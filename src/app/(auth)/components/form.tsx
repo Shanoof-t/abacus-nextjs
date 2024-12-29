@@ -6,13 +6,13 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-regular-svg-icons";
 import { authValidationSchema } from "@/utils/validations/auth-validation";
 import { SignInType, SignUpType } from "@/types/auth-types";
-import { useSignup } from "@/hooks/auth-hooks";
+import { useSignin, useSignup } from "@/hooks/auth-hooks";
 import { useRouter } from "next/navigation";
 
 function AuthForm({ type }: { type: "sign-in" | "sign-up" }) {
   const [isPasswordShow, setIsPasswordShow] = useState<boolean>(false);
   const router = useRouter();
-  
+
   const signUpInitialValues: SignUpType = {
     email: "",
     password: "",
@@ -23,14 +23,22 @@ function AuthForm({ type }: { type: "sign-in" | "sign-up" }) {
     password: "",
   };
 
-  const { error, mutate } = useSignup();
+  const { error: signUpError, mutate: signUpMutate } = useSignup();
+  const { error: signInError, mutate: signInMutate } = useSignin();
 
-  const handleSubmit = (
-    formInputs: SignInType | SignUpType,
-    { resetForm }: { resetForm: () => void }
-  ) => {
-    mutate(
-      { email: formInputs.email, password: formInputs.password },
+  type SignUpHandler = {
+    signUpInputs: SignUpType;
+    resetForm: () => void;
+  };
+
+  type SignInHandler = {
+    signInInputs: SignInType;
+    resetForm: () => void;
+  };
+
+  const signUpHandler = ({ signUpInputs, resetForm }: SignUpHandler) => {
+    signUpMutate(
+      { email: signUpInputs.email, password: signUpInputs.password },
       {
         onSuccess: () => {
           resetForm();
@@ -38,6 +46,29 @@ function AuthForm({ type }: { type: "sign-in" | "sign-up" }) {
         },
       }
     );
+  };
+
+  const signInHandler = ({ signInInputs, resetForm }: SignInHandler) => {
+    signInMutate(
+      { email: signInInputs.email, password: signInInputs.password },
+      {
+        onSuccess: () => {
+          resetForm();
+          router.replace("/");
+        },
+      }
+    );
+  };
+
+  const handleSubmit = (
+    formInputs: SignInType | SignUpType,
+    { resetForm }: { resetForm: () => void }
+  ) => {
+    if (type === "sign-up") {
+      signUpHandler({ signUpInputs: formInputs, resetForm });
+    } else if (type === "sign-in") {
+      signInHandler({ signInInputs: formInputs, resetForm });
+    }
   };
 
   return (
@@ -67,12 +98,15 @@ function AuthForm({ type }: { type: "sign-in" | "sign-up" }) {
                 className="input-field"
                 placeholder="Enter your email"
               />
-              {(touched.email && errors.email) ||
-                (error?.message && (
+              {touched.email && errors.email && (
+                <p className="text-sm text-red-600">{errors.email}</p>
+              )}
+              {touched.email &&
+                (signUpError?.message || signInError?.message) && (
                   <p className="text-sm text-red-600">
-                    {errors.email || error.message}
+                    {signUpError?.message || signInError?.message}
                   </p>
-                ))}
+                )}
             </div>
 
             {/* Password Input */}

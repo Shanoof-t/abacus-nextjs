@@ -39,7 +39,7 @@ function Page() {
 
           {/* form */}
 
-          <AuthForm type="sign-up" />
+          <AuthForm type="sign-in" />
           
           <div className="mt-4 w-full flex items-center">
             <hr className="flex-grow text-[#7E8CA0]" />

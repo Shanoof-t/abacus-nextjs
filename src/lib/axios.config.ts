@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { InternalAxiosRequestConfig } from "axios";
 
 const apiClient = axios.create({
   baseURL: process.env.NEXT_PUBLIC_BACKEND_URL,
@@ -15,6 +15,17 @@ apiClient.interceptors.response.use(
   (err) => {
     console.log("ERROR-RESPONSE>>>>>", err);
     return Promise.reject(err.response.data);
+  }
+);
+
+apiClient.interceptors.request.use(
+  (config: InternalAxiosRequestConfig<any>) => {
+    config.withCredentials = true;
+    return config;
+  },
+  (err) => {
+    console.log("ERROR-REQUEST>>>>>", err);
+    return Promise.reject(err);
   }
 );
 
