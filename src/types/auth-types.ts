@@ -7,3 +7,10 @@ export type SignInType = {
   email: string;
   password: string;
 };
+
+export type OtpVerifyParams = {
+  otp: string;
+  userId: string;
+};
+
+

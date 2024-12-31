@@ -8,6 +8,7 @@ import { authValidationSchema } from "@/utils/validations/auth-validation";
 import { SignInType, SignUpType } from "@/types/auth-types";
 import { useSignin, useSignup } from "@/hooks/auth-hooks";
 import { useRouter } from "next/navigation";
+import { useQueryClient } from "@tanstack/react-query";
 
 function AuthForm({ type }: { type: "sign-in" | "sign-up" }) {
   const [isPasswordShow, setIsPasswordShow] = useState<boolean>(false);
@@ -22,6 +23,8 @@ function AuthForm({ type }: { type: "sign-in" | "sign-up" }) {
     email: "",
     password: "",
   };
+  
+  const query = useQueryClient();
 
   const { error: signUpError, mutate: signUpMutate } = useSignup();
   const { error: signInError, mutate: signInMutate } = useSignin();
@@ -40,9 +43,10 @@ function AuthForm({ type }: { type: "sign-in" | "sign-up" }) {
     signUpMutate(
       { email: signUpInputs.email, password: signUpInputs.password },
       {
-        onSuccess: () => {
+        onSuccess: (data) => {
+          query.setQueryData(["signup"], data);
           resetForm();
-          router.replace("/sign-in");
+          router.replace("/sign-up/verify-email");
         },
       }
     );

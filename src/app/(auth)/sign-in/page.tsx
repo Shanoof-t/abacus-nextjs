@@ -4,7 +4,6 @@ import React from "react";
 import AuthForm from "../components/form";
 import Link from "next/link";
 
-
 function Page() {
   return (
     <div className="grid grid-cols-2 min-h-screen">
@@ -15,8 +14,8 @@ function Page() {
         </h6>
         <div className="border rounded bg-slate-400 p-10 mt-7">
           <div className="flex flex-col justify-center items-center">
-            <h1 className="font-bold">Create your account</h1>
-            <p>Welcome! Please fill in the details to get started.</p>
+            <h1 className="font-bold">Sign In to Abacus</h1>
+            <p>Welcome back! Please sign in to continu</p>
           </div>
           {/* google button  */}
           <div className="flex justify-center mt-4">
@@ -40,14 +39,15 @@ function Page() {
           {/* form */}
 
           <AuthForm type="sign-in" />
-          
+
           <div className="mt-4 w-full flex items-center">
             <hr className="flex-grow text-[#7E8CA0]" />
             <hr className="flex-grow text-[#7E8CA0]" />
           </div>
 
           <div>
-            <p>Don’t have an account?</p><Link href="./sign-up">Sign up</Link>
+            <p>Don’t have an account?</p>
+            <Link href="./sign-up">Sign up</Link>
           </div>
         </div>
       </div>

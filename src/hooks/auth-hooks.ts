@@ -1,5 +1,5 @@
 "use client";
-import { signIn, signUp } from "@/services/auth-service";
+import { resendOTP, signIn, signUp, verifyOTP } from "@/services/auth-service";
 import { useMutation } from "@tanstack/react-query";
 
 export const useSignup = () => {
@@ -13,3 +13,15 @@ export const useSignin = () => {
     mutationFn: signIn,
   });
 };
+
+export const useOtpVerify  = ()=>{
+  return useMutation({
+    mutationFn:verifyOTP
+  })
+}
+
+export const useResendOtp = ()=>{
+  return useMutation({
+    mutationFn:resendOTP
+  })
+}
