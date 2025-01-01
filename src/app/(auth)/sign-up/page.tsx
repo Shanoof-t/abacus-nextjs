@@ -51,7 +51,7 @@ function Page() {
     setToggleFetch(true);
   };
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-2  min-h-screen">
+    <div className="grid grid-cols-1 lg:grid-cols-2 min-h-screen">
       <div className="flex flex-col justify-center items-center ">
         <h1 className="font-bold text-3xl text-[#2E2A47]">Welcome Back!</h1>
         <h6 className="lg:text-base text-[#7E8CA0] xs:text-sm sm:text-xs text-center mt-3">
@@ -60,8 +60,8 @@ function Page() {
 
         <div className="border rounded shadow-xl py-5 px-10 mt-4">
           <div className="flex flex-col justify-center items-center">
-            <h6 className="font-bold text-sm">Sign In to Abacus</h6>
-            <p className="text-xs">Welcome back! Please sign in to continue</p>
+            <h6 className="font-bold text-sm">Create your account</h6>
+            <p className="text-xs text-[#7E8CA0] mt-1">Welcome! Please fill in the details to get started</p>
           </div>
           {/* google button  */}
           <div className="flex justify-center mt-4">

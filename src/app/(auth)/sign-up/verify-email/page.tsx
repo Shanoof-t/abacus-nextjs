@@ -1,56 +1,43 @@
 "use client";
-import Image from "next/image";
 import React, { useState } from "react";
-
+import { useRouter } from "next/navigation";
+import { useQueryClient } from "@tanstack/react-query";
+import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import {
   InputOTP,
   InputOTPGroup,
-  InputOTPSeparator,
   InputOTPSlot,
 } from "@/components/ui/input-otp";
 import { REGEXP_ONLY_DIGITS_AND_CHARS } from "input-otp";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useOtpVerify, useResendOtp } from "@/hooks/auth-hooks";
-import { useRouter } from "next/navigation";
 
 type SignUpData = {
   data: {
     userId: string;
+    email: string;
   };
 };
 
-function Page() {
+const Page = () => {
   const [otp, setOtp] = useState<string>("");
-
-  const [inputs, setInputes] = useState([
-    "key1",
-    "key2",
-    "key3",
-    "key4",
-    "key5",
-    "key6",
-  ]);
-
-  const handleChange = (e: string) => {
-    setOtp(e);
-  };
-
+  const [inputs] = useState(["key1", "key2", "key3", "key4", "key5", "key6"]);
+  const router = useRouter();
+  const queryClient = useQueryClient();
+  const signUpData = queryClient.getQueryData<SignUpData>(["signup"]);
+  console.log("sign up data", signUpData);
   const { mutate: verifyMutate, error: verifyError } = useOtpVerify();
   const { mutate: resendMutate, error: resendError } = useResendOtp();
 
-  const query = useQueryClient();
-
-  const router = useRouter();
-
-  const signUpData = query.getQueryData<SignUpData>(["signup"]);
+  const handleChange = (value: string) => setOtp(value);
 
   const handleSubmit = () => {
+    
     if (signUpData?.data) {
-      const { data } = signUpData;
+      const { userId } = signUpData.data;
       verifyMutate(
-        { otp, userId: data.userId },
+        { otp, userId },
         {
           onSuccess: () => {
             router.replace("/sign-in");
@@ -60,93 +47,84 @@ function Page() {
     }
   };
 
-  const handleResentOTP = () => {
+  const handleResendOTP = () => {
     if (signUpData?.data) {
-      const { data } = signUpData;
-      resendMutate(
-        { userId: data.userId },
-        {
-          onSuccess: () => {
-            // router.replace("/sign-in");
-          },
-        }
-      );
+      const { userId } = signUpData.data;
+      resendMutate({ userId });
     }
   };
+
   return (
-    <div className="grid grid-cols-2 min-h-screen">
-      <div className="flex flex-col justify-center items-center ">
+    <div className="grid grid-cols-1 lg:grid-cols-2 min-h-screen">
+      <div className="flex flex-col justify-center items-center px-6">
         <h1 className="font-bold text-3xl text-[#2E2A47]">Welcome Back!</h1>
-        <h6 className="text-base text-[#7E8CA0]">
-          Log in or Create account to get back to your dashboard!
+        <h6 className="text-base text-[#7E8CA0] text-center mt-2">
+          Log in or Create an account to get back to your dashboard!
         </h6>
-        <div className="border rounded bg-slate-400 p-10 mt-7">
-          <div className="flex flex-col justify-center items-center">
-            <h1 className="font-bold">Verify your email</h1>
-            <p>
-              Enter the verification code sent to your email {"'this is email'"}
+
+        <div className="border rounded shadow-xl py-5 px-10 mt-4 flex flex-col justify-center">
+          <div className="text-center mb-6">
+            <h2 className="font-bold text-lg">Verify your email</h2>
+            <p className="text-sm text-[#7E8CA0]">
+              Enter the verification code sent to your email{" "}
+              <strong>{`${signUpData?.data.email}`}</strong>
             </p>
           </div>
 
-          {/* form */}
-
-          <InputOTP
-            maxLength={6}
-            pattern={REGEXP_ONLY_DIGITS_AND_CHARS}
-            onChange={handleChange}
-          >
-            {inputs.map((value, index) => {
-              return (
-                <InputOTPGroup className="flex justify-center " key={value}>
-                  <InputOTPSlot index={index} />
+          <div className="items-center flex justify-center flex-col">
+            <InputOTP
+              maxLength={6}
+              pattern={REGEXP_ONLY_DIGITS_AND_CHARS}
+              onChange={handleChange}
+              className="flex justify-center space-x-2 mb-4"
+            >
+              {inputs.map((key, index) => (
+                <InputOTPGroup key={key} className="relative">
+                  <InputOTPSlot
+                    index={index}
+                    className="w-10 h-10 text-center text-lg font-semibold border rounded-md border-gray-300"
+                  />
                 </InputOTPGroup>
-              );
-            })}
-          </InputOTP>
+              ))}
+            </InputOTP>
 
-          {verifyError?.message ||
-            (resendError?.message && (
-              <p className="text-sm text-red-600">
-                {verifyError!.message || resendError!.message}
+            {(verifyError?.message || resendError?.message) && (
+              <p className="text-sm text-red-600 mt-2">
+                {verifyError?.message || resendError?.message}
               </p>
-            ))}
+            )}
+          </div>
 
-          {/* retry */}
-
+          {/* Resend OTP */}
           <div className="text-center mt-4">
             <p className="text-sm">
               Didn't receive a code?{" "}
               <button
-                className="text-blue-600 hover:text-blue-700"
-                onClick={handleResentOTP}
+                className="font-medium hover:underline"
+                onClick={handleResendOTP}
               >
-                Resend(1)
+                Resend
               </button>
             </p>
           </div>
 
           {/* Submit Button */}
-
           <div>
             <Button
               onClick={handleSubmit}
-              className="w-full py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+              className="bg-zinc-800 hover:bg-zinc-700 text-white h-[2rem] mt-2 w-full border rounded text-[0.700rem]"
             >
               Continue
             </Button>
           </div>
-
-          <div className="mt-4 w-full flex items-center">
-            <hr className="flex-grow text-[#7E8CA0]" />
-            <hr className="flex-grow text-[#7E8CA0]" />
-          </div>
         </div>
       </div>
-      <div className="bg-blue-600 flex justify-center items-center">
-        <Image src="../logo.svg" width={100} height={100} alt="logo" />
+
+      <div className="bg-blue-600 flex justify-center items-center hidden lg:flex">
+        <Image src="./logo.svg" width={100} height={100} alt="logo" />
       </div>
     </div>
   );
-}
+};
 
 export default Page;

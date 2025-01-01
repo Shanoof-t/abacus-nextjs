@@ -90,20 +90,6 @@ function AuthForm({ type }: { type: "sign-in" | "sign-up" }) {
           <Form className="space-y-3">
             {/* Email Input */}
             <div className="space-y-1">
-              {/* <label
-                htmlFor="email"
-                className="block text-xs font-medium text-gray-700"
-              >
-                Email Address
-              </label>
-              <Field
-                type="email"
-                name="email"
-                onChange={handleChange}
-                value={values.email}
-                className="input-field  text-xs w-full outline-black"
-                placeholder="Enter your email"
-              /> */}
               <div className="grid w-full max-w-sm items-center gap-1.5">
                 <Label htmlFor="email" className="font-semibold text-xs">
                   Email address
@@ -113,19 +99,13 @@ function AuthForm({ type }: { type: "sign-in" | "sign-up" }) {
                   name="email"
                   onChange={handleChange}
                   value={values.email}
-                  className="h-[1.5rem] border rounded border-[0.1rem] border-gray-400"
+                  className="h-[1.5rem] border rounded text-xs border-[0.1rem] border-gray-400"
                 />
               </div>
 
               {touched.email && errors.email && (
                 <p className="text-sm text-red-600">{errors.email}</p>
               )}
-              {touched.email &&
-                (signUpError?.message || signInError?.message) && (
-                  <p className="text-sm text-red-600">
-                    {signUpError?.message || signInError?.message}
-                  </p>
-                )}
             </div>
 
             {/* Password Input */}
@@ -140,7 +120,7 @@ function AuthForm({ type }: { type: "sign-in" | "sign-up" }) {
                     name="password"
                     onChange={handleChange}
                     value={values.password}
-                    className="h-[1.5rem] border rounded border-[0.1rem] border-gray-400 pr-10"
+                    className="h-[1.5rem] border rounded text-xs border-[0.1rem] border-gray-400 pr-10"
                   />
                   <button
                     type="button"
@@ -154,6 +134,12 @@ function AuthForm({ type }: { type: "sign-in" | "sign-up" }) {
               {touched.password && errors.password && (
                 <p className="text-sm text-red-600">{errors.password}</p>
               )}
+              {touched.email &&
+                (signUpError?.message || signInError?.message) && (
+                  <p className="text-sm text-red-600">
+                    {signUpError?.message || signInError?.message}
+                  </p>
+                )}
             </div>
 
             {/* Submit Button */}
