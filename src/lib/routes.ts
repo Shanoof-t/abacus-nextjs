@@ -4,7 +4,8 @@ const API_ROUTES = {
     SIGNUP: "/api/v1/auth/sign-up",
     VERIFY_OTP: "api/v1/auth/verify-otp",
     RESEND_OTP: "api/v1/auth/resend-otp",
-
+    GOOGLE_AUTH: "/api/v1/auth/google-auth",
+    GOOGLE_AUTH_POST:"/api/v1/auth/oauth2-callback"
   },
 };
 
