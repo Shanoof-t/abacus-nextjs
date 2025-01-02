@@ -1,8 +1,8 @@
 "use client";
 import Image from "next/image";
-import AuthForm from "../components/form";
+import AuthForm from "../components/AuthForm";
 import Link from "next/link";
-import GoogleButton from "../components/google-button";
+import GoogleButton from "../components/GoogleButton";
 
 function Page() {
   return (
