@@ -3,7 +3,6 @@ import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useQueryClient } from "@tanstack/react-query";
 import Image from "next/image";
-import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import {
   InputOTP,
@@ -26,7 +25,7 @@ const Page = () => {
   const router = useRouter();
   const queryClient = useQueryClient();
   const signUpData = queryClient.getQueryData<SignUpData>(["signup"]);
-  console.log("sign up data", signUpData);
+  
   const { mutate: verifyMutate, error: verifyError } = useOtpVerify();
   const { mutate: resendMutate, error: resendError } = useResendOtp();
 

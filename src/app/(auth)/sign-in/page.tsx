@@ -3,8 +3,7 @@ import Image from "next/image";
 import React from "react";
 import AuthForm from "../components/form";
 import Link from "next/link";
-
-import { Button } from "@/components/ui/button";
+import GoogleButton from "../components/google-button";
 
 function Page() {
   return (
@@ -22,15 +21,7 @@ function Page() {
           </div>
           {/* google button  */}
           <div className="flex justify-center mt-4">
-            <Button className="shadow-lg hover:bg-gray-100 h-[1.5rem] w-full border rounded text-[0.700rem]">
-              <Image
-                src="./google-icon.svg"
-                width={15}
-                height={15}
-                alt="google-icon"
-              />
-              Continue with Google
-            </Button>
+          <GoogleButton />
           </div>
 
           <div className="mt-3 mb-1 w-full flex items-center">
