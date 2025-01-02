@@ -18,14 +18,14 @@ function Page() {
       return res.data;
     },
     onSuccess: (data) => {
-      console.log("succes data",data)
+      console.log("succes data", data);
       router.replace("http://localhost:3000/");
     },
   });
 
   useEffect(() => {
     if (code) mutate(code);
-  }, [code]);
+  }, [code, mutate]);
 
   return (
     <div className="h-screen flex items-center justify-center">

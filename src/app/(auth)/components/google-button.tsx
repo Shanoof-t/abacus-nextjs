@@ -7,12 +7,24 @@ import { useRouter, useSearchParams } from "next/navigation";
 import Image from "next/image";
 
 const GoogleButton = () => {
+  const [toggleFetch, setToggleFetch] = useState(false);
+  const searchParams = useSearchParams();
+  const code = searchParams.get("code") as string;
 
-    const [toggleFetch, setToggleFetch] = useState(false);
   const router = useRouter();
-  const query = useQueryClient();
+  useQueryClient();
 
-  const { data, isSuccess } = useQuery({
+  const { mutate } = useMutation({
+    mutationFn: async (data: string) => {
+      console.log("code", data);
+      const res = await apiClient.post(API_ROUTES.AUTH.GOOGLE_AUTH_POST, {
+        code: data,
+      });
+      return res.data;
+    },
+  });
+
+  const { isSuccess } = useQuery({
     enabled: toggleFetch,
     queryKey: ["google-auth"],
     queryFn: async () => {
@@ -25,30 +37,15 @@ const GoogleButton = () => {
 
   useEffect(() => {
     if (isSuccess) {
-      const searchParams = useSearchParams();
-      const code = searchParams.get("code");
-      console.log("the code", code);
-      const { mutate } = useMutation({
-        mutationFn: async (data: string) => {
-          console.log("code", data);
-          const res = await apiClient.post(API_ROUTES.AUTH.GOOGLE_AUTH_POST, {
-            code: data,
-          });
-          return res.data;
-        },
-      });
-
-      useEffect(() => {
-        mutate(code!);
-      }, []);
+      mutate(code!);
     }
-  }, [isSuccess, data]);
+  }, [isSuccess, code, mutate]);
 
   const handleGoogleAuth = () => {
     console.log("clicked");
     setToggleFetch(true);
   };
-  
+
   return (
     <Button
       className="shadow-lg hover:bg-gray-100 h-[1.5rem] w-full border rounded text-[0.700rem]"
@@ -60,4 +57,4 @@ const GoogleButton = () => {
   );
 };
 
-export default GoogleButton
+export default GoogleButton;

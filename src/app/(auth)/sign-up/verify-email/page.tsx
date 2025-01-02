@@ -97,7 +97,7 @@ const Page = () => {
           {/* Resend OTP */}
           <div className="text-center mt-4">
             <p className="text-sm">
-              Didn't receive a code?{" "}
+              Didn&apos;t receive a code?
               <button
                 className="font-medium hover:underline"
                 onClick={handleResendOTP}

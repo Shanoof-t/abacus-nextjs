@@ -1,9 +1,7 @@
 "use client";
 import { Button } from "@/components/ui/button";
-import { Field, Form, Formik } from "formik";
+import { Form, Formik } from "formik";
 import React, { useState } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEye, faEyeSlash } from "@fortawesome/free-regular-svg-icons";
 import { authValidationSchema } from "@/utils/validations/auth-validation";
 import { SignInType, SignUpType } from "@/types/auth-types";
 import { useSignin, useSignup } from "@/hooks/auth-hooks";

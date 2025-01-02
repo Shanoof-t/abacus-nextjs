@@ -19,7 +19,7 @@ apiClient.interceptors.response.use(
 );
 
 apiClient.interceptors.request.use(
-  (config: InternalAxiosRequestConfig<any>) => {
+  (config: InternalAxiosRequestConfig<unknown>) => {
     config.withCredentials = true;
     return config;
   },

@@ -6,6 +6,7 @@ import Link from "next/link";
 import GoogleButton from "../components/google-button";
 
 function Page() {
+
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2  min-h-screen">
       <div className="flex flex-col justify-center items-center ">
@@ -17,11 +18,13 @@ function Page() {
         <div className="border rounded shadow-xl py-5 px-10 mt-4">
           <div className="flex flex-col justify-center items-center">
             <h6 className="font-bold text-sm">Sign In to Abacus</h6>
-            <p className="text-xs text-[#7E8CA0] mt-1">Welcome back! Please sign in to continue</p>
+            <p className="text-xs text-[#7E8CA0] mt-1">
+              Welcome back! Please sign in to continue
+            </p>
           </div>
           {/* google button  */}
           <div className="flex justify-center mt-4">
-          <GoogleButton />
+            <GoogleButton />
           </div>
 
           <div className="mt-3 mb-1 w-full flex items-center">
