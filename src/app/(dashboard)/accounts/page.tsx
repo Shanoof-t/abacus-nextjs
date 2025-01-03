@@ -14,8 +14,8 @@ const AccountsPage = () => {
           <CardTitle className="text-xl line-clamp-1">Accounts</CardTitle>
           <Button
             size="sm"
-            variant="secondary"
-            className="bg-slate-900 text-white border rounded-lg"
+            variant="primary"
+            className="bg-slate-900 text-white border rounded-[.50rem]"
             onClick={onOpen}
           >
             <Plus /> Add new
