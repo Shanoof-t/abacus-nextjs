@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import { Suspense } from "react";
 import "./globals.css";
 import QueryProvider from "@/utils/QueryProvider";
+import { SheetProvider } from "@/providers/sheet-provider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -30,7 +31,10 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <QueryProvider>
-          <Suspense>{children}</Suspense>
+          <Suspense>
+            <SheetProvider />
+            {children}
+          </Suspense>
         </QueryProvider>
       </body>
     </html>
