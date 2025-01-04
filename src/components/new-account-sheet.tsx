@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Sheet,
   SheetContent,
@@ -12,26 +12,48 @@ import { useNewAccount } from "@/hooks/account-hooks";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import { Label } from "./ui/label";
+import { useMutation } from "@tanstack/react-query";
+import apiClient from "@/lib/axios.config";
+import API_ROUTES from "@/lib/routes";
 
 const NewAccountSheet = () => {
   const { isOpen, onClose } = useNewAccount();
 
+  const initialValue = { account_name: "" };
   const validationSchema = Yup.object().shape({
     account_name: Yup.string().required("Please add account name."),
   });
 
-  const handleSubmit = (values: { account_name: string }) => {
-    console.log(values);
-    onClose();
+  const { mutate, error, isSuccess } = useMutation({
+    mutationFn: async (data: { account_name: string }) => {
+      console.log("in mutate fun", data);
+      const response = await apiClient.post(
+        API_ROUTES.ACCOUNT.CREATE_ACCOUNT,
+        data
+      );
+
+      return response.data;
+    },
+  });
+
+  useEffect(() => {
+    if (isSuccess) {
+      onClose();
+      initialValue.account_name = "";
+    }
+  }, [isSuccess, onClose]);
+
+  const handleSubmit = async (values: { account_name: string }) => {
+    mutate(values);
   };
 
   return (
     <Formik
-      initialValues={{ account_name: "" }}
+      initialValues={initialValue}
       validationSchema={validationSchema}
       onSubmit={handleSubmit}
     >
-      {({ errors, touched, isSubmitting }) => (
+      {({ errors, touched }) => (
         <Sheet open={isOpen} onOpenChange={onClose}>
           <SheetContent className="bg-white w-full">
             <SheetHeader>
@@ -56,6 +78,9 @@ const NewAccountSheet = () => {
                   {errors.account_name}
                 </p>
               )}
+              {error?.message && (
+                <p className="text-red-500 text-sm mt-3">{error.message}</p>
+              )}
 
               <SheetFooter className="mt-4">
                 <div className="w-full">
@@ -63,7 +88,6 @@ const NewAccountSheet = () => {
                     type="submit"
                     variant="primary"
                     className="w-full border rounded-[.50rem] text-white"
-                    disabled={isSubmitting}
                   >
                     Create account
                   </Button>

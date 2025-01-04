@@ -7,6 +7,9 @@ const API_ROUTES = {
     GOOGLE_AUTH: "/api/v1/auth/google-auth",
     GOOGLE_AUTH_POST:"/api/v1/auth/oauth2-callback"
   },
+  ACCOUNT:{
+    CREATE_ACCOUNT:"/api/v1/account"
+  }
 };
 
 export default API_ROUTES;
