@@ -9,7 +9,7 @@ function layout({ children }: Props) {
   return (
     <>
       <TopSection />
-      <main>{children}</main>
+      <main className="flex justify-center">{children}</main>
     </>
   );
 }
