@@ -1,19 +1,17 @@
 "use client";
 
 import {
-  ColumnDef,
-  flexRender,
-  getCoreRowModel,
-  getPaginationRowModel,
   useReactTable,
-  getSortedRowModel,
+  ColumnDef,
+  getCoreRowModel,
+  flexRender,
+  getPaginationRowModel,
   SortingState,
-  getFilteredRowModel,
+  getSortedRowModel,
   ColumnFiltersState,
+  getFilteredRowModel,
   Row,
 } from "@tanstack/react-table";
-
-import { Input } from "./input";
 
 import {
   Table,
@@ -24,24 +22,27 @@ import {
   TableRow,
 } from "./table";
 import { Button } from "./button";
-import React, { useState } from "react";
+import { useState } from "react";
+import { Input } from "./input";
 import { Trash } from "lucide-react";
 
-interface DataTableProps<TData, TValue> {
-  columns: ColumnDef<TData, TValue>[];
+type DataTypeProps<TData, TValue> = {
   data: TData[];
-  filterKey?: string;
+  columns: ColumnDef<TData, TValue>[];
+  filterKey: string;
+  filterPlaceholder: string;
   onDelete: (rows: Row<TData>[]) => void;
   disabled?: boolean;
-}
+};
 
-export function DataTable<TData, TValue>({
-  columns,
+const DataTable = <TData, TValue>({
   data,
+  columns,
   filterKey,
+  filterPlaceholder,
   onDelete,
   disabled,
-}: DataTableProps<TData, TValue>) {
+}: DataTypeProps<TData, TValue>) => {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [rowSelection, setRowSelection] = useState({});
@@ -56,7 +57,6 @@ export function DataTable<TData, TValue>({
     onColumnFiltersChange: setColumnFilters,
     getFilteredRowModel: getFilteredRowModel(),
     onRowSelectionChange: setRowSelection,
-
     state: {
       sorting,
       columnFilters,
@@ -66,37 +66,42 @@ export function DataTable<TData, TValue>({
 
   return (
     <div>
-      {/* table filter input */}
-      {filterKey && (
-        <div className="flex items-center justify-between py-4">
+      <div className="flex justify-between">
+        <div>
           <Input
-            placeholder={`Filter ${filterKey}...`}
+            placeholder={`Search ${filterPlaceholder}...`}
             value={
               (table.getColumn(filterKey)?.getFilterValue() as string) ?? ""
             }
             onChange={(event) =>
               table.getColumn(filterKey)?.setFilterValue(event.target.value)
             }
-            className="max-w-sm"
+            className="placeholder:text-gray-400 border rounded"
           />
+        </div>
+        <div>
           {table.getFilteredSelectedRowModel().rows.length > 0 && (
-            <div>
-              <Button variant="outline" size="sm" disabled={disabled}>
-                <Trash />
-                delete({table.getFilteredSelectedRowModel().rows.length})
-              </Button>
-            </div>
+            <Button
+              disabled={disabled}
+              variant="outline"
+              size="sm"
+              onClick={() => {
+                onDelete(table.getFilteredSelectedRowModel().rows);
+              }}
+            >
+              <Trash />
+              Delete({table.getFilteredSelectedRowModel().rows.length})
+            </Button>
           )}
         </div>
-      )}
-
+      </div>
       <div className="rounded-md border">
         <Table>
           <TableHeader>
-            {table.getHeaderGroups().map((headerGroup) => (
-              <TableRow key={headerGroup.id}>
-                {headerGroup.headers.map((header) => {
-                  return (
+            {table.getHeaderGroups().map((headerGroup) => {
+              return (
+                <TableRow key={headerGroup.id}>
+                  {headerGroup.headers.map((header) => (
                     <TableHead key={header.id}>
                       {header.isPlaceholder
                         ? null
@@ -105,19 +110,16 @@ export function DataTable<TData, TValue>({
                             header.getContext()
                           )}
                     </TableHead>
-                  );
-                })}
-              </TableRow>
-            ))}
+                  ))}
+                </TableRow>
+              );
+            })}
           </TableHeader>
           <TableBody>
-            {table.getRowModel().rows?.length ? (
+            {table.getRowModel().rows.length ? (
               table.getRowModel().rows.map((row) => (
-                <TableRow
-                  key={row.id}
-                  data-state={row.getIsSelected() && "selected"}
-                >
-                  {row.getVisibleCells().map((cell) => (
+                <TableRow key={row.id}>
+                  {row.getAllCells().map((cell) => (
                     <TableCell key={cell.id}>
                       {flexRender(
                         cell.column.columnDef.cell,
@@ -139,14 +141,17 @@ export function DataTable<TData, TValue>({
             )}
           </TableBody>
         </Table>
-        <div className="flex items-center justify-end space-x-2 py-4">
-          <div className="flex-1 text-sm text-muted-foreground">
-            {table.getFilteredSelectedRowModel().rows.length} of{" "}
-            {table.getFilteredRowModel().rows.length} row(s) selected.
-          </div>
+      </div>
+      <div className="flex justify-between my-2 items-center">
+        <div>
+          {table.getFilteredSelectedRowModel().rows.length} of{" "}
+          {table.getFilteredRowModel().rows.length} row(s) selected.
+        </div>
+        <div className="space-x-2">
           <Button
             variant="outline"
             size="sm"
+            className="border rounded-[.50rem] border-gray-300 hover:bg-gray-100"
             onClick={() => table.previousPage()}
             disabled={!table.getCanPreviousPage()}
           >
@@ -155,6 +160,7 @@ export function DataTable<TData, TValue>({
           <Button
             variant="outline"
             size="sm"
+            className="border rounded-[.50rem] border-gray-300 hover:bg-gray-100"
             onClick={() => table.nextPage()}
             disabled={!table.getCanNextPage()}
           >
@@ -164,4 +170,6 @@ export function DataTable<TData, TValue>({
       </div>
     </div>
   );
-}
+};
+
+export default DataTable;

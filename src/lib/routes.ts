@@ -11,6 +11,7 @@ const API_ROUTES = {
   ACCOUNT: {
     CREATE_ACCOUNT: "/api/v1/account",
     GET_ALL_ACCOUNTS: "/api/v1/account",
+    BULK_DELETE_ACCOUNTS:"/api/v1/account/bulk-delete"
   },
 };
 

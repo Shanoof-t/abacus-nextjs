@@ -11,13 +11,19 @@ import { Button } from "./ui/button";
 import { useNewAccount } from "@/hooks/account-hooks";
 import { Formik, Form, Field } from "formik";
 import { Label } from "./ui/label";
-import { useMutation } from "@tanstack/react-query";
+import {
+  QueryClient,
+  useMutation,
+  useQueryClient,
+} from "@tanstack/react-query";
 import apiClient from "@/lib/axios.config";
 import API_ROUTES from "@/lib/routes";
 import * as Yup from "yup";
 
 const NewAccountSheet = () => {
   const { isOpen, onClose } = useNewAccount();
+
+  const queryClient = useQueryClient();
 
   const initialValues = {
     account_name: "",
@@ -43,6 +49,10 @@ const NewAccountSheet = () => {
         data
       );
       return response.data;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["accounts"] });
+      // queryClient.refetchQueries({queryKey:["accounts"] })
     },
   });
 
