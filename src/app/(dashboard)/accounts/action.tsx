@@ -8,9 +8,10 @@ import {
 import { Edit, MoreHorizontal, Trash } from "lucide-react";
 
 import { useDeleteAccount } from "@/hooks/account-hooks";
+import { useEditAccountStore } from "@/store/account-store";
 
 const Action = ({ id }: { id: string }) => {
-  
+  const { onOpen, setID } = useEditAccountStore();
   const { mutate } = useDeleteAccount();
 
   return (
@@ -19,7 +20,12 @@ const Action = ({ id }: { id: string }) => {
         <MoreHorizontal />
       </DropdownMenuTrigger>
       <DropdownMenuContent>
-        <DropdownMenuItem onClick={() => {}}>
+        <DropdownMenuItem
+          onClick={() => {
+            onOpen();
+            setID(id);
+          }}
+        >
           <Edit />
           Edit
         </DropdownMenuItem>

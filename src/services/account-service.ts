@@ -1,10 +1,11 @@
 import apiClient from "@/lib/axios.config";
 import API_ROUTES from "@/lib/routes";
 
-export const createNewAccount = async (data: {
+type AccountInputs = {
   account_name: string;
   account_balance: number | null;
-}) => {
+};
+export const createNewAccount = async (data: AccountInputs) => {
   const response = await apiClient.post(
     API_ROUTES.ACCOUNT.CREATE_ACCOUNT,
     data
@@ -28,6 +29,19 @@ export const deleteBulkAccounts = async (ids: string[]) => {
 export const deleteAccount = async (id: string) => {
   const response = await apiClient.delete(
     API_ROUTES.ACCOUNT.DELETE_ACCOUNT + id
+  );
+  return response.data;
+};
+
+type EditAccount = {
+  values: AccountInputs;
+  id: string;
+};
+
+export const editAccount = async ({ values, id }: EditAccount) => {
+  const response = await apiClient.put(
+    API_ROUTES.ACCOUNT.EDIT_ACCOUNT + id,
+    values
   );
   return response.data;
 };

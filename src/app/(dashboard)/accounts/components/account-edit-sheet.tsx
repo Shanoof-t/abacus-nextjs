@@ -13,19 +13,18 @@ import { Label } from "../../../../components/ui/label";
 import { Formik, Form, Field } from "formik";
 import { validationSchema } from "@/schemas/account-schema";
 
-import { useNewAccountStore } from "@/store/account-store";
-import { useNewAccount } from "@/hooks/account-hooks";
+import { useEditAccountStore } from "@/store/account-store";
+import { useEditAccount } from "@/hooks/account-hooks";
 
-const NewAccountSheet = () => {
-  const { isOpen, onClose } = useNewAccountStore();
-
+const EditAccountSheet = () => {
+  const { isOpen, onClose, id } = useEditAccountStore();
 
   const initialValues = {
     account_name: "",
     account_balance: 0,
   };
 
-  const { mutate, error, isSuccess } = useNewAccount();
+  const { mutate, error, isSuccess } = useEditAccount();
 
   useEffect(() => {
     if (isSuccess) {
@@ -38,7 +37,7 @@ const NewAccountSheet = () => {
       initialValues={initialValues}
       validationSchema={validationSchema}
       onSubmit={(values, { resetForm }) => {
-        mutate(values);
+        mutate({ values, id });
         resetForm();
       }}
     >
@@ -46,7 +45,7 @@ const NewAccountSheet = () => {
         <Sheet open={isOpen} onOpenChange={onClose}>
           <SheetContent className="bg-white w-full">
             <SheetHeader>
-              <SheetTitle>New Account</SheetTitle>
+              <SheetTitle>Edit Account</SheetTitle>
             </SheetHeader>
             <SheetDescription className="text-black/50">
               Create a new account to track your transactions
@@ -102,4 +101,4 @@ const NewAccountSheet = () => {
   );
 };
 
-export default NewAccountSheet;
+export default EditAccountSheet;

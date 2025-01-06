@@ -2,6 +2,7 @@ import {
   createNewAccount,
   deleteAccount,
   deleteBulkAccounts,
+  editAccount,
   fetchAllAccounts,
 } from "@/services/account-service";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
@@ -39,6 +40,16 @@ export const useDeleteAccount = () => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: deleteAccount,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["accounts"] });
+    },
+  });
+};
+
+export const useEditAccount = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: editAccount,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["accounts"] });
     },

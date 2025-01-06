@@ -7,11 +7,11 @@ import DataTable from "@/components/ui/data-table";
 
 import { column } from "./columns";
 
-import { useAccountStore } from "@/store/account-store";
+import { useNewAccountStore } from "@/store/account-store";
 import { useBulkAccountDelete, useGetAllAccount } from "@/hooks/account-hooks";
 
 const AccountsPage = () => {
-  const { onOpen } = useAccountStore();
+  const { onOpen } = useNewAccountStore();
 
   const { data, isLoading, isSuccess } = useGetAllAccount();
 
