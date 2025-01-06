@@ -1,41 +1,21 @@
 "use client";
 import { Button } from "@/components/ui/button";
-
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-
-import { Loader2, LucideLoader2, Plus } from "lucide-react";
-
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import apiClient from "@/lib/axios.config";
-import API_ROUTES from "@/lib/routes";
+import { Loader2, Plus } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
 import DataTable from "@/components/ui/data-table";
-import { column, Account } from "./columns";
+
+import { column } from "./columns";
+
 import { useAccountStore } from "@/store/account-store";
+import { useBulkAccountDelete, useGetAllAccount } from "@/hooks/account-hooks";
 
 const AccountsPage = () => {
   const { onOpen } = useAccountStore();
-  const queryClient = useQueryClient();
-  const { data, isLoading, isSuccess, error } = useQuery({
-    queryKey: ["accounts"],
-    queryFn: async () => {
-      const response = await apiClient.get(API_ROUTES.ACCOUNT.GET_ALL_ACCOUNTS);
-      return response.data;
-    },
-  });
 
-  const { mutate } = useMutation({
-    mutationFn: async (ids: string[]) => {
-      const response = await apiClient.post(
-        API_ROUTES.ACCOUNT.BULK_DELETE_ACCOUNTS,
-        ids
-      );
-      return response.data;
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["accounts"] });
-    },
-  });
+  const { data, isLoading, isSuccess } = useGetAllAccount();
+
+  const { mutate } = useBulkAccountDelete();
 
   if (isLoading) {
     return (

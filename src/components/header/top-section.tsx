@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import Navbar from "./nav-bar";
+import Navbar from "./nav-bar"; 
 import WelcomeMsg from "./welcome-msg";
 
 const TopSection = () => {

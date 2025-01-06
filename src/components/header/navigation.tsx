@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import NavButton from "./nav-button";
 import { usePathname, useRouter } from "next/navigation";
 import { useMedia } from "react-use";
-import { Sheet, SheetContent, SheetTrigger } from "./ui/sheet";
-import { Button } from "./ui/button";
+import { Sheet, SheetContent, SheetTrigger } from "../ui/sheet";
+import { Button } from "../ui/button";
 import { Menu } from "lucide-react";
 const routes = [
   { label: "Overview", href: "/" },

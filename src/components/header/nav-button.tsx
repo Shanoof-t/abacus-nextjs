@@ -1,5 +1,5 @@
 import React from "react";
-import { Button } from "./ui/button";
+import { Button } from "../ui/button";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 
@@ -8,6 +8,7 @@ type Props = {
   href: string;
   isActive: boolean;
 };
+
 function NavButton({ label, href, isActive }: Props) {
   return (
     <Button

@@ -1,9 +1,9 @@
 import React from "react";
 import HeaderLogo from "./header-logo";
-import Navigations from "./navigation";
-import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
+import Navigations from "./navigation"; 
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar"
 import { Bell, Loader2, LogOut } from "lucide-react";
-import { DropdownMenu, DropdownMenuItem } from "./ui/dropdown-menu";
+import { DropdownMenu, DropdownMenuItem } from "../ui/dropdown-menu";
 import {
   DropdownMenuContent,
   DropdownMenuTrigger,

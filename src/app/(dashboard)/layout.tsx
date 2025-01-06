@@ -1,4 +1,4 @@
-import TopSection from "@/components/top-section";
+import TopSection from "@/components/header/top-section";
 import React from "react";
 
 type Props = {

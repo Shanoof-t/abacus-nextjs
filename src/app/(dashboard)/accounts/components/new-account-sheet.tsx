@@ -6,9 +6,9 @@ import {
   SheetFooter,
   SheetHeader,
   SheetTitle,
-} from "./ui/sheet";
-import { Button } from "./ui/button";
-import { Label } from "./ui/label";
+} from "../../../../components/ui/sheet";
+import { Button } from "../../../../components/ui/button";
+import { Label } from "../../../../components/ui/label";
 
 import { Formik, Form, Field } from "formik";
 import { validationSchema } from "@/schemas/account-schema";

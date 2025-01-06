@@ -1,6 +1,6 @@
 "use client";
 
-import TopSection from "@/components/top-section";
+import TopSection from "@/components/header/top-section";
 
 export default function DashBoard() {
   return (
