@@ -25,6 +25,7 @@ import { Button } from "./button";
 import { useState } from "react";
 import { Input } from "./input";
 import { Trash } from "lucide-react";
+import useConfirm from "@/hooks/confirm-hook";
 
 type DataTypeProps<TData, TValue> = {
   data: TData[];
@@ -64,8 +65,13 @@ const DataTable = <TData, TValue>({
     },
   });
 
+  const { ConfirmDialog, confirm } = useConfirm({
+    title: "are you sure?",
+    description: "this is test",
+  });
   return (
     <div>
+      <ConfirmDialog />
       <div className="flex justify-between">
         <div>
           <Input
@@ -85,8 +91,11 @@ const DataTable = <TData, TValue>({
               disabled={disabled}
               variant="outline"
               size="sm"
-              onClick={() => {
-                onDelete(table.getFilteredSelectedRowModel().rows);
+              onClick={async () => {
+                const ok = await confirm();
+                if (ok) {
+                  onDelete(table.getFilteredSelectedRowModel().rows);
+                }
               }}
             >
               <Trash />

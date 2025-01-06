@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useNewAccount } from "@/hooks/account-hooks";
 
-import { Plus } from "lucide-react";
+import { Loader2, LucideLoader2, Plus } from "lucide-react";
 
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import apiClient from "@/lib/axios.config";
@@ -38,47 +38,62 @@ const AccountsPage = () => {
     },
   });
 
+  if (isLoading) {
+    return (
+      <div className="-mt-28 bg-white container overflow-y-auto border rounded-[.50rem]">
+        <Card className="border-none drop-shadow-sm">
+          <CardHeader className="lg:flex-row lg:justify-between lg:items-center">
+            <Skeleton className="h-8 w-48 bg-gray-200 border rounded" />{" "}
+            <Skeleton className="h-8 w-40 bg-gray-200 border rounded" />
+          </CardHeader>
+          <CardContent className="flex justify-center items-center h-[500px]">
+            <Loader2 className="h-6 w-6 text-gray-500 animate-spin" />
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
+
+  if (!isSuccess) {
+    return (
+      <div className="-mt-28 bg-white container overflow-y-auto border rounded-[.50rem]">
+        <Card className="border-none drop-shadow-sm">
+          <CardContent className="flex justify-center items-center h-[500px]">
+            <CardTitle className="text-xl line-clamp-1">
+              Something Wrongs Happened!
+            </CardTitle>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
+
   return (
     <div className="-mt-28 bg-white container overflow-y-auto border rounded-[.50rem]">
       <Card className="border-none drop-shadow-sm">
         <CardHeader className="lg:flex-row lg:justify-between lg:items-center ">
           <CardTitle className="text-xl line-clamp-1">Accounts</CardTitle>
           <Button
-            size="sm"
             variant="primary"
-            className="bg-slate-900 text-white border rounded-[.50rem]"
+            size="sm"
+            className="text-white border rounded-[.50rem]"
             onClick={onOpen}
           >
             <Plus /> Add new
           </Button>
         </CardHeader>
         <CardContent>
-          {isLoading ? (
-            <div>
-              <Skeleton className="w-full h-10 my-3 border rounded bg-gray-200 " />
-              <Skeleton className="w-full h-10 my-3 border rounded bg-gray-200 " />
-              <Skeleton className="w-full h-10 my-3 border rounded bg-gray-200 " />
-              <Skeleton className="w-full h-10 my-3 border rounded bg-gray-200 " />
-              <Skeleton className="w-full h-10 my-3 border rounded bg-gray-200 " />
-              <Skeleton className="w-full h-10 my-3 border rounded bg-gray-200 " />
-              <Skeleton className="w-full h-10 my-3 border rounded bg-gray-200 " />
-              <Skeleton className="w-full h-10 my-3 border rounded bg-gray-200 " />
-              <Skeleton className="w-full h-10 my-3 border rounded bg-gray-200 " />
-              <Skeleton className="w-full h-10 my-3 border rounded bg-gray-200 " />
-            </div>
-          ) : (
-            <DataTable
-              data={data.data}
-              columns={column}
-              filterKey="account_name"
-              filterPlaceholder="name"
-              disabled={false}
-              onDelete={(rows) => {
-                const ids = rows.map((row) => row.original._id);
-                mutate(ids);
-              }}
-            />
-          )}
+          <DataTable
+            data={data.data}
+            columns={column}
+            filterKey="account_name"
+            filterPlaceholder="name"
+            disabled={false}
+            onDelete={(rows) => {
+              const ids = rows.map((row) => row.original._id);
+              mutate(ids);
+            }}
+          />
         </CardContent>
       </Card>
     </div>
