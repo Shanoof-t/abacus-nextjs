@@ -1,5 +1,6 @@
 import {
   createNewAccount,
+  deleteAccount,
   deleteBulkAccounts,
   fetchAllAccounts,
 } from "@/services/account-service";
@@ -28,6 +29,16 @@ export const useBulkAccountDelete = () => {
 
   return useMutation({
     mutationFn: deleteBulkAccounts,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["accounts"] });
+    },
+  });
+};
+
+export const useDeleteAccount = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: deleteAccount,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["accounts"] });
     },

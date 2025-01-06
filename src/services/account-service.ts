@@ -24,3 +24,10 @@ export const deleteBulkAccounts = async (ids: string[]) => {
   );
   return response.data;
 };
+
+export const deleteAccount = async (id: string) => {
+  const response = await apiClient.delete(
+    API_ROUTES.ACCOUNT.DELETE_ACCOUNT + id
+  );
+  return response.data;
+};
