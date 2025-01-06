@@ -8,53 +8,24 @@ import {
   SheetTitle,
 } from "./ui/sheet";
 import { Button } from "./ui/button";
-import { useNewAccount } from "@/hooks/account-hooks";
-import { Formik, Form, Field } from "formik";
 import { Label } from "./ui/label";
-import {
-  QueryClient,
-  useMutation,
-  useQueryClient,
-} from "@tanstack/react-query";
-import apiClient from "@/lib/axios.config";
-import API_ROUTES from "@/lib/routes";
-import * as Yup from "yup";
+
+import { Formik, Form, Field } from "formik";
+import { validationSchema } from "@/schemas/account-schema";
+
+import { useAccountStore } from "@/store/account-store";
+import { useNewAccount } from "@/hooks/account-hooks";
 
 const NewAccountSheet = () => {
-  const { isOpen, onClose } = useNewAccount();
+  const { isOpen, onClose } = useAccountStore();
 
-  const queryClient = useQueryClient();
 
   const initialValues = {
     account_name: "",
     account_balance: 0,
   };
 
-  const validationSchema = Yup.object({
-    account_name: Yup.string()
-      .required("Please add account name.")
-      .min(1, "Account name cannot be empty."),
-    account_balance: Yup.number()
-      .typeError("Account balance must be a number.")
-      .min(0, "Balance must be non-negative."),
-  });
-
-  const { mutate, error, isSuccess } = useMutation({
-    mutationFn: async (data: {
-      account_name: string;
-      account_balance: number | null;
-    }) => {
-      const response = await apiClient.post(
-        API_ROUTES.ACCOUNT.CREATE_ACCOUNT,
-        data
-      );
-      return response.data;
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["accounts"] });
-      // queryClient.refetchQueries({queryKey:["accounts"] })
-    },
-  });
+  const { mutate, error, isSuccess } = useNewAccount();
 
   useEffect(() => {
     if (isSuccess) {
@@ -62,18 +33,14 @@ const NewAccountSheet = () => {
     }
   }, [isSuccess, onClose]);
 
-  const handleSubmit = async (values: {
-    account_name: string;
-    account_balance: number;
-  }) => {
-    mutate(values);
-  };
-
   return (
     <Formik
       initialValues={initialValues}
       validationSchema={validationSchema}
-      onSubmit={handleSubmit}
+      onSubmit={(values, { resetForm }) => {
+        mutate(values);
+        resetForm();
+      }}
     >
       {({ errors, touched }) => (
         <Sheet open={isOpen} onOpenChange={onClose}>

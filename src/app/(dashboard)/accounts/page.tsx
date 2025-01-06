@@ -2,7 +2,6 @@
 import { Button } from "@/components/ui/button";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { useNewAccount } from "@/hooks/account-hooks";
 
 import { Loader2, LucideLoader2, Plus } from "lucide-react";
 
@@ -12,9 +11,10 @@ import API_ROUTES from "@/lib/routes";
 import { Skeleton } from "@/components/ui/skeleton";
 import DataTable from "@/components/ui/data-table";
 import { column, Account } from "./columns";
+import { useAccountStore } from "@/store/account-store";
 
 const AccountsPage = () => {
-  const { onOpen } = useNewAccount();
+  const { onOpen } = useAccountStore();
   const queryClient = useQueryClient();
   const { data, isLoading, isSuccess, error } = useQuery({
     queryKey: ["accounts"],
@@ -26,7 +26,6 @@ const AccountsPage = () => {
 
   const { mutate } = useMutation({
     mutationFn: async (ids: string[]) => {
-      console.log("ids", ids);
       const response = await apiClient.post(
         API_ROUTES.ACCOUNT.BULK_DELETE_ACCOUNTS,
         ids

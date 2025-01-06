@@ -1,13 +1,14 @@
-import { create } from "zustand";
+import { createNewAccount } from "@/services/account-service";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-type NewAccount = {
-  isOpen: boolean;
-  onClose: () => void;
-  onOpen: () => void;
+export const useNewAccount = () => {
+
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: createNewAccount,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["accounts"] });
+    },
+  });
 };
-export const useNewAccount = create<NewAccount>((set) => ({
-  isOpen: false,
-  error: "",
-  onOpen: () => set({ isOpen: true }),
-  onClose: () => set({ isOpen: false }),
-}));
