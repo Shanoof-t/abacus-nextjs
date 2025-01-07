@@ -44,6 +44,7 @@ const DataTable = <TData, TValue>({
   onDelete,
   disabled,
 }: DataTypeProps<TData, TValue>) => {
+  
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [rowSelection, setRowSelection] = useState({});
@@ -69,21 +70,21 @@ const DataTable = <TData, TValue>({
     title: "are you sure?",
     description: "this is test",
   });
-  
+
   return (
     <div>
       <ConfirmDialog />
       <div className="flex justify-between mb-3 w-full">
         <div>
           <Input
-            placeholder={`Search ${filterPlaceholder}...`}
+            placeholder={`${filterPlaceholder}...`}
             value={
               (table.getColumn(filterKey)?.getFilterValue() as string) ?? ""
             }
             onChange={(event) =>
               table.getColumn(filterKey)?.setFilterValue(event.target.value)
             }
-            className="w-[19rem] placeholder:text-gray-400 rounded-[.50rem] border-gray-200 shadow-sm"
+            className="w-[19rem] placeholder:text-gray-400 rounded-[.50rem] border-gray-200 "
           />
         </div>
         <div>
@@ -92,7 +93,7 @@ const DataTable = <TData, TValue>({
               disabled={disabled}
               variant="outline"
               size="sm"
-              className="rounded-[.50rem] border-gray-200 shadow-sm"
+              className="rounded-[.50rem] border-gray-200"
               onClick={async () => {
                 const ok = await confirm();
                 if (ok) {

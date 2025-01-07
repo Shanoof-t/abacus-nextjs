@@ -12,8 +12,8 @@ import { useEditAccountStore } from "@/store/account-store";
 import useConfirm from "@/hooks/use-confirm";
 
 const Action = ({ id }: { id: string }) => {
-  const { onOpen, setID } = useEditAccountStore();
-  const { mutate } = useDeleteAccount();
+  // const { onOpen, setID } = useEditAccountStore();
+  // const { mutate } = useDeleteAccount();
   const { ConfirmDialog, confirm } = useConfirm({
     title: "Are you sure?",
     description: "You are about to delete this account.",
@@ -28,8 +28,8 @@ const Action = ({ id }: { id: string }) => {
       <DropdownMenuContent>
         <DropdownMenuItem
           onClick={() => {
-            onOpen();
-            setID(id);
+            // onOpen();
+            // setID(id);
           }}
         >
           <Edit />
@@ -40,7 +40,7 @@ const Action = ({ id }: { id: string }) => {
           onClick={async () => {
             const ok = await confirm();
             if (ok) {
-              mutate(id);
+              // mutate(id);
             }
           }}
         >

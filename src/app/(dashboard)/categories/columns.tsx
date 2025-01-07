@@ -35,7 +35,7 @@ export const column: ColumnDef<Account>[] = [
     ),
   },
   {
-    accessorKey: "account_name",
+    accessorKey: "category_name",
     header: ({ column }) => {
       return (
         <Button
@@ -47,7 +47,6 @@ export const column: ColumnDef<Account>[] = [
       );
     },
   },
-  { accessorKey: "account_balance", header: "Balance" },
   {
     id: "actions",
     cell: ({ row }) => <Action id={row.original._id} />,

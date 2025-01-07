@@ -14,3 +14,8 @@ export const createNewCategory = async (data: CategoryInputs) => {
   );
   return response.data;
 };
+
+export const fetchAllCategories = async () => {
+  const response = await apiClient.get(API_ROUTES.CATEGORY.GET_ALL_CATEGORY);
+  return response.data;
+};
