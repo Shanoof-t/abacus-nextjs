@@ -3,6 +3,7 @@ import {
   deleteAccount,
   deleteBulkAccounts,
   editAccount,
+  fetchAccount,
   fetchAllAccounts,
 } from "@/services/account-service";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
@@ -25,6 +26,20 @@ export const useGetAllAccount = () => {
   });
 };
 
+// type GetAccount = {
+//   account_name: string;
+//   account_balance: number | null;
+//   _id?: string;
+//   user_id?: string;
+// };
+
+export const useGetAccount = (id: string) => {
+  return useQuery({
+    queryKey: ["account", id],
+    queryFn: () => fetchAccount(id),
+    enabled: !!id,
+  });
+};
 export const useBulkAccountDelete = () => {
   const queryClient = useQueryClient();
 

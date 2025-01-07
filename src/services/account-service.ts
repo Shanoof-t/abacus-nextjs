@@ -3,8 +3,11 @@ import API_ROUTES from "@/lib/routes";
 
 type AccountInputs = {
   account_name: string;
-  account_balance: number | null;
+  account_balance: number ;
+  _id?: string;
+  user_id?: string;
 };
+
 export const createNewAccount = async (data: AccountInputs) => {
   const response = await apiClient.post(
     API_ROUTES.ACCOUNT.CREATE_ACCOUNT,
@@ -16,6 +19,11 @@ export const createNewAccount = async (data: AccountInputs) => {
 export const fetchAllAccounts = async () => {
   const response = await apiClient.get(API_ROUTES.ACCOUNT.GET_ALL_ACCOUNTS);
   return response.data;
+};
+
+export const fetchAccount = async (id: string): Promise<AccountInputs> => {
+  const response = await apiClient.get(API_ROUTES.ACCOUNT.GET_ACCOUNT + id);
+  return response.data.data;
 };
 
 export const deleteBulkAccounts = async (ids: string[]) => {
