@@ -10,7 +10,7 @@ import {
   InputOTPSlot,
 } from "@/components/ui/input-otp";
 import { REGEXP_ONLY_DIGITS_AND_CHARS } from "input-otp";
-import { useOtpVerify, useResendOtp } from "@/hooks/auth-hooks";
+import { useOtpVerify, useResendOtp } from "@/hooks/use-auth";
 
 type SignUpData = {
   data: {

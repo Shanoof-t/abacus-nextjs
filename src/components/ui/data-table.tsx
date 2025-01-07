@@ -25,7 +25,7 @@ import { Button } from "./button";
 import { useState } from "react";
 import { Input } from "./input";
 import { Trash } from "lucide-react";
-import useConfirm from "@/hooks/confirm-hook";
+import useConfirm from "@/hooks/use-confirm";
 
 type DataTypeProps<TData, TValue> = {
   data: TData[];
@@ -73,7 +73,7 @@ const DataTable = <TData, TValue>({
   return (
     <div>
       <ConfirmDialog />
-      <div className="flex justify-between">
+      <div className="flex justify-between mb-3 w-full">
         <div>
           <Input
             placeholder={`Search ${filterPlaceholder}...`}
@@ -83,7 +83,7 @@ const DataTable = <TData, TValue>({
             onChange={(event) =>
               table.getColumn(filterKey)?.setFilterValue(event.target.value)
             }
-            className="placeholder:text-gray-400 border rounded"
+            className="w-[19rem] placeholder:text-gray-400 rounded-[.50rem] border-gray-200 shadow-sm"
           />
         </div>
         <div>
@@ -92,6 +92,7 @@ const DataTable = <TData, TValue>({
               disabled={disabled}
               variant="outline"
               size="sm"
+              className="rounded-[.50rem] border-gray-200 shadow-sm"
               onClick={async () => {
                 const ok = await confirm();
                 if (ok) {
@@ -100,7 +101,7 @@ const DataTable = <TData, TValue>({
               }}
             >
               <Trash />
-              Delete({table.getFilteredSelectedRowModel().rows.length})
+              Delete ({table.getFilteredSelectedRowModel().rows.length})
             </Button>
           )}
         </div>

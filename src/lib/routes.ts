@@ -16,6 +16,14 @@ const API_ROUTES = {
     BULK_DELETE_ACCOUNTS: "/api/v1/account/bulk-delete",
     EDIT_ACCOUNT: "/api/v1/account/",
   },
+  CATEGORY: {
+    CREATE_CATEGORY: "/api/v1/category",
+    GET_CATEGORY: "/api/v1/category/",
+    GET_ALL_CATEGORY: "/api/v1/category",
+    DELETE_CATEGORY: "/api/v1/category/",
+    BULK_DELETE_CATEGORY: "/api/v1/category/bulk-delete",
+    EDIT_CATEGORY: "/api/v1/category/",
+  },
 };
 
 export default API_ROUTES;

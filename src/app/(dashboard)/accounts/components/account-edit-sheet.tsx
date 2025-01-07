@@ -14,7 +14,7 @@ import { Formik, Form, Field } from "formik";
 import { validationSchema } from "@/schemas/account-schema";
 
 import { useEditAccountStore } from "@/store/account-store";
-import { useEditAccount, useGetAccount } from "@/hooks/account-hooks";
+import { useEditAccount, useGetAccount } from "@/hooks/use-account";
 import { Loader2 } from "lucide-react";
 
 const EditAccountSheet = () => {

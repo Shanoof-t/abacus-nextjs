@@ -11,21 +11,15 @@ import { Button } from "../../../../components/ui/button";
 import { Label } from "../../../../components/ui/label";
 
 import { Formik, Form, Field } from "formik";
-import { validationSchema } from "@/schemas/account-schema";
 
-import { useNewAccountStore } from "@/store/account-store";
-import { useNewAccount } from "@/hooks/use-account";
+import { useNewCategoryStore } from "@/store/category-store";
+import { validationSchema } from "@/schemas/category-schema";
+import { useNewCategory } from "@/hooks/use-categorie";
 
-const NewAccountSheet = () => {
-  const { isOpen, onClose } = useNewAccountStore();
+const NewCategorieSheet = () => {
+  const { isOpen, onClose } = useNewCategoryStore();
 
-
-  const initialValues = {
-    account_name: "",
-    account_balance: 0,
-  };
-
-  const { mutate, error, isSuccess } = useNewAccount();
+  const { isSuccess, mutate } = useNewCategory();
 
   useEffect(() => {
     if (isSuccess) {
@@ -35,7 +29,9 @@ const NewAccountSheet = () => {
 
   return (
     <Formik
-      initialValues={initialValues}
+      initialValues={{
+        category_name: "",
+      }}
       validationSchema={validationSchema}
       onSubmit={(values, { resetForm }) => {
         mutate(values);
@@ -46,10 +42,10 @@ const NewAccountSheet = () => {
         <Sheet open={isOpen} onOpenChange={onClose}>
           <SheetContent className="bg-white w-full">
             <SheetHeader>
-              <SheetTitle>New Account</SheetTitle>
+              <SheetTitle>New Category</SheetTitle>
             </SheetHeader>
             <SheetDescription className="text-black/50">
-              Create a new account to track your transactions
+              Create a new category to track your transactions
             </SheetDescription>
 
             <Form className="mt-3">
@@ -57,32 +53,16 @@ const NewAccountSheet = () => {
               <br />
               <Field
                 type="text"
-                name="account_name"
+                name="category_name"
                 placeholder="eg: Savings.."
                 className="flex h-10 w-full border-input bg-background px-3 py-2 text-base file:border-0 file:bg-transparent file:text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm border-1 border rounded-[.50rem] border-black"
               />
-              {errors.account_name && touched.account_name && (
+              {errors.category_name && touched.category_name && (
                 <p className="text-red-500 text-sm mt-3">
-                  {errors.account_name}
+                  {errors.category_name}
                 </p>
               )}
 
-              <Label>Current Balance</Label>
-              <br />
-              <Field
-                type="number"
-                name="account_balance"
-                placeholder="Enter your balance here"
-                className="flex h-10 w-full border-input bg-background px-3 py-2 text-base file:border-0 file:bg-transparent file:text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm border-1 border rounded-[.50rem] border-black"
-              />
-              {errors.account_balance && touched.account_balance && (
-                <p className="text-red-500 text-sm mt-3">
-                  {errors.account_balance}
-                </p>
-              )}
-              {error?.message && (
-                <p className="text-red-500 text-sm mt-3">{error.message}</p>
-              )}
               <SheetFooter className="mt-4">
                 <div className="w-full">
                   <Button
@@ -90,7 +70,7 @@ const NewAccountSheet = () => {
                     variant="primary"
                     className="w-full border rounded-[.50rem] text-white"
                   >
-                    Create account
+                    Create categorie
                   </Button>
                 </div>
               </SheetFooter>
@@ -102,4 +82,4 @@ const NewAccountSheet = () => {
   );
 };
 
-export default NewAccountSheet;
+export default NewCategorieSheet;

@@ -8,7 +8,7 @@ import DataTable from "@/components/ui/data-table";
 import { column } from "./columns";
 
 import { useNewAccountStore } from "@/store/account-store";
-import { useBulkAccountDelete, useGetAllAccount } from "@/hooks/account-hooks";
+import { useBulkAccountDelete, useGetAllAccount } from "@/hooks/use-account";
 
 const AccountsPage = () => {
   const { onOpen } = useNewAccountStore();

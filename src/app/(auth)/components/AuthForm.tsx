@@ -4,7 +4,7 @@ import { Form, Formik } from "formik";
 import React, { useState } from "react";
 import { authValidationSchema } from "@/utils/validations/auth-validation";
 import { SignInType, SignUpType } from "@/types/auth-types";
-import { useSignin, useSignup } from "@/hooks/auth-hooks";
+import { useSignin, useSignup } from "@/hooks/use-auth";
 import { useRouter } from "next/navigation";
 import { useQueryClient } from "@tanstack/react-query";
 import { Input } from "@/components/ui/input";
