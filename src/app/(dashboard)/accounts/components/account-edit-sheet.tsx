@@ -62,7 +62,7 @@ const EditAccountSheet = () => {
               <SheetTitle>Edit Account</SheetTitle>
             </SheetHeader>
             <SheetDescription className="text-black/50">
-              Create a new account to track your transactions
+              Edit an existing account
             </SheetDescription>
 
             {isLoading ? (

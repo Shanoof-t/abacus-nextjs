@@ -7,13 +7,15 @@ import {
   fetchAllAccounts,
 } from "@/services/account-service";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useToast } from "./use-toast";
 
 export const useNewAccount = () => {
   const queryClient = useQueryClient();
-
+  const { toast } = useToast();
   return useMutation({
     mutationFn: createNewAccount,
-    onSuccess: () => {
+    onSuccess: (data) => {
+      toast({ description: data.message });
       queryClient.invalidateQueries({ queryKey: ["accounts"] });
     },
   });
@@ -42,10 +44,11 @@ export const useGetAccount = (id: string) => {
 };
 export const useBulkAccountDelete = () => {
   const queryClient = useQueryClient();
-
+  const { toast } = useToast();
   return useMutation({
     mutationFn: deleteBulkAccounts,
-    onSuccess: () => {
+    onSuccess: (data) => {
+      toast({ description: data.message });
       queryClient.invalidateQueries({ queryKey: ["accounts"] });
     },
   });
@@ -53,9 +56,11 @@ export const useBulkAccountDelete = () => {
 
 export const useDeleteAccount = () => {
   const queryClient = useQueryClient();
+  const { toast } = useToast();
   return useMutation({
     mutationFn: deleteAccount,
-    onSuccess: () => {
+    onSuccess: (data) => {
+      toast({ description: data.message });
       queryClient.invalidateQueries({ queryKey: ["accounts"] });
     },
   });
@@ -63,9 +68,11 @@ export const useDeleteAccount = () => {
 
 export const useEditAccount = () => {
   const queryClient = useQueryClient();
+  const { toast } = useToast();
   return useMutation({
     mutationFn: editAccount,
-    onSuccess: () => {
+    onSuccess: (data) => {
+      toast({ description: data.message });
       queryClient.invalidateQueries({ queryKey: ["accounts"] });
     },
   });

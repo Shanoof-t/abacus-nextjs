@@ -9,13 +9,19 @@ import { Edit, MoreHorizontal, Trash } from "lucide-react";
 
 import { useDeleteAccount } from "@/hooks/account-hooks";
 import { useEditAccountStore } from "@/store/account-store";
+import useConfirm from "@/hooks/confirm-hook";
 
 const Action = ({ id }: { id: string }) => {
   const { onOpen, setID } = useEditAccountStore();
   const { mutate } = useDeleteAccount();
+  const { ConfirmDialog, confirm } = useConfirm({
+    title: "Are you sure?",
+    description: "You are about to delete this account.",
+  });
 
   return (
     <DropdownMenu>
+      <ConfirmDialog />
       <DropdownMenuTrigger>
         <MoreHorizontal />
       </DropdownMenuTrigger>
@@ -30,7 +36,14 @@ const Action = ({ id }: { id: string }) => {
           Edit
         </DropdownMenuItem>
         <DropdownMenuSeparator />
-        <DropdownMenuItem onClick={() => mutate(id)}>
+        <DropdownMenuItem
+          onClick={async () => {
+            const ok = await confirm();
+            if (ok) {
+              mutate(id);
+            }
+          }}
+        >
           <Trash />
           Delete
         </DropdownMenuItem>
