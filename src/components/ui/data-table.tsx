@@ -68,7 +68,7 @@ const DataTable = <TData, TValue>({
 
   const { ConfirmDialog, confirm } = useConfirm({
     title: "are you sure?",
-    description: "this is test",
+    description: "You are about to perform a bulk delete.",
   });
 
   return (

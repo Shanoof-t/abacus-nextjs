@@ -28,12 +28,6 @@ export const useGetAllAccount = () => {
   });
 };
 
-// type GetAccount = {
-//   account_name: string;
-//   account_balance: number | null;
-//   _id?: string;
-//   user_id?: string;
-// };
 
 export const useGetAccount = (id: string) => {
   return useQuery({
@@ -42,6 +36,7 @@ export const useGetAccount = (id: string) => {
     enabled: !!id,
   });
 };
+
 export const useBulkAccountDelete = () => {
   const queryClient = useQueryClient();
   const { toast } = useToast();

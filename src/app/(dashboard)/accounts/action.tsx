@@ -14,6 +14,7 @@ import useConfirm from "@/hooks/use-confirm";
 const Action = ({ id }: { id: string }) => {
   const { onOpen, setID } = useEditAccountStore();
   const { mutate } = useDeleteAccount();
+  
   const { ConfirmDialog, confirm } = useConfirm({
     title: "Are you sure?",
     description: "You are about to delete this account.",

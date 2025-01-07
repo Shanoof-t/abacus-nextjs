@@ -23,9 +23,11 @@ type useConfirm = {
 };
 
 const useConfirm = ({ title, description }: Confirm): useConfirm => {
-  const [promise, setPromise] = useState<{
+  type Promise = {
     resolve: (value: boolean) => void;
-  } | null>(null);
+  } | null;
+  
+  const [promise, setPromise] = useState<Promise>(null);
 
   const confirm = () =>
     new Promise((resolve, reject) => {

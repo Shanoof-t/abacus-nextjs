@@ -3,7 +3,10 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import DataTable from "@/components/ui/data-table";
 import { Skeleton } from "@/components/ui/skeleton";
-import { useGetAllCategories } from "@/hooks/use-categorie";
+import {
+  useDeleteBulkCategories,
+  useGetAllCategories,
+} from "@/hooks/use-categorie";
 import { useNewCategoryStore } from "@/store/category-store";
 import { Loader2, Plus } from "lucide-react";
 import React from "react";
@@ -12,7 +15,7 @@ import { column } from "./columns";
 const Page = () => {
   const { onOpen } = useNewCategoryStore();
   const { data, isLoading, isSuccess } = useGetAllCategories();
-
+  const { mutate } = useDeleteBulkCategories();
   if (isLoading) {
     return (
       <div className="-mt-28 bg-white container overflow-y-auto border rounded-[.50rem]">
@@ -62,7 +65,10 @@ const Page = () => {
             data={data.data}
             columns={column}
             filterKey="category_name"
-            onDelete={() => {}}
+            onDelete={(rows) => {
+              const ids = rows.map((row) => row.original._id);
+              mutate(ids);
+            }}
             disabled={false}
             filterPlaceholder="Search Category"
           />

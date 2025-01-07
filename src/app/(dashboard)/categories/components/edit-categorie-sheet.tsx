@@ -12,14 +12,14 @@ import { Label } from "../../../../components/ui/label";
 
 import { Formik, Form, Field } from "formik";
 
-import { useNewCategoryStore } from "@/store/category-store";
 import { validationSchema } from "@/schemas/category-schema";
-import { useNewCategory } from "@/hooks/use-categorie";
+import { useEditCategory, useGetCategory } from "@/hooks/use-categorie";
+import { useEditCategoryStore } from "@/store/category-store";
 
-const NewCategorieSheet = () => {
-  const { isOpen, onClose } = useNewCategoryStore();
-
-  const { isSuccess, mutate, error } = useNewCategory();
+const EditCategorySheet = () => {
+  const { id, isOpen, onClose } = useEditCategoryStore();
+  const { data } = useGetCategory(id);
+  const { mutate, isSuccess, error } = useEditCategory();
 
   useEffect(() => {
     if (isSuccess) {
@@ -29,12 +29,13 @@ const NewCategorieSheet = () => {
 
   return (
     <Formik
+      enableReinitialize
       initialValues={{
-        category_name: "",
+        category_name: data?.category_name || "",
       }}
       validationSchema={validationSchema}
       onSubmit={(values, { resetForm }) => {
-        mutate(values);
+        mutate({ values, id });
         resetForm();
       }}
     >
@@ -42,10 +43,10 @@ const NewCategorieSheet = () => {
         <Sheet open={isOpen} onOpenChange={onClose}>
           <SheetContent className="bg-white w-full">
             <SheetHeader>
-              <SheetTitle>New Category</SheetTitle>
+              <SheetTitle>Edit Category</SheetTitle>
             </SheetHeader>
             <SheetDescription className="text-black/50">
-              Create a new category to track your transactions
+              Edit an existing category
             </SheetDescription>
 
             <Form className="mt-3">
@@ -85,4 +86,4 @@ const NewCategorieSheet = () => {
   );
 };
 
-export default NewCategorieSheet;
+export default EditCategorySheet;

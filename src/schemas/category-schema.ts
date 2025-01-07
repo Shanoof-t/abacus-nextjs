@@ -2,6 +2,6 @@ import * as Yup from "yup";
 
 export const validationSchema = Yup.object({
   category_name: Yup.string()
-    .required("Please add account name.")
-    .min(1, "Account name cannot be empty."),
+    .required("Please add category name.")
+    .min(1, "Category name cannot be empty."),
 });

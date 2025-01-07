@@ -7,13 +7,12 @@ import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown } from "lucide-react";
 import Action from "./action";
 
-export type Account = {
+export type Category = {
   _id: string;
-  account_balance: number;
-  account_name: string;
+  category_name: string;
 };
 
-export const column: ColumnDef<Account>[] = [
+export const column: ColumnDef<Category>[] = [
   {
     id: "select",
     header: ({ table }) => (

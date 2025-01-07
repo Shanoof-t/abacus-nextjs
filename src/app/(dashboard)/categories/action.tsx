@@ -7,16 +7,19 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Edit, MoreHorizontal, Trash } from "lucide-react";
 
-import { useDeleteAccount } from "@/hooks/use-account";
-import { useEditAccountStore } from "@/store/account-store";
 import useConfirm from "@/hooks/use-confirm";
+import { useDeleteCategory } from "@/hooks/use-categorie";
+import { useEditCategoryStore } from "@/store/category-store";
 
 const Action = ({ id }: { id: string }) => {
-  // const { onOpen, setID } = useEditAccountStore();
-  // const { mutate } = useDeleteAccount();
+  const { mutate } = useDeleteCategory();
+  const { onOpen, setID } = useEditCategoryStore();
+
+  // const { data } = useGetCategory();
+
   const { ConfirmDialog, confirm } = useConfirm({
     title: "Are you sure?",
-    description: "You are about to delete this account.",
+    description: "You are about to delete this category.",
   });
 
   return (
@@ -28,8 +31,8 @@ const Action = ({ id }: { id: string }) => {
       <DropdownMenuContent>
         <DropdownMenuItem
           onClick={() => {
-            // onOpen();
-            // setID(id);
+            onOpen();
+            setID(id);
           }}
         >
           <Edit />
@@ -40,7 +43,7 @@ const Action = ({ id }: { id: string }) => {
           onClick={async () => {
             const ok = await confirm();
             if (ok) {
-              // mutate(id);
+              mutate(id);
             }
           }}
         >
