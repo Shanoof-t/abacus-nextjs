@@ -5,12 +5,14 @@ import { useMedia } from "react-use";
 import { Sheet, SheetContent, SheetTrigger } from "../ui/sheet";
 import { Button } from "../ui/button";
 import { Menu } from "lucide-react";
+
 const routes = [
   { label: "Overview", href: "/" },
   { label: "Transactions", href: "/transactions" },
   { label: "Accounts", href: "/accounts" },
   { label: "Categories", href: "/categories" },
 ];
+
 const Navigations = () => {
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
