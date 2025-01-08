@@ -1,12 +1,14 @@
-"use client"
+"use client";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import DataTable from "@/components/ui/data-table";
 import { useNewTransactionStore } from "@/store/transaction-store";
 import { Plus } from "lucide-react";
 import React from "react";
 
 const Page = () => {
   const { onOpen } = useNewTransactionStore();
+  
   return (
     <div className="-mt-28 bg-white container overflow-y-auto border rounded-[.50rem]">
       <Card className="border-none drop-shadow-sm">
@@ -24,7 +26,14 @@ const Page = () => {
           </Button>
         </CardHeader>
         <CardContent className="h-64">
-          <p>this is just sample</p>
+          <DataTable
+            columns={[]}
+            data={[]}
+            filterKey=""
+            filterPlaceholder=""
+            onDelete={() => {}}
+            disabled={false}
+          />
         </CardContent>
       </Card>
     </div>
