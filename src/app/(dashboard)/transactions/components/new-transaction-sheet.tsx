@@ -2,25 +2,17 @@
 
 import { useNewTransactionStore } from "@/store/transaction-store";
 
-import { Button } from "@/components/ui/button";
-import { Calendar } from "@/components/ui/calendar";
-import { Popover } from "@/components/ui/popover";
 import {
   Sheet,
   SheetContent,
   SheetDescription,
-  SheetFooter,
   SheetHeader,
   SheetTitle,
 } from "@/components/ui/sheet";
-import { PopoverContent, PopoverTrigger } from "@radix-ui/react-popover";
-import { format } from "date-fns";
-import { CalendarIcon } from "lucide-react";
 
-import { useEffect, useState } from "react";
-import CreatableSelect from "@/components/creatable-select";
 import { useGetAllAccount, useNewAccount } from "@/hooks/use-account";
 import TransactionForm from "./transaction-form";
+import { useGetAllCategories, useNewCategory } from "@/hooks/use-categorie";
 
 const NewTransactionSheet = () => {
   const { isOpen, onClose } = useNewTransactionStore();
@@ -40,10 +32,30 @@ const NewTransactionSheet = () => {
     accountData?.data.map((account) => account.account_name) || [];
 
   const { mutate: accountMutate } = useNewAccount();
-  
-  const isLoading = accountLoading;
-  const isSuccess = accountSuccess;
-  const isError = accountError;
+  const onCreateAccount = (name: string) =>
+    accountMutate({ account_name: name });
+
+  // category section
+
+  // fetch categories
+  const {
+    data: categoryData,
+    isLoading: categoryLoading,
+    isSuccess: categorySuccess,
+    isError: categoryError,
+  } = useGetAllCategories();
+
+  // filter category name
+  const categoryValues: string[] =
+    categoryData?.data.map((category) => category.category_name) || [];
+  const { mutate: categoryMutate } = useNewCategory();
+
+  const onCreateCategory = (name: string) =>
+    categoryMutate({ category_name: name });
+
+  const isLoading = accountLoading || categoryLoading;
+  const isSuccess = accountSuccess || categorySuccess;
+  const isError = accountError || categoryError;
 
   return (
     <Sheet open={isOpen} onOpenChange={onClose}>
@@ -62,7 +74,9 @@ const NewTransactionSheet = () => {
         {isSuccess && !isLoading && (
           <TransactionForm
             accountValues={accountValues}
-            accountMutate={accountMutate}
+            onAccountCreate={onCreateAccount}
+            categoryValues={categoryValues}
+            onCategoryCreate={onCreateCategory}
           />
         )}
       </SheetContent>

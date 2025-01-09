@@ -1,7 +1,7 @@
 import apiClient from "@/lib/axios.config";
 import API_ROUTES from "@/lib/routes";
 
-type CategoryInputs = {
+export type CategoryInputs = {
   category_name: string;
   _id?: string;
   user_id?: string;
@@ -15,7 +15,12 @@ export const createNewCategory = async (data: CategoryInputs) => {
   return response.data;
 };
 
-export const fetchAllCategories = async () => {
+type FetchCategories = {
+  status: string;
+  message: string;
+  data: CategoryInputs[]
+};
+export const fetchAllCategories = async (): Promise<FetchCategories> => {
   const response = await apiClient.get(API_ROUTES.CATEGORY.GET_ALL_CATEGORY);
   return response.data;
 };

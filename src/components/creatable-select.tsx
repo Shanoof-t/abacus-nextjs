@@ -1,6 +1,5 @@
-import { useNewAccount } from "@/hooks/use-account";
-import { AccountInputs } from "@/services/account-service";
 import { useState } from "react";
+import { ControllerRenderProps, FieldValues } from "react-hook-form";
 import CreatableSelect from "react-select/creatable";
 
 interface Options {
@@ -16,35 +15,33 @@ const createOption = (label: string) => ({
 type Props = {
   values: string[];
   placeholder: string;
-  // setNewValue: () => void;
-  isLoading: boolean;
-  mutate: (data: AccountInputs) => void;
+  onCreate: (name: string) => void;
+  onChange: (value: string | undefined) => void;
 };
 
-export default ({ values, placeholder, isLoading, mutate }: Props) => {
+const Select = ({ values, placeholder, onCreate, onChange }: Props) => {
   const defaultOptions = values.map((value) => createOption(value));
 
   const [options, setOptions] = useState(defaultOptions);
   const [value, setValue] = useState<Options | null>();
 
-  // const { mutate, isPaused } = useNewAccount();
-  const handleCreate = (newAccount: string) => {
-    const newOption = createOption(newAccount);
+  const handleCreate = (newName: string) => {
+    const newOption = createOption(newName);
     setOptions((p) => [...p, newOption]);
     setValue(newOption);
-    mutate({ account_name: newAccount });
+    onCreate(newName);
   };
 
   return (
     <CreatableSelect
       isClearable
-      // isDisabled={isPaused}
-      // isLoading={isPaused}
       value={value}
       options={options}
-      onChange={(newValue) => setValue(newValue)}
+      onChange={(newValue) => onChange(newValue?.value)}
       onCreateOption={handleCreate}
       placeholder={placeholder}
     />
   );
 };
+
+export default Select;
