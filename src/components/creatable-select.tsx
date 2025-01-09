@@ -40,6 +40,18 @@ const Select = ({ values, placeholder, onCreate, onChange }: Props) => {
       onChange={(newValue) => onChange(newValue?.value)}
       onCreateOption={handleCreate}
       placeholder={placeholder}
+      styles={{
+        control: (base, state) => ({
+          ...base,
+          borderRadius: "0.5rem",
+          borderColor: state.isFocused ? "black" : "gray",
+          boxShadow: "none",
+          "&:hover": {
+            borderColor: "gray",
+            cursor: "pointer",
+          },
+        }),
+      }}
     />
   );
 };

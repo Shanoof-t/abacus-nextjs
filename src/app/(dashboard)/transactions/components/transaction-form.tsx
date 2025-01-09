@@ -25,6 +25,8 @@ import { format } from "date-fns";
 import { Calendar } from "@/components/ui/calendar";
 import { Input } from "@/components/ui/input";
 import Select from "@/components/creatable-select";
+import AmountInput from "./amount-input";
+import { Textarea } from "@/components/ui/textarea";
 
 const transactionSchema = z.object({
   account_name: z.string().min(1, { message: "Account name is required" }),
@@ -33,6 +35,8 @@ const transactionSchema = z.object({
     message: "Please select a date for transaction.",
   }),
   transaction_payee: z.string().min(1, { message: "Payee name is required" }),
+  transaction_amount: z.string({ message: "The amount is required." }),
+  transaction_note: z.string(),
 });
 
 type TransactionForm = {
@@ -64,7 +68,7 @@ const TransactionForm = ({
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)}>
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-2 mt-6">
         {/* date picker */}
         <FormField
           name="transaction_date"
@@ -76,7 +80,7 @@ const TransactionForm = ({
                   <PopoverTrigger asChild>
                     <Button
                       variant={"outline"}
-                      className="border-gray-200 rounded-[.50rem] hover:bg-gray-100 w-[15.625rem] justify-start transition"
+                      className="border-gray-200 rounded-[.50rem] hover:bg-gray-100 w-full justify-start transition"
                     >
                       <CalendarIcon />
                       {field.value ? (
@@ -86,7 +90,7 @@ const TransactionForm = ({
                       )}
                     </Button>
                   </PopoverTrigger>
-                  <PopoverContent>
+                  <PopoverContent className="bg-white items-center flex justify-center">
                     <Calendar
                       mode="single"
                       selected={field.value}
@@ -120,6 +124,7 @@ const TransactionForm = ({
                   // field={field}
                   onChange={field.onChange}
                   onCreate={onAccountCreate}
+                  
                 />
               </FormControl>
               {form.formState.errors.account_name && (
@@ -156,6 +161,7 @@ const TransactionForm = ({
             </FormItem>
           )}
         />
+
         {/* transaction payee */}
         <FormField
           name="transaction_payee"
@@ -164,7 +170,7 @@ const TransactionForm = ({
             <FormItem>
               <FormLabel>Payee</FormLabel>
               <FormControl>
-                <Input className="" placeholder="Add a payee" {...field} />
+                <Input className="border rounded-[.50rem] transition placeholder-shown:text-gray-500 focus-within:border-black" placeholder="Add a payee" {...field} />
               </FormControl>
               {form.formState.errors.transaction_payee && (
                 <p className="text-red-500 text-sm mt-1">
@@ -175,15 +181,52 @@ const TransactionForm = ({
           )}
         />
 
-        <div className="w-full mt-4">
-          <Button
-            type="submit"
-            variant="primary"
-            className="w-full border rounded-[.50rem] text-white"
-          >
-            Add Transaction
-          </Button>
-        </div>
+        {/* transaction amount */}
+        <FormField
+          name="transaction_amount"
+          control={form.control}
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Amount</FormLabel>
+              <FormControl>
+                <AmountInput placeholder="0.00" disabled={false} {...field} />
+              </FormControl>
+
+              {form.formState.errors.transaction_amount && (
+                <p className="text-red-500 text-sm mt-1">
+                  {form.formState.errors.transaction_amount.message}
+                </p>
+              )}
+            </FormItem>
+          )}
+        />
+
+        {/* transaction note */}
+        <FormField
+          name="transaction_note"
+          control={form.control}
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Notes</FormLabel>
+              <FormControl>
+                <Textarea placeholder="Type your notes here." {...field} className="border transition rounded-[.50rem] placeholder-shown:text-gray-500 focus-within:border-black"/>
+              </FormControl>
+              {form.formState.errors.transaction_payee && (
+                <p className="text-red-500 text-sm mt-1">
+                  {form.formState.errors.transaction_payee.message}
+                </p>
+              )}
+            </FormItem>
+          )}
+        />
+
+        <Button
+          type="submit"
+          variant="primary"
+          className="w-full border rounded-[.50rem] text-white"
+        >
+          Add Transaction
+        </Button>
       </form>
     </Form>
   );

@@ -26,14 +26,14 @@ const Page = () => {
           </Button>
         </CardHeader>
         <CardContent className="h-64">
-          <DataTable
+          {/* <DataTable
             columns={[]}
             data={[]}
             filterKey=""
             filterPlaceholder=""
             onDelete={() => {}}
             disabled={false}
-          />
+          /> */}
         </CardContent>
       </Card>
     </div>
