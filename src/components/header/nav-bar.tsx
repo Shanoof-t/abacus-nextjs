@@ -19,9 +19,11 @@ const Navbar = () => {
       return response.data;
     },
   });
+
   if (isSuccess) {
-    window.location.reload();
+    window.location.reload();  
   }
+
   const handleLogout = () => {
     mutate();
   };

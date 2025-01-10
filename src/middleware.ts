@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 export function middleware(request: NextRequest) {
   const user = request.cookies.get("token");
+
   if (!user) {
     return NextResponse.redirect(new URL("/sign-in", request.url));
   }
@@ -9,5 +10,5 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/","/accounts"],
+  matcher: ["/", "/accounts", "/transactions", "/category"],
 };
