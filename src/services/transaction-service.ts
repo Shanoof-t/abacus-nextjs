@@ -62,3 +62,12 @@ export const fetchTransaction = async (
   );
   return response.data.data;
 };
+
+type EditTransaction = { data: z.infer<typeof transactionSchema>; id: string };
+export const editTransaction = async ({ data, id }: EditTransaction) => {
+  const response = await apiClient.put(
+    API_ROUTES.TRANSACTION.EDIT_TRANSACTION + id,
+    data
+  );
+  return response.data;
+};

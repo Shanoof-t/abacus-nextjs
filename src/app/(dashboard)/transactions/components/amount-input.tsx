@@ -30,7 +30,7 @@ const AmountInput: React.FC<Props> = ({
       onChange(value.toString());
     }
   }, [value, isEdit]);
-  console.log("value", typeof value);
+
   const parsedValue = parseFloat(value) || 0;
   const isIncome = parsedValue > 0;
   const isExpense = parsedValue < 0;

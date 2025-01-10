@@ -2,6 +2,7 @@ import {
   createTransaction,
   deleteTranaction,
   deleteTransactions,
+  editTransaction,
   fetchAllTransactions,
   fetchTransaction,
   FetchTransactions,
@@ -13,7 +14,8 @@ import {
   UseQueryResult,
 } from "@tanstack/react-query";
 import { toast } from "./use-toast";
-import { useNewTransactionStore } from "@/store/transaction-store";
+import { useEditTransactionStore, useNewTransactionStore } from "@/store/transaction-store";
+import { useEditAccountStore } from "@/store/account-store";
 
 export const useNewTransaction = () => {
   const queryClient = useQueryClient();
@@ -62,5 +64,18 @@ export const useGetTransaction = (id: string) => {
     queryKey: ["transaction", id],
     queryFn: () => fetchTransaction(id),
     enabled: !!id,
+  });
+};
+
+export const useEditTransaction = () => {
+  const queryClient = useQueryClient();
+  const { onClose } = useEditTransactionStore();
+  return useMutation({
+    mutationFn: editTransaction,
+    onSuccess: (data) => {
+      onClose();
+      toast({ description: data.message });
+      queryClient.invalidateQueries({ queryKey: ["transactions"] });
+    },
   });
 };

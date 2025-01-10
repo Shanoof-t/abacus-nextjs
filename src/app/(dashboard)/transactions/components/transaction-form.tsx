@@ -27,8 +27,11 @@ import { Input } from "@/components/ui/input";
 import Select from "@/components/creatable-select";
 import AmountInput from "./amount-input";
 import { Textarea } from "@/components/ui/textarea";
-import { useNewTransaction } from "@/hooks/use-transaction";
-import { useNewTransactionStore } from "@/store/transaction-store";
+import { useEditTransaction, useNewTransaction } from "@/hooks/use-transaction";
+import {
+  useEditTransactionStore,
+  useNewTransactionStore,
+} from "@/store/transaction-store";
 import { TransactionInput } from "@/services/transaction-service";
 
 export const transactionSchema = z.object({
@@ -59,8 +62,6 @@ const TransactionForm = ({
   isEdit,
   transactionData,
 }: TransactionForm) => {
-  console.log("transactionData", transactionData);
-
   const form = useForm<z.infer<typeof transactionSchema>>({
     resolver: zodResolver(transactionSchema),
     defaultValues: isEdit
@@ -78,10 +79,13 @@ const TransactionForm = ({
         },
   });
 
-  const { mutate } = useNewTransaction();
-
+  const { mutate: newTransactionMutate } = useNewTransaction();
+  const { mutate: editTransactionMutate } = useEditTransaction();
+  const { id } = useEditTransactionStore();
   const onSubmit = (values: z.infer<typeof transactionSchema>) => {
-    mutate(values);
+    isEdit
+      ? editTransactionMutate({ data: values, id })
+      : newTransactionMutate(values);
   };
 
   return (
