@@ -67,8 +67,8 @@ const Page = () => {
           <DataTable
             columns={column}
             data={data.data}
-            filterKey=""
-            filterPlaceholder=""
+            filterKey="transaction_payee"
+            filterPlaceholder="Search payee"
             onDelete={(rows) => {
               const ids = rows.map((row) => row.original._id);
               mutate(ids);

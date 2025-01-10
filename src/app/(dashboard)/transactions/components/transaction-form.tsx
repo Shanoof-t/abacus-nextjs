@@ -29,6 +29,7 @@ import AmountInput from "./amount-input";
 import { Textarea } from "@/components/ui/textarea";
 import { useNewTransaction } from "@/hooks/use-transaction";
 import { useNewTransactionStore } from "@/store/transaction-store";
+import { TransactionInput } from "@/services/transaction-service";
 
 export const transactionSchema = z.object({
   account_name: z.string().min(1, { message: "Account name is required" }),
@@ -46,6 +47,8 @@ type TransactionForm = {
   onAccountCreate: (name: string) => void;
   categoryValues: string[];
   onCategoryCreate: (name: string) => void;
+  isEdit?: boolean;
+  transactionData?: TransactionInput;
 };
 
 const TransactionForm = ({
@@ -53,19 +56,23 @@ const TransactionForm = ({
   onAccountCreate,
   categoryValues,
   onCategoryCreate,
+  isEdit,
+  transactionData,
 }: TransactionForm) => {
   const form = useForm<z.infer<typeof transactionSchema>>({
     resolver: zodResolver(transactionSchema),
-    defaultValues: {
-      account_name: "",
-      transaction_date: undefined,
-      category_name: "",
-      transaction_payee: "",
-    },
+    defaultValues: isEdit
+      ? transactionData
+      : {
+          account_name: "",
+          transaction_date: undefined,
+          category_name: "",
+          transaction_payee: "",
+        },
   });
 
   const { mutate } = useNewTransaction();
-  
+
   const onSubmit = (values: z.infer<typeof transactionSchema>) => {
     mutate(values);
   };
@@ -126,6 +133,7 @@ const TransactionForm = ({
                   values={accountValues}
                   placeholder="Select an account"
                   // field={field}
+                  value={field.value}
                   onChange={field.onChange}
                   onCreate={onAccountCreate}
                 />
@@ -153,7 +161,8 @@ const TransactionForm = ({
                   placeholder="Select an account"
                   onCreate={onCategoryCreate}
                   onChange={field.onChange}
-                  // value={field.value}
+                  value={field.value}
+
                 />
               </FormControl>
               {form.formState.errors.category_name && (
@@ -236,7 +245,7 @@ const TransactionForm = ({
           variant="primary"
           className="w-full border rounded-[.50rem] text-white"
         >
-          Add Transaction
+          {isEdit ? "Edit Transaction" : "Add Transaction"}
         </Button>
       </form>
     </Form>

@@ -14,7 +14,7 @@ export const createTransaction = async (
   return response.data;
 };
 
-type FetchTransactions = {
+export type FetchTransactions = {
   status: string;
   message: string;
   data: z.infer<typeof transactionSchema>;
@@ -33,4 +33,32 @@ export const deleteTransactions = async (ids: string[]) => {
     ids
   );
   return response.data;
+};
+
+export const deleteTranaction = async (id: string) => {
+  const response = await apiClient.delete(
+    API_ROUTES.TRANSACTION.DELETE_TRANSACTION + id
+  );
+  return response.data;
+};
+
+export type TransactionInput = {
+  _id: string;
+  user_id: string;
+  account_name: string;
+  transaction_amount: string;
+  category_name: string;
+  transaction_type: string;
+  transction_date: string;
+  transaction_payee: string;
+  transaction_note: string;
+};
+
+export const fetchTransaction = async (
+  id: string
+): Promise<TransactionInput> => {
+  const response = await apiClient.get(
+    API_ROUTES.TRANSACTION.GET_TRANSACTION + id
+  );
+  return response.data.data;
 };

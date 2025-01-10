@@ -16,13 +16,14 @@ type Props = {
   placeholder: string;
   onCreate: (name: string) => void;
   onChange: (value: string | undefined) => void;
+  value: string;
 };
 
-const Select = ({ values, placeholder, onCreate, onChange }: Props) => {
+const Select = ({ values, value, placeholder, onCreate, onChange }: Props) => {
   const defaultOptions = values.map((value) => createOption(value));
 
   const [options, setOptions] = useState(defaultOptions);
-  const [value, setValue] = useState<Options | null>();
+  // const [value, setValue] = useState<Options | null>();
 
   const handleCreate = (newName: string) => {
     const newOption = createOption(newName);
@@ -33,7 +34,7 @@ const Select = ({ values, placeholder, onCreate, onChange }: Props) => {
   return (
     <CreatableSelect
       isClearable
-      value={value}
+      value={createOption(value)}
       options={options}
       onChange={(newValue) => onChange(newValue?.value)}
       onCreateOption={handleCreate}

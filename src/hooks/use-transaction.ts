@@ -1,9 +1,17 @@
 import {
   createTransaction,
+  deleteTranaction,
   deleteTransactions,
   fetchAllTransactions,
+  fetchTransaction,
+  FetchTransactions,
 } from "@/services/transaction-service";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import {
+  useMutation,
+  useQuery,
+  useQueryClient,
+  UseQueryResult,
+} from "@tanstack/react-query";
 import { toast } from "./use-toast";
 import { useNewTransactionStore } from "@/store/transaction-store";
 
@@ -35,5 +43,24 @@ export const useBulkTransactionDelete = () => {
       toast({ description: data.message });
       queryClient.invalidateQueries({ queryKey: ["transactions"] });
     },
+  });
+};
+
+export const useDeleteTransaction = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: deleteTranaction,
+    onSuccess: (data) => {
+      toast({ description: data.message });
+      queryClient.invalidateQueries({ queryKey: ["transactions"] });
+    },
+  });
+};
+
+export const useGetTransaction = (id: string) => {
+  return useQuery({
+    queryKey: ["transaction", id],
+    queryFn: () => fetchTransaction(id),
+    enabled: !!id,
   });
 };
