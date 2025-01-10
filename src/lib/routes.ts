@@ -24,6 +24,14 @@ const API_ROUTES = {
     BULK_DELETE_CATEGORY: "/api/v1/category/bulk-delete",
     EDIT_CATEGORY: "/api/v1/category/",
   },
+  TRANSACTION: {
+    CREATE_TRANSACTION: "/api/v1/transaction",
+    GET_TRANSACTION: "/api/v1/transaction/",
+    GET_ALL_TRANSACTION: "/api/v1/transaction",
+    DELETE_TRANSACTION: "/api/v1/transaction/",
+    BULK_DELETE_TRANSACTION: "/api/v1/transaction/bulk-delete",
+    EDIT_TRANSACTION: "/api/v1/transaction/",
+  },
 };
 
 export default API_ROUTES;

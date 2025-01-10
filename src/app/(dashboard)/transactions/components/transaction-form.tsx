@@ -27,8 +27,10 @@ import { Input } from "@/components/ui/input";
 import Select from "@/components/creatable-select";
 import AmountInput from "./amount-input";
 import { Textarea } from "@/components/ui/textarea";
+import { useNewTransaction } from "@/hooks/use-transaction";
+import { useNewTransactionStore } from "@/store/transaction-store";
 
-const transactionSchema = z.object({
+export const transactionSchema = z.object({
   account_name: z.string().min(1, { message: "Account name is required" }),
   category_name: z.string().min(1, { message: "Category name is required" }),
   transaction_date: z.date({
@@ -36,7 +38,7 @@ const transactionSchema = z.object({
   }),
   transaction_payee: z.string().min(1, { message: "Payee name is required" }),
   transaction_amount: z.string({ message: "The amount is required." }),
-  transaction_note: z.string(),
+  transaction_note: z.string().optional(),
 });
 
 type TransactionForm = {
@@ -62,8 +64,10 @@ const TransactionForm = ({
     },
   });
 
+  const { mutate } = useNewTransaction();
+  
   const onSubmit = (values: z.infer<typeof transactionSchema>) => {
-    console.log("onSubmit", values);
+    mutate(values);
   };
 
   return (
@@ -124,7 +128,6 @@ const TransactionForm = ({
                   // field={field}
                   onChange={field.onChange}
                   onCreate={onAccountCreate}
-                  
                 />
               </FormControl>
               {form.formState.errors.account_name && (
@@ -170,7 +173,11 @@ const TransactionForm = ({
             <FormItem>
               <FormLabel>Payee</FormLabel>
               <FormControl>
-                <Input className="border rounded-[.50rem] transition placeholder-shown:text-gray-500 focus-within:border-black" placeholder="Add a payee" {...field} />
+                <Input
+                  className="items-center placeholder-shown:text-gray-500 border-gray-200 focus:border-black rounded-[.50rem] w-full justify-start transition"
+                  placeholder="Add a payee"
+                  {...field}
+                />
               </FormControl>
               {form.formState.errors.transaction_payee && (
                 <p className="text-red-500 text-sm mt-1">
@@ -209,11 +216,15 @@ const TransactionForm = ({
             <FormItem>
               <FormLabel>Notes</FormLabel>
               <FormControl>
-                <Textarea placeholder="Type your notes here." {...field} className="border transition rounded-[.50rem] placeholder-shown:text-gray-500 focus-within:border-black"/>
+                <Textarea
+                  placeholder="Type your notes here."
+                  {...field}
+                  className="items-center placeholder-shown:text-gray-500 border-gray-200 focus:border-black rounded-[.50rem] w-full justify-start transition"
+                />
               </FormControl>
-              {form.formState.errors.transaction_payee && (
+              {form.formState.errors.transaction_note && (
                 <p className="text-red-500 text-sm mt-1">
-                  {form.formState.errors.transaction_payee.message}
+                  {form.formState.errors.transaction_note.message}
                 </p>
               )}
             </FormItem>

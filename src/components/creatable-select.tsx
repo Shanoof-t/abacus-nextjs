@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { ControllerRenderProps, FieldValues } from "react-hook-form";
 import CreatableSelect from "react-select/creatable";
 
 interface Options {
@@ -28,7 +27,6 @@ const Select = ({ values, placeholder, onCreate, onChange }: Props) => {
   const handleCreate = (newName: string) => {
     const newOption = createOption(newName);
     setOptions((p) => [...p, newOption]);
-    setValue(newOption);
     onCreate(newName);
   };
 
@@ -44,10 +42,9 @@ const Select = ({ values, placeholder, onCreate, onChange }: Props) => {
         control: (base, state) => ({
           ...base,
           borderRadius: "0.5rem",
-          borderColor: state.isFocused ? "black" : "gray",
+          borderColor: state.isFocused ? "black" : "",
           boxShadow: "none",
           "&:hover": {
-            borderColor: "gray",
             cursor: "pointer",
           },
         }),

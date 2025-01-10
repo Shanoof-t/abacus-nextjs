@@ -23,14 +23,14 @@ const AmountInput: React.FC<Props> = ({
   onChange,
   disabled = false,
 }) => {
-  const parsedValue = parseFloat(value) || 0; // Ensure parsedValue is always a number
+  const parsedValue = parseFloat(value) || 0;
   const isIncome = parsedValue > 0;
   const isExpense = parsedValue < 0;
 
   const handleReverseValue = () => {
     if (!value) return;
-    const reversedValue = (-parsedValue).toFixed(2); // Ensure consistent decimal format
-    onChange(reversedValue);
+    const reversedValue = parseFloat(value) * -1;
+    onChange(reversedValue.toString());
   };
 
   return (
@@ -62,7 +62,7 @@ const AmountInput: React.FC<Props> = ({
 
       <CurrencyInput
         className={cn(
-          "ps-12 transition border-gray-500 h-10 w-full bg-background px-3 py-2 text-base placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 border rounded-[.50rem] placeholder-shown:text-gray-500 focus-within:border-black"
+          "ps-12 h-10 bg-background px-3 py-2 text-base placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 border  focus-within:border-black items-center placeholder-shown:text-gray-500 border-gray-200 focus:border-black rounded-[.50rem] w-full justify-start transition"
         )}
         prefix="₹"
         onValueChange={onChange}
