@@ -59,10 +59,17 @@ const TransactionForm = ({
   isEdit,
   transactionData,
 }: TransactionForm) => {
+  console.log("transactionData", transactionData);
+
   const form = useForm<z.infer<typeof transactionSchema>>({
     resolver: zodResolver(transactionSchema),
     defaultValues: isEdit
-      ? transactionData
+      ? {
+          ...transactionData,
+          transaction_date: transactionData?.transaction_date
+            ? new Date(transactionData.transaction_date)
+            : undefined,
+        }
       : {
           account_name: "",
           transaction_date: undefined,
@@ -121,6 +128,7 @@ const TransactionForm = ({
         />
 
         {/* account select */}
+
         <FormField
           name="account_name"
           control={form.control}
@@ -132,7 +140,6 @@ const TransactionForm = ({
                 <Select
                   values={accountValues}
                   placeholder="Select an account"
-                  // field={field}
                   value={field.value}
                   onChange={field.onChange}
                   onCreate={onAccountCreate}
@@ -162,7 +169,6 @@ const TransactionForm = ({
                   onCreate={onCategoryCreate}
                   onChange={field.onChange}
                   value={field.value}
-
                 />
               </FormControl>
               {form.formState.errors.category_name && (
@@ -205,7 +211,12 @@ const TransactionForm = ({
             <FormItem>
               <FormLabel>Amount</FormLabel>
               <FormControl>
-                <AmountInput placeholder="0.00" disabled={false} {...field} />
+                <AmountInput
+                  placeholder="0.00"
+                  disabled={false}
+                  isEdit={isEdit}
+                  {...field}
+                />
               </FormControl>
 
               {form.formState.errors.transaction_amount && (

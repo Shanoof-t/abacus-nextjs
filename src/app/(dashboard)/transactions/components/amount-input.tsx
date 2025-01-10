@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import CurrencyInput from "react-currency-input-field";
 import { CircleMinus, CirclePlus, Info } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -15,14 +15,22 @@ type Props = {
   onChange: (value: string | undefined) => void;
   disabled?: boolean;
   value: string;
+  isEdit?: boolean;
 };
 
 const AmountInput: React.FC<Props> = ({
   placeholder = "Enter amount",
   value,
   onChange,
+  isEdit,
   disabled = false,
 }) => {
+  useEffect(() => {
+    if (isEdit) {
+      onChange(value.toString());
+    }
+  }, [value, isEdit]);
+  console.log("value", typeof value);
   const parsedValue = parseFloat(value) || 0;
   const isIncome = parsedValue > 0;
   const isExpense = parsedValue < 0;
@@ -39,7 +47,10 @@ const AmountInput: React.FC<Props> = ({
         <Tooltip>
           <TooltipTrigger asChild>
             <Button
-              onClick={handleReverseValue}
+              onClick={(e) => {
+                e.preventDefault();
+                handleReverseValue();
+              }}
               disabled={disabled}
               aria-label="Toggle income/expense"
               className={cn(

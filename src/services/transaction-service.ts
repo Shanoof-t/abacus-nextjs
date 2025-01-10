@@ -49,7 +49,7 @@ export type TransactionInput = {
   transaction_amount: string;
   category_name: string;
   transaction_type: string;
-  transction_date: string;
+  transaction_date: string;
   transaction_payee: string;
   transaction_note: string;
 };

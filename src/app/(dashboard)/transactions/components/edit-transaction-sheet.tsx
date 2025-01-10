@@ -72,6 +72,7 @@ const EdtTransactionSheet = () => {
   const isSuccess = accountSuccess || categorySuccess || transactionSuccess;
   const isError = accountError || categoryError || transactionError;
 
+ 
   return (
     <Sheet open={isOpen} onOpenChange={onClose}>
       <SheetContent className="bg-white w-full">
