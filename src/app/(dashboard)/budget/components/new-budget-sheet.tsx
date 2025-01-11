@@ -1,22 +1,29 @@
-"use client";
-
-import { useEditTransactionStore } from "@/store/transaction-store";
-
 import {
   Sheet,
   SheetContent,
   SheetDescription,
   SheetHeader,
   SheetTitle,
-} from "@/components/ui/sheet";
+} from "../../../../components/ui/sheet";
+
+import { useNewBudgetStore } from "@/store/budget-store";
+import BudgetForm from "./budget-form";
 
 import { useGetAllAccount, useNewAccount } from "@/hooks/use-account";
-import TransactionForm from "./transaction-form";
 import { useGetAllCategories, useNewCategory } from "@/hooks/use-categorie";
-import { useGetTransaction } from "@/hooks/use-transaction";
 
-const EdtTransactionSheet = () => {
-  // account section
+const NewBudgetSheet = () => {
+  const { isOpen, onClose } = useNewBudgetStore();
+
+  // const { isSuccess, mutate, error } = useNewCategory();
+
+  // useEffect(() => {
+  //   if (isSuccess) {
+  //     onClose();
+  //   }
+  // }, [isSuccess, onClose]);
+
+  // account section ------------------------------------
 
   // fetch accounts
   const {
@@ -34,7 +41,7 @@ const EdtTransactionSheet = () => {
   const onCreateAccount = (name: string) =>
     accountMutate({ account_name: name });
 
-  // category section
+  // category section-------------------------------------
 
   // fetch categories
   const {
@@ -52,31 +59,18 @@ const EdtTransactionSheet = () => {
   const onCreateCategory = (name: string) =>
     categoryMutate({ category_name: name });
 
-  // existing transaction
-
-  // fetch transaction
-
-  const { id, isOpen, onClose } = useEditTransactionStore();
-
-  const {
-    data: transactionData,
-    isLoading: transactionLoading,
-    isError: transactionError,
-    isSuccess: transactionSuccess,
-  } = useGetTransaction(id);
-
-  const isLoading = accountLoading || categoryLoading || transactionLoading;
-  const isSuccess = accountSuccess || categorySuccess || transactionSuccess;
-  const isError = accountError || categoryError || transactionError;
+  const isLoading = accountLoading || categoryLoading;
+  const isSuccess = accountSuccess || categorySuccess;
+  const isError = accountError || categoryError;
 
   return (
     <Sheet open={isOpen} onOpenChange={onClose}>
       <SheetContent className="bg-white w-full">
         <SheetHeader>
-          <SheetTitle>Edi Transaction</SheetTitle>
+          <SheetTitle>New Budget</SheetTitle>
         </SheetHeader>
         <SheetDescription className="text-black/50">
-          Edit an existing transaction
+          Create a new budget to track your budget
         </SheetDescription>
 
         {isLoading && <div>Loading Form...</div>}
@@ -84,13 +78,11 @@ const EdtTransactionSheet = () => {
         {!isLoading && isError && <div>Something wrong happened</div>}
 
         {isSuccess && !isLoading && (
-          <TransactionForm
+          <BudgetForm
             accountValues={accountValues}
             onAccountCreate={onCreateAccount}
             categoryValues={categoryValues}
-            onCategoryCreate={onCreateCategory}
-            isEdit={true}
-            transactionData={transactionData}
+            onCategoryCreate={onCreateAccount}
           />
         )}
       </SheetContent>
@@ -98,4 +90,4 @@ const EdtTransactionSheet = () => {
   );
 };
 
-export default EdtTransactionSheet;
+export default NewBudgetSheet;

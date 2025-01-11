@@ -5,17 +5,13 @@ import {
   editTransaction,
   fetchAllTransactions,
   fetchTransaction,
-  FetchTransactions,
 } from "@/services/transaction-service";
-import {
-  useMutation,
-  useQuery,
-  useQueryClient,
-  UseQueryResult,
-} from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "./use-toast";
-import { useEditTransactionStore, useNewTransactionStore } from "@/store/transaction-store";
-import { useEditAccountStore } from "@/store/account-store";
+import {
+  useEditTransactionStore,
+  useNewTransactionStore,
+} from "@/store/transaction-store";
 
 export const useNewTransaction = () => {
   const queryClient = useQueryClient();

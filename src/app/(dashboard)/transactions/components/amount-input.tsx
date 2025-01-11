@@ -25,11 +25,12 @@ const AmountInput: React.FC<Props> = ({
   isEdit,
   disabled = false,
 }) => {
+  
   useEffect(() => {
     if (isEdit) {
       onChange(value.toString());
     }
-  }, [value, isEdit]);
+  }, [value, isEdit, onChange]);
 
   const parsedValue = parseFloat(value) || 0;
   const isIncome = parsedValue > 0;

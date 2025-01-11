@@ -11,7 +11,7 @@ const routes = [
   { label: "Transactions", href: "/transactions" },
   { label: "Accounts", href: "/accounts" },
   { label: "Categories", href: "/categories" },
-  { label: "Budget", href: "/buget" },
+  { label: "Budget", href: "/budget" },
 ];
 
 const Navigations = () => {

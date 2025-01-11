@@ -30,7 +30,7 @@ const useConfirm = ({ title, description }: Confirm): useConfirm => {
   const [promise, setPromise] = useState<Promise>(null);
 
   const confirm = () =>
-    new Promise((resolve, reject) => {
+    new Promise((resolve) => {
       setPromise({ resolve });
     });
 

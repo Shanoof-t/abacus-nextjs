@@ -1,10 +1,10 @@
 import { useState } from "react";
 import CreatableSelect from "react-select/creatable";
 
-interface Options {
-  readonly label: string;
-  readonly value: string;
-}
+// interface Options {
+//   readonly label: string;
+//   readonly value: string;
+// }
 
 const createOption = (label: string) => ({
   label,

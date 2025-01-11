@@ -10,10 +10,7 @@ import {
   FormLabel,
 } from "@/components/ui/form";
 
-import { SheetFooter } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
-import CreatableSelect from "@/components/creatable-select";
-import { useState } from "react";
 
 import {
   Popover,
@@ -28,10 +25,7 @@ import Select from "@/components/creatable-select";
 import AmountInput from "./amount-input";
 import { Textarea } from "@/components/ui/textarea";
 import { useEditTransaction, useNewTransaction } from "@/hooks/use-transaction";
-import {
-  useEditTransactionStore,
-  useNewTransactionStore,
-} from "@/store/transaction-store";
+import { useEditTransactionStore } from "@/store/transaction-store";
 import { TransactionInput } from "@/services/transaction-service";
 
 export const transactionSchema = z.object({
@@ -83,9 +77,11 @@ const TransactionForm = ({
   const { mutate: editTransactionMutate } = useEditTransaction();
   const { id } = useEditTransactionStore();
   const onSubmit = (values: z.infer<typeof transactionSchema>) => {
-    isEdit
-      ? editTransactionMutate({ data: values, id })
-      : newTransactionMutate(values);
+    if (isEdit) {
+      editTransactionMutate({ data: values, id });
+    } else {
+      newTransactionMutate(values);
+    }
   };
 
   return (

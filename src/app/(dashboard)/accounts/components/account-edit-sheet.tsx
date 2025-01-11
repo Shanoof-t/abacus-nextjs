@@ -40,9 +40,8 @@ const EditAccountSheet = () => {
     if (getAccountSuccess && data) {
       setInitialValues({
         account_name: data.account_name,
-        account_balance: data.account_balance,
+        account_balance: data.account_balance ?? 0,
       });
-      console.log(initialValues);
     }
   }, [getAccountSuccess, data]);
 
