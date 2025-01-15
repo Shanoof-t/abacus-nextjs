@@ -12,6 +12,7 @@ import {
   useEditTransactionStore,
   useNewTransactionStore,
 } from "@/store/transaction-store";
+import useBudgetAlert from "./use-alert";
 
 export const useNewTransaction = () => {
   const queryClient = useQueryClient();
@@ -21,6 +22,14 @@ export const useNewTransaction = () => {
     onSuccess: (data) => {
       onClose();
       toast({ description: data.message });
+      console.log("data", data.alert);
+      if (data.alert) {
+        const { setIsBudgetAlertVisible } = useBudgetAlert({
+          title: "Alert.",
+          description: data.alert,
+        });
+        setIsBudgetAlertVisible(true);
+      }
       queryClient.invalidateQueries({ queryKey: ["transactions"] });
     },
   });

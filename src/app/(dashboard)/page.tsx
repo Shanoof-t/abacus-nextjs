@@ -1,13 +1,12 @@
-"use client";
+import CardGrid from "@/components/overview/overview-card-grid";
+import React from "react";
 
-// import TopSection from "@/components/header/top-section";
-
-export default function DashBoard() {
+const Page = () => {
   return (
-    <div className="bg-blue-600 h-full">
-      {/* <div className="mx-[3rem] my-[2rem] flex justify-center ">
-       this
-      </div> */}
+    <div className="-mt-28 border-none container overflow-y-auto ">
+      <CardGrid />
     </div>
   );
-}
+};
+
+export default Page;

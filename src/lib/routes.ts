@@ -32,6 +32,14 @@ const API_ROUTES = {
     BULK_DELETE_TRANSACTION: "/api/v1/transaction/bulk-delete",
     EDIT_TRANSACTION: "/api/v1/transaction/",
   },
+  BUDGET: {
+    CREATE_BUDGET: "/api/v1/budget",
+    GET_BUDGET: "/api/v1/budget/",
+    GET_ALL_BUDGET: "/api/v1/budget",
+    DELETE_BUDGET: "/api/v1/budget/",
+    BULK_DELETE_BUDGET: "/api/v1/budget/bulk-delete",
+    EDIT_BUDGET: "/api/v1/budget/",
+  },
 };
 
 export default API_ROUTES;

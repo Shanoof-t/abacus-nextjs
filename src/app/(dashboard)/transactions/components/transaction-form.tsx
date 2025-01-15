@@ -27,6 +27,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { useEditTransaction, useNewTransaction } from "@/hooks/use-transaction";
 import { useEditTransactionStore } from "@/store/transaction-store";
 import { TransactionInput } from "@/services/transaction-service";
+import useBudgetAlert from "@/hooks/use-alert";
 
 export const transactionSchema = z.object({
   account_name: z.string().min(1, { message: "Account name is required" }),
@@ -73,8 +74,10 @@ const TransactionForm = ({
         },
   });
 
-  const { mutate: newTransactionMutate } = useNewTransaction();
+  const { mutate: newTransactionMutate, isSuccess, data } = useNewTransaction();
   const { mutate: editTransactionMutate } = useEditTransaction();
+  const { BudgetAlertDialog } = useBudgetAlert();
+
   const { id } = useEditTransactionStore();
   const onSubmit = (values: z.infer<typeof transactionSchema>) => {
     if (isEdit) {
@@ -86,6 +89,7 @@ const TransactionForm = ({
 
   return (
     <Form {...form}>
+      <BudgetAlertDialog />
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-2 mt-6">
         {/* date picker */}
         <FormField

@@ -27,6 +27,7 @@ import { format } from "date-fns";
 import AmountInput from "./amount-input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import { useNewBudget } from "@/hooks/use-budget";
 
 const initialValues = {
   budget_name: "",
@@ -60,8 +61,9 @@ const BudgetForm = ({
     defaultValues: initialValues,
   });
 
+  const { mutate } = useNewBudget();
   const onSubmit = (values: z.infer<typeof budgetSchema>) => {
-    
+    mutate(values);
   };
 
   return (
