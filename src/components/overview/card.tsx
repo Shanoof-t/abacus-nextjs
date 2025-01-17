@@ -43,8 +43,8 @@ interface OverViewCard extends BoxVarient, IconVarient {
   title: string;
   dateRange: string;
   icon: IconType;
-  percentage: number;
-  value: number;
+  percentage?: number;
+  value?: number;
 }
 
 const OverViewCard = ({
@@ -53,7 +53,7 @@ const OverViewCard = ({
   icon: Icon,
   percentage,
   variant,
-  value,
+  value = 0,
 }: OverViewCard) => {
   return (
     <Card className="border-none drop-shadow-sm bg-white p-4 border rounded-[.50rem]">
@@ -80,12 +80,12 @@ const OverViewCard = ({
         </h1>
         <p
           className={
-            percentage > 0
+            percentage && percentage > 0
               ? "text-emerald-500  text-sm"
               : "text-rose-500  text-sm"
           }
         >
-          {percentage} from last period
+          {percentage}% from last period
         </p>
       </CardContent>
     </Card>

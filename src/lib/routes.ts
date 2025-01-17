@@ -40,6 +40,9 @@ const API_ROUTES = {
     BULK_DELETE_BUDGET: "/api/v1/budget/bulk-delete",
     EDIT_BUDGET: "/api/v1/budget/",
   },
+  OVERVIEW:{
+    FINANCIAL_SUMMARY:"/api/v1/statistics/financial-summary"
+  }
 };
 
 export default API_ROUTES;
