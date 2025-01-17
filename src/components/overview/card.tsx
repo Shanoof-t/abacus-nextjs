@@ -78,15 +78,19 @@ const OverViewCard = ({
             prefix="$"
           />
         </h1>
-        <p
-          className={
-            percentage && percentage > 0
-              ? "text-emerald-500  text-sm"
-              : "text-rose-500  text-sm"
-          }
-        >
-          {percentage}% from last period
-        </p>
+        {percentage ? (
+          <p
+            className={
+              percentage && percentage > 0
+                ? "text-emerald-500  text-sm"
+                : "text-rose-500  text-sm"
+            }
+          >
+            {percentage}% from last period
+          </p>
+        ) : (
+          <p className="text-black/50  text-sm">0% from last period</p>
+        )}
       </CardContent>
     </Card>
   );

@@ -41,7 +41,8 @@ const API_ROUTES = {
     EDIT_BUDGET: "/api/v1/budget/",
   },
   OVERVIEW:{
-    FINANCIAL_SUMMARY:"/api/v1/statistics/financial-summary"
+    FINANCIAL_SUMMARY:"/api/v1/statistics/financial-summary",
+    FINANCIAL_HISTORY:"/api/v1/statistics/financial-history"
   }
 };
 

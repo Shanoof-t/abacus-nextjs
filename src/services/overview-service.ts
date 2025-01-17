@@ -14,8 +14,8 @@ type fetchSummaryByDateReponse = {
     income: number;
     expense: number;
     pastMonthIncomePercentage: number;
-    pastMonthExpensePercentage:number
-    pastMonthRemainingPercentage:number
+    pastMonthExpensePercentage: number;
+    pastMonthRemainingPercentage: number;
   };
 };
 export const fetchSummaryByDate = async (
@@ -25,5 +25,23 @@ export const fetchSummaryByDate = async (
     API_ROUTES.OVERVIEW.FINANCIAL_SUMMARY,
     data
   );
+  return response.data;
+};
+
+export type History = {
+  _id: string;
+  date: string;
+  income: number;
+  expense: number;
+};
+
+type FetchHistory = {
+  status: string;
+  message: string;
+  data: History[];
+};
+
+export const fetchHistory = async (): Promise<FetchHistory> => {
+  const response = await apiClient.get(API_ROUTES.OVERVIEW.FINANCIAL_HISTORY);
   return response.data;
 };
