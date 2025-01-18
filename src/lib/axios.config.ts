@@ -2,7 +2,7 @@ import axios, { InternalAxiosRequestConfig } from "axios";
 
 const apiClient = axios.create({
   baseURL: process.env.NEXT_PUBLIC_BACKEND_URL,
-  timeout: 10000,
+  timeout: 1000000,
   timeoutErrorMessage:
     "Request timed out. Please check your network connection and try again.",
 });

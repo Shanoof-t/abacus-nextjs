@@ -1,4 +1,5 @@
 import {
+  createBulkTransactions,
   createTransaction,
   deleteTranaction,
   deleteTransactions,
@@ -81,6 +82,15 @@ export const useEditTransaction = () => {
       onClose();
       toast({ description: data.message });
       queryClient.invalidateQueries({ queryKey: ["transactions"] });
+    },
+  });
+};
+
+export const useCreateBulkTransaction = () => {
+  return useMutation({
+    mutationFn: createBulkTransactions,
+    onSuccess: (data) => {
+      console.log("data", data);
     },
   });
 };

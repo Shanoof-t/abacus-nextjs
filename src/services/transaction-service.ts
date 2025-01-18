@@ -71,3 +71,11 @@ export const editTransaction = async ({ data, id }: EditTransaction) => {
   );
   return response.data;
 };
+
+export const createBulkTransactions = async (data: any) => {
+  const response = await apiClient.post(
+    API_ROUTES.TRANSACTION.CREATE_BULK_TRANSACTIONS,
+    data
+  );
+  return response.data;
+};

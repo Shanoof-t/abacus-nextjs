@@ -31,6 +31,7 @@ const API_ROUTES = {
     DELETE_TRANSACTION: "/api/v1/transaction/",
     BULK_DELETE_TRANSACTION: "/api/v1/transaction/bulk-delete",
     EDIT_TRANSACTION: "/api/v1/transaction/",
+    CREATE_BULK_TRANSACTIONS:"/api/v1/transaction/bulk-create"
   },
   BUDGET: {
     CREATE_BUDGET: "/api/v1/budget",
