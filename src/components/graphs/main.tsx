@@ -1,10 +1,16 @@
 import React from "react";
-import Graph1 from "./graph-1";
+import TransactionGraph from "./TransactionGraph";
+import SpendingPie from "./spending-pie";
 
 function Graphs() {
   return (
-    <div >
-      <Graph1 />
+    <div className="grid grid-cols-3">
+      <div className="col-span-2">
+        <TransactionGraph />
+      </div>
+      <div className="col-span-1">
+        <SpendingPie />
+      </div>
     </div>
   );
 }

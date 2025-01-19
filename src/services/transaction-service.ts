@@ -17,7 +17,7 @@ export const createTransaction = async (
 export type FetchTransactions = {
   status: string;
   message: string;
-  data: z.infer<typeof transactionSchema>;
+  data: z.infer<typeof transactionSchema>[]
 };
 
 export const fetchAllTransactions = async (): Promise<FetchTransactions> => {

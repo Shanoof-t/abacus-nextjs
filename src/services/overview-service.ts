@@ -28,7 +28,7 @@ export const fetchSummaryByDate = async (
   return response.data;
 };
 
-export type History = {
+export type Transaction = {
   _id: string;
   date: string;
   income: number;
@@ -38,7 +38,9 @@ export type History = {
 type FetchHistory = {
   status: string;
   message: string;
-  data: History[];
+  data: {
+    transaction: Transaction[];
+  };
 };
 
 export const fetchHistory = async (): Promise<FetchHistory> => {

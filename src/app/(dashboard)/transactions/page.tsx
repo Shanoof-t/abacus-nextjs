@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import DataTable from "@/components/ui/data-table";
 import { useNewTransactionStore } from "@/store/transaction-store";
-import { Loader2, Plus } from "lucide-react";
+import { Download, Loader2, Plus } from "lucide-react";
 import React, { useState } from "react";
 import { column } from "./components/column";
 import {
@@ -11,9 +11,11 @@ import {
   useGetAllTransaction,
 } from "@/hooks/use-transaction";
 import { Skeleton } from "@/components/ui/skeleton";
-
 import CsvUploadButton from "./components/csv-upload-button";
 import CsvUpload from "./components/csv-upload";
+import { jsonToCSV } from "react-papaparse";
+import useConfirm from "@/hooks/use-confirm";
+import { toast } from "@/hooks/use-toast";
 
 type CsvResult = {
   data: [];
@@ -36,7 +38,6 @@ const Page = () => {
 
   const importCsv = (result: CsvResult) => {
     setVariant(Variants.IMPORT);
-
     const filterdNonEmpty = result.data.filter((imports) => imports.length > 1);
     setImportData(filterdNonEmpty);
   };
@@ -47,6 +48,42 @@ const Page = () => {
 
   const onBack = () => {
     setVariant(Variants.DEFAULT);
+  };
+
+  const { ConfirmDialog, confirm } = useConfirm({
+    title: "Export Transactions",
+    description: "Are you sure to export transactions?",
+  });
+  
+  const onExport = async () => {
+    if (data) {
+      try {
+        await confirm();
+        const filterDataForCSV = data.data.map((transaction) => {
+          return {
+            account_name: transaction.account_name,
+            category_name: transaction.category_name,
+            transaction_date: transaction.transaction_date,
+            transaction_payee: transaction.transaction_payee,
+            transaction_amount: transaction.transaction_amount,
+            transaction_note: transaction.transaction_note,
+          };
+        });
+        const jsonData: any = JSON.stringify(filterDataForCSV);
+        const result = jsonToCSV(jsonData);
+        const url = URL.createObjectURL(new Blob([result]));
+        const link = document.createElement("a");
+        link.href = url;
+        const fileName = `transactions_${Date.now()}.csv`;
+        link.setAttribute("download", fileName);
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+        toast({ description: "Transactions downloaded successfully." });
+      } catch (error) {
+        console.error(error);
+      }
+    }
   };
 
   if (isLoading) {
@@ -87,6 +124,7 @@ const Page = () => {
   if (variant === Variants.DEFAULT)
     return (
       <div className="-mt-28 bg-white container overflow-y-auto border rounded-[.50rem]">
+        <ConfirmDialog />
         <Card className="border-none drop-shadow-sm">
           <CardHeader className="lg:flex-row lg:justify-between lg:items-center">
             <CardTitle className="text-xl line-clamp-1">
@@ -94,6 +132,14 @@ const Page = () => {
             </CardTitle>
 
             <div className="space-x-2">
+              <Button
+                variant="primary"
+                size="sm"
+                className="text-white border rounded-[.50rem]"
+                onClick={() => onExport()}
+              >
+                <Download /> Export
+              </Button>
               <CsvUploadButton onUpload={importCsv} />
 
               <Button
