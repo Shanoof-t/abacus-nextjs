@@ -35,11 +35,18 @@ export type Transaction = {
   expense: number;
 };
 
+export type Category = {
+  _id: string;
+  category_name: string;
+  category_amount: number;
+};
+
 type FetchHistory = {
   status: string;
   message: string;
   data: {
     transaction: Transaction[];
+    categories: Category[];
   };
 };
 

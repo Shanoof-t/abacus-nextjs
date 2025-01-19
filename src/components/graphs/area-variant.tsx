@@ -1,4 +1,4 @@
-import { History } from "@/services/overview-service";
+import { Transaction } from "@/services/overview-service";
 import React from "react";
 import {
   Area,
@@ -8,10 +8,10 @@ import {
   Tooltip,
   XAxis,
 } from "recharts";
-import CustomTooltip from "../custome-tooltip";
+import CustomTooltip from "./transaction-tooltip";
 import { format } from "date-fns";
 
-const AreaVariant = ({ data }: { data: History[] }) => {
+const AreaVariant = ({ data }: { data: Transaction[] }) => {
   return (
     <ResponsiveContainer width="100%" height={350}>
       <AreaChart data={data}>
