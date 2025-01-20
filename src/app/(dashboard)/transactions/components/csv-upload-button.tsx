@@ -17,9 +17,6 @@ const CsvUploadButton = ({
   return (
     <CSVReader
       onUploadAccepted={(results: any) => {
-        console.log("---------------------------");
-        console.log(results);
-        console.log("---------------------------");
         onUpload(results);
       }}
     >
@@ -29,7 +26,7 @@ const CsvUploadButton = ({
             variant="primary"
             size="sm"
             type="button"
-            className="text-white border rounded-[.50rem]"
+            className="text-white border rounded-[.50rem] w-full lg:w-auto"
             {...getRootProps()}
           >
             <Upload /> Import

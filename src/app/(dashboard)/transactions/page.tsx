@@ -135,7 +135,7 @@ const Page = () => {
               <Button
                 variant="primary"
                 size="sm"
-                className="text-white border rounded-[.50rem]"
+                className="text-white border rounded-[.50rem] w-full lg:w-auto"
                 onClick={() => onExport()}
               >
                 <Download /> Export
@@ -145,7 +145,7 @@ const Page = () => {
               <Button
                 variant="primary"
                 size="sm"
-                className="text-white border rounded-[.50rem]"
+                className="text-white border rounded-[.50rem] w-full lg:w-auto"
                 onClick={() => onOpen()}
               >
                 <Plus /> Add new
