@@ -13,7 +13,6 @@ import {
   useEditTransactionStore,
   useNewTransactionStore,
 } from "@/store/transaction-store";
-import useBudgetAlert from "./use-alert";
 import { useAlertStore } from "@/store/alert-store";
 
 export const useNewTransaction = () => {

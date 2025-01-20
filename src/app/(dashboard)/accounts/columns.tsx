@@ -40,6 +40,7 @@ export const column: ColumnDef<Account>[] = [
       return (
         <Button
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          variant="sort"
         >
           Name
           <ArrowUpDown />
@@ -47,7 +48,12 @@ export const column: ColumnDef<Account>[] = [
       );
     },
   },
-  { accessorKey: "account_balance", header: "Balance" },
+  {
+    accessorKey: "account_balance",
+    header: () => {
+      return <span className="font-normal text-secondary-foreground">Balance</span>;
+    },
+  },
   {
     id: "actions",
     cell: ({ row }) => <Action id={row.original._id} />,

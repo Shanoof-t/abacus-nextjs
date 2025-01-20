@@ -44,6 +44,7 @@ export const column: ColumnDef<Transaction>[] = [
       return (
         <Button
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          variant="sort"
         >
           Date
           <ArrowUpDown />
@@ -59,6 +60,7 @@ export const column: ColumnDef<Transaction>[] = [
       return (
         <Button
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          variant="sort"
         >
           Category
           <ArrowUpDown />
@@ -72,6 +74,7 @@ export const column: ColumnDef<Transaction>[] = [
       return (
         <Button
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          variant="sort"
         >
           Payee
           <ArrowUpDown />
@@ -85,6 +88,7 @@ export const column: ColumnDef<Transaction>[] = [
       return (
         <Button
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          variant="sort"
         >
           Amount
           <ArrowUpDown />
@@ -109,6 +113,7 @@ export const column: ColumnDef<Transaction>[] = [
       return (
         <Button
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          variant="sort"
         >
           Account
           <ArrowUpDown />

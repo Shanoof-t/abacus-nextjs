@@ -39,6 +39,7 @@ export const column: ColumnDef<Category>[] = [
       return (
         <Button
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          variant="sort"
         >
           Name
           <ArrowUpDown />
