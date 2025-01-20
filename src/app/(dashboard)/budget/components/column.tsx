@@ -6,10 +6,9 @@ import { Button } from "@/components/ui/button";
 import { ArrowUpDown } from "lucide-react";
 import Action from "./action";
 import moment from "moment";
-import { Badge } from "@/components/ui/badge";
 import { z } from "zod";
 import { budgetSchema } from "@/schemas/budget-schema";
-import { buildStyles, CircularProgressbar } from "react-circular-progressbar";
+import { CircularProgressbar } from "react-circular-progressbar";
 import {
   Tooltip,
   TooltipContent,
@@ -19,7 +18,7 @@ import {
 interface Budget extends z.infer<typeof budgetSchema> {
   _id: string;
   progress: number;
-  spent: number;
+  total_spent: number;
 }
 export const column: ColumnDef<Budget>[] = [
   {
@@ -183,7 +182,8 @@ export const column: ColumnDef<Budget>[] = [
             </TooltipTrigger>
             <TooltipContent>
               <p className="text-sm text-center bg-white">
-                Used: ₹{row.original.spent} of ₹{row.original.amount_limit}
+                Used: ₹{row.original.total_spent} of ₹
+                {row.original.amount_limit}
                 <br />
                 Progress: {Math.round(row.original.progress)}%
               </p>
