@@ -1,7 +1,6 @@
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -45,16 +44,9 @@ type BudgetForm = {
   onAccountCreate: (name: string) => void;
   categoryValues: string[];
   onCategoryCreate: (name: string) => void;
-  // isEdit?: boolean;
-  // transactionData?: TransactionInput;
 };
 
-const BudgetForm = ({
-  accountValues,
-  onAccountCreate,
-  categoryValues,
-  onCategoryCreate,
-}: BudgetForm) => {
+const BudgetForm = ({ categoryValues, onCategoryCreate }: BudgetForm) => {
   const form = useForm<z.infer<typeof budgetSchema>>({
     resolver: zodResolver(budgetSchema),
     defaultValues: initialValues,

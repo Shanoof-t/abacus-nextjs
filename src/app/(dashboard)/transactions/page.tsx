@@ -9,7 +9,6 @@ import { column } from "./components/column";
 import {
   useBulkTransactionDelete,
   useGetAllTransaction,
-  useNewTransaction,
 } from "@/hooks/use-transaction";
 import { Skeleton } from "@/components/ui/skeleton";
 import CsvUploadButton from "./components/csv-upload-button";
@@ -17,7 +16,6 @@ import CsvUpload from "./components/csv-upload";
 import { jsonToCSV } from "react-papaparse";
 import useConfirm from "@/hooks/use-confirm";
 import { toast } from "@/hooks/use-toast";
-import useBudgetAlert from "@/hooks/use-alert";
 
 type CsvResult = {
   data: [];
@@ -56,20 +54,6 @@ const Page = () => {
     title: "Export Transactions",
     description: "Are you sure to export transactions?",
   });
-
-  // const { data: newTransactionData, isSuccess: transactionSuccess } =
-  //   useNewTransaction();
-  // console.log("transactionSuccess", transactionSuccess);
-  // if (transactionSuccess && newTransactionData.alert) {
-  //   console.log("data", newTransactionData.alert);
-  //   console.log("inside");
-  //   const { setIsBudgetAlertVisible, BudgetAlertDialog } = useBudgetAlert({
-  //     title: "Alert.",
-  //     description: newTransactionData.alert,
-  //   });
-  //   setIsBudgetAlertVisible(true);
-  //   console.log("ok");
-  // }
 
   const onExport = async () => {
     if (data) {

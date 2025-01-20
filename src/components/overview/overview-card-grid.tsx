@@ -4,12 +4,12 @@ import OverViewCard from "./card";
 import { FaPiggyBank } from "react-icons/fa";
 import { FaArrowTrendUp, FaArrowTrendDown } from "react-icons/fa6";
 import { useFinancialSummary } from "@/hooks/use-overview";
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 const CardGrid = () => {
   // date period
 
-  const to = new Date();
-  const from = subMonths(to, 1);
+  const to = useMemo(() => new Date(), []);
+  const from = useMemo(() => subMonths(to, 1), [to]);
 
   const endDate = format(to, "PP");
   const startDate = format(from, "MMM MM");
@@ -18,7 +18,7 @@ const CardGrid = () => {
 
   useEffect(() => {
     mutate({ to, from });
-  }, []);
+  }, [mutate, to, from]);
 
   return (
     <div className="grid lg:grid-cols-3 gap-8">
