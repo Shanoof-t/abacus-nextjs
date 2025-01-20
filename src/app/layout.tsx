@@ -4,6 +4,7 @@ import { Suspense } from "react";
 import "./globals.css";
 import QueryProvider from "@/utils/QueryProvider";
 import { SheetProvider } from "@/providers/sheet-provider";
+import AlertProvider from "@/providers/alert-provider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -32,6 +33,7 @@ export default function RootLayout({
       >
         <QueryProvider>
           <Suspense>
+            <AlertProvider />
             <SheetProvider />
             {children}
           </Suspense>

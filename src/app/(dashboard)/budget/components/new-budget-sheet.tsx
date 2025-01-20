@@ -82,7 +82,7 @@ const NewBudgetSheet = () => {
             accountValues={accountValues}
             onAccountCreate={onCreateAccount}
             categoryValues={categoryValues}
-            onCategoryCreate={onCreateAccount}
+            onCategoryCreate={onCreateCategory}
           />
         )}
       </SheetContent>

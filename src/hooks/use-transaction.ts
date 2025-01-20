@@ -14,22 +14,20 @@ import {
   useNewTransactionStore,
 } from "@/store/transaction-store";
 import useBudgetAlert from "./use-alert";
+import { useAlertStore } from "@/store/alert-store";
 
 export const useNewTransaction = () => {
   const queryClient = useQueryClient();
+  const { onOpen, setContent } = useAlertStore();
   const { onClose } = useNewTransactionStore();
   return useMutation({
     mutationFn: createTransaction,
     onSuccess: (data) => {
       onClose();
       toast({ description: data.message });
-      console.log("data", data.alert);
       if (data.alert) {
-        const { setIsBudgetAlertVisible } = useBudgetAlert({
-          title: "Alert.",
-          description: data.alert,
-        });
-        setIsBudgetAlertVisible(true);
+        setContent({ title: "Budget alert", description: data.alert });
+        onOpen();
       }
       queryClient.invalidateQueries({ queryKey: ["transactions"] });
     },

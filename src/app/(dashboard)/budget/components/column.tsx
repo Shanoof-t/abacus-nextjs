@@ -19,7 +19,7 @@ import {
 interface Budget extends z.infer<typeof budgetSchema> {
   _id: string;
   progress: number;
-  spent:number
+  spent: number;
 }
 export const column: ColumnDef<Budget>[] = [
   {
@@ -113,12 +113,12 @@ export const column: ColumnDef<Budget>[] = [
     cell: ({ row }) => {
       const amount = Number(row.original.amount_limit);
       return (
-        <Badge
-          className="text-xs font-medium px-3.5 py-2.5"
-          variant={amount < 0 ? "destructive" : "primary"}
-        >
-          {amount}
-        </Badge>
+        // <Badge
+        //   className="text-xs font-medium px-3.5 py-2.5"
+        //   variant={amount < 0 ? "destructive" : "primary"}
+        // >
+        <span className="font-medium">{amount}</span>
+        // </Badge>
       );
     },
   },

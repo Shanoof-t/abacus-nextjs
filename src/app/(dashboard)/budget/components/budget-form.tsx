@@ -32,7 +32,6 @@ import { useNewBudget } from "@/hooks/use-budget";
 const initialValues = {
   budget_name: "",
   category_name: "",
-  account_name: "",
   amount_limit: "",
   budget_start_date: undefined,
   budget_end_date: undefined,
@@ -176,14 +175,13 @@ const BudgetForm = ({
 
         {/* account select */}
 
-        <FormField
+        {/* <FormField
           name="account_name"
           control={form.control}
           render={({ field }) => (
             <FormItem>
               <FormLabel>Account</FormLabel>
               <FormControl>
-                {/* account selector */}
                 <Select
                   values={accountValues}
                   placeholder="Select an account"
@@ -199,7 +197,7 @@ const BudgetForm = ({
               )}
             </FormItem>
           )}
-        />
+        /> */}
 
         {/* category select */}
         <FormField

@@ -12,7 +12,7 @@ import { useGetAllBudget } from "@/hooks/use-budget";
 const BudgetPage = () => {
   const { onOpen } = useNewBudgetStore();
   const { data, isSuccess } = useGetAllBudget();
-console.log("in budget",data)
+
   if (isSuccess)
     return (
       <div className="-mt-28 bg-white container overflow-y-auto border rounded-[.50rem]">
@@ -32,8 +32,8 @@ console.log("in budget",data)
             <DataTable
               data={data}
               columns={column}
-              filterKey=""
-              filterPlaceholder=""
+              filterKey="category_name"
+              filterPlaceholder="Filter Category"
               disabled={false}
               onDelete={() => {}}
             />

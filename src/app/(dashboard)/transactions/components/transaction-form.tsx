@@ -79,9 +79,10 @@ const TransactionForm = ({
 
   const { mutate: newTransactionMutate, isSuccess, data } = useNewTransaction();
   const { mutate: editTransactionMutate } = useEditTransaction();
-  const { BudgetAlertDialog } = useBudgetAlert();
+  // const { BudgetAlertDialog } = useBudgetAlert();
 
   const { id } = useEditTransactionStore();
+
   const onSubmit = (values: z.infer<typeof transactionSchema>) => {
     if (isEdit) {
       editTransactionMutate({ data: values, id });
@@ -92,7 +93,7 @@ const TransactionForm = ({
 
   return (
     <Form {...form}>
-      <BudgetAlertDialog />
+      {/* <BudgetAlertDialog /> */}
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-2 mt-6">
         {/* date picker */}
         <FormField
