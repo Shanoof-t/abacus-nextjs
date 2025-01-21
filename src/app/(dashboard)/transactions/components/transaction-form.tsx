@@ -27,7 +27,16 @@ import { Textarea } from "@/components/ui/textarea";
 import { useEditTransaction, useNewTransaction } from "@/hooks/use-transaction";
 import { useEditTransactionStore } from "@/store/transaction-store";
 import { TransactionInput } from "@/services/transaction-service";
-
+import { Checkbox } from "@/components/ui/checkbox";
+import {
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+  Select as ShadcnSelect,
+} from "@/components/ui/select";
 export const transactionSchema = z.object({
   account_name: z.string().min(1, { message: "Account name is required" }),
   category_name: z.string().min(1, { message: "Category name is required" }),
@@ -40,6 +49,8 @@ export const transactionSchema = z.object({
   transaction_payee: z.string().min(1, { message: "Payee name is required" }),
   transaction_amount: z.string({ message: "The amount is required." }),
   transaction_note: z.string().optional(),
+  is_recurring: z.boolean().optional(),
+  recurring_frequency: z.string().optional(),
 });
 
 type TransactionForm = {
@@ -73,6 +84,8 @@ const TransactionForm = ({
           transaction_date: undefined,
           category_name: "",
           transaction_payee: "",
+          is_recurring: false,
+          recurring_frequency: undefined,
         },
   });
 
@@ -89,6 +102,7 @@ const TransactionForm = ({
     }
   };
 
+  console.log(form.getValues());
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-2 mt-6">
@@ -194,7 +208,7 @@ const TransactionForm = ({
               <FormLabel>Payee</FormLabel>
               <FormControl>
                 <Input
-                  className="items-center placeholder-shown:text-gray-500 border-gray-200 focus:border-black rounded-[.50rem] w-full justify-start transition"
+                  className="items-center placeholder-shown:text-gray-500 border-gray-200  rounded-[.50rem] w-full justify-start transition"
                   placeholder="Add a payee"
                   {...field}
                 />
@@ -233,6 +247,59 @@ const TransactionForm = ({
           )}
         />
 
+        {/* reccuring option */}
+        <FormField
+          name="is_recurring"
+          control={form.control}
+          render={({ field }) => (
+            <FormItem className="flex items-center space-x-3 ">
+              <FormControl>
+                <Checkbox
+                  checked={field.value}
+                  onCheckedChange={field.onChange}
+                />
+              </FormControl>
+              <FormLabel className="text-sm font-medium pb-1">
+                Is this a recurring transaction?
+              </FormLabel>
+            </FormItem>
+          )}
+        />
+
+        {/* select time period */}
+        {form.getValues().is_recurring && (
+          <FormField
+            name="recurring_frequency"
+            control={form.control}
+            render={({ field }) => (
+              <FormItem className="flex flex-col space-y-2">
+                <FormLabel className="text-sm font-medium">
+                  Select frequency
+                </FormLabel>
+                <FormControl>
+                  <ShadcnSelect
+                    onValueChange={field.onChange}
+                    defaultValue={field.value}
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select frequency" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectGroup>
+                        <SelectLabel>Frequency</SelectLabel>
+                        <SelectItem value="daily">Daily</SelectItem>
+                        <SelectItem value="weekly">Weekly</SelectItem>
+                        <SelectItem value="monthly">Monthly</SelectItem>
+                        <SelectItem value="yearly">Yearly</SelectItem>
+                      </SelectGroup>
+                    </SelectContent>
+                  </ShadcnSelect>
+                </FormControl>
+              </FormItem>
+            )}
+          />
+        )}
+
         {/* transaction note */}
         <FormField
           name="transaction_note"
@@ -244,7 +311,7 @@ const TransactionForm = ({
                 <Textarea
                   placeholder="Type your notes here."
                   {...field}
-                  className="items-center placeholder-shown:text-gray-500 border-gray-200 focus:border-black rounded-[.50rem] w-full justify-start transition"
+                  className="items-center placeholder-shown:text-gray-500 border-gray-200  rounded-[.50rem] w-full justify-start transition"
                 />
               </FormControl>
               {form.formState.errors.transaction_note && (

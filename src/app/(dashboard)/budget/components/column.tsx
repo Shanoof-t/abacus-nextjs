@@ -116,29 +116,10 @@ export const column: ColumnDef<Budget>[] = [
     },
     cell: ({ row }) => {
       const amount = Number(row.original.amount_limit);
-      return (
-        // <Badge
-        //   className="text-xs font-medium px-3.5 py-2.5"
-        //   variant={amount < 0 ? "destructive" : "primary"}
-        // >
-        <span className="font-medium">{amount}</span>
-        // </Badge>
-      );
+      return <span className="font-medium">{amount}</span>;
     },
   },
-  // {
-  //   accessorKey: "account_name",
-  //   header: ({ column }) => {
-  //     return (
-  //       <Button
-  //         onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-  //       >
-  //         Account
-  //         <ArrowUpDown />
-  //       </Button>
-  //     );
-  //   },
-  // },
+
   {
     accessorKey: "progress",
     header: ({ column }) => {
@@ -163,7 +144,13 @@ export const column: ColumnDef<Budget>[] = [
                   text={`${row.original.progress}%`}
                   styles={{
                     path: {
-                      stroke: "#4caf50",
+                      stroke:
+                        row.original.progress < 75
+                          ? "green"
+                          : row.original.progress >= 75 &&
+                            row.original.progress > 100
+                          ? "orange"
+                          : "red",
                       strokeWidth: 10,
                     },
                     trail: {
@@ -171,7 +158,13 @@ export const column: ColumnDef<Budget>[] = [
                       strokeWidth: 10,
                     },
                     text: {
-                      fill: "#4caf50",
+                      fill:
+                        row.original.progress < 75
+                          ? "green"
+                          : row.original.progress >= 75 &&
+                            row.original.progress > 100
+                          ? "orange"
+                          : "red",
                       fontWeight: "bold",
                       textAnchor: "middle",
                       dominantBaseline: "middle",

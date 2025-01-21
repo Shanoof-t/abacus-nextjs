@@ -152,7 +152,7 @@ const BudgetForm = ({ categoryValues, onCategoryCreate }: BudgetForm) => {
               <FormControl>
                 <Input
                   placeholder="Enter budget name"
-                  className="items-center placeholder-shown:text-gray-500 border-gray-200 focus:border-black rounded-[.50rem] w-full justify-start transition"
+                  className="items-center placeholder-shown:text-gray-500  rounded-[.50rem] w-full justify-start transition"
                   {...field}
                 />
               </FormControl>
@@ -264,7 +264,7 @@ const BudgetForm = ({ categoryValues, onCategoryCreate }: BudgetForm) => {
                       }}
                       min={0}
                       max={100}
-                      className="w-full h-2 bg-gray-200 rounded-full appearance-none focus:ring-2 focus:ring-blue-500"
+                      className="w-full h-2 bg-gray-200 rounded-full appearance-none focus:ring-2 focus:ring-blue-500 cursor-pointer"
                     />
                   </div>
                 </FormControl>
@@ -284,7 +284,7 @@ const BudgetForm = ({ categoryValues, onCategoryCreate }: BudgetForm) => {
                 <Textarea
                   placeholder="Type your notes here."
                   {...field}
-                  className="items-center placeholder-shown:text-gray-500 border-gray-200 focus:border-black rounded-[.50rem] w-full justify-start transition"
+                  className="items-center placeholder-shown:text-gray-500 border-gray-200 rounded-[.50rem] w-full justify-start transition"
                 />
               </FormControl>
               {form.formState.errors.budget_note && (
