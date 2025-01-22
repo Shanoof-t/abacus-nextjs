@@ -31,7 +31,7 @@ const API_ROUTES = {
     DELETE_TRANSACTION: "/api/v1/transaction/",
     BULK_DELETE_TRANSACTION: "/api/v1/transaction/bulk-delete",
     EDIT_TRANSACTION: "/api/v1/transaction/",
-    CREATE_BULK_TRANSACTIONS:"/api/v1/transaction/bulk-create"
+    CREATE_BULK_TRANSACTIONS: "/api/v1/transaction/bulk-create",
   },
   BUDGET: {
     CREATE_BUDGET: "/api/v1/budget",
@@ -41,10 +41,14 @@ const API_ROUTES = {
     BULK_DELETE_BUDGET: "/api/v1/budget/bulk-delete",
     EDIT_BUDGET: "/api/v1/budget/",
   },
-  OVERVIEW:{
-    FINANCIAL_SUMMARY:"/api/v1/statistics/financial-summary",
-    FINANCIAL_HISTORY:"/api/v1/statistics/financial-history"
-  }
+  OVERVIEW: {
+    FINANCIAL_SUMMARY: "/api/v1/statistics/financial-summary",
+    FINANCIAL_HISTORY: "/api/v1/statistics/financial-history",
+  },
+  NOTIFICATION: {
+    ALL_NOTIFICATIONS: "/api/v1/notifications",
+    UPDATE_NOTIFICATION: "/api/v1/notifications/",
+  },
 };
 
 export default API_ROUTES;

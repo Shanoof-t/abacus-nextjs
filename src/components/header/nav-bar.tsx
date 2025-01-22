@@ -1,7 +1,7 @@
 import React from "react";
 import HeaderLogo from "./header-logo";
-import Navigations from "./navigation"; 
-import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar"
+import Navigations from "./navigation";
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { Bell, Loader2, LogOut } from "lucide-react";
 import { DropdownMenu, DropdownMenuItem } from "../ui/dropdown-menu";
 import {
@@ -11,6 +11,17 @@ import {
 import { useMutation } from "@tanstack/react-query";
 import apiClient from "@/lib/axios.config";
 import API_ROUTES from "@/lib/routes";
+import {
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger,
+} from "../ui/hover-card";
+import {
+  useGetAllNotification,
+  useUpdateNotification,
+} from "@/hooks/use-notification";
+import { Separator } from "../ui/separator";
+import { Button } from "../ui/button";
 
 const Navbar = () => {
   const { mutate, isSuccess } = useMutation({
@@ -21,12 +32,19 @@ const Navbar = () => {
   });
 
   if (isSuccess) {
-    window.location.reload();  
+    window.location.reload();
   }
+
+  const { data } = useGetAllNotification();
 
   const handleLogout = () => {
     mutate();
   };
+
+  // notification
+
+  const { mutate: notificationMutation } = useUpdateNotification();
+
   return (
     <div className="flex justify-between items-center w-full">
       <div className="flex justify-between items-center">
@@ -37,7 +55,86 @@ const Navbar = () => {
       </div>
       <div className="flex justify-between items-center">
         <div className="relative">
-          <Bell className="text-white w-5 h-5 m-1" />
+          <HoverCard>
+            <HoverCardTrigger>
+              <Bell className="text-white w-5 h-5 m-1 cursor-pointer" />
+            </HoverCardTrigger>
+            <HoverCardContent className="w-[30rem] mr-16 mt-5">
+              <h1>Notification</h1>
+              <Separator className="my-4" />
+              {data?.data.length === 0 && (
+                <div>
+                  <h1>No messages.</h1>
+                </div>
+              )}
+              {data?.data.map((notification) => (
+                <div>
+                  <div className="flex">
+                    <div className="mr-5">
+                      {notification.is_server_notification && (
+                        <div className="bg-slate-200 p-3 rounded-full border-[0.0.5rem] border-gray-600 text-gray-600">
+                          <Bell className="size-4" />
+                        </div>
+                      )}
+                    </div>
+                    <div>
+                      <div>
+                        {/* title */}
+                        <div className="flex justify-between">
+                          <div>
+                            <h2 className="text-base font-semibold text-gray-600">
+                              This is sample title
+                            </h2>
+                          </div>
+                          <div>
+                            <span className="text-sm text-muted-foreground">
+                              2h ago
+                            </span>
+                          </div>
+                        </div>
+                        <h6 className="text-sm text-muted-foreground ">
+                          <div
+                            dangerouslySetInnerHTML={{
+                              __html: notification.message,
+                            }}
+                          ></div>
+                        </h6>
+                      </div>
+                      <div className="space-x-2 space-y-2">
+                        <Button
+                          className="text-xs font-semibold "
+                          size="sm"
+                          onClick={() =>
+                            notificationMutation({
+                              id: notification._id,
+                              action: "ESTIMATED",
+                            })
+                          }
+                        >
+                          Approve
+                        </Button>
+                        <Button
+                          className="text-xs font-semibold"
+                          variant="outline"
+                          size="sm"
+                          onClick={() =>
+                            notificationMutation({
+                              id: notification._id,
+                              action: "NOT_ESTIMATED",
+                            })
+                          }
+                        >
+                          Reject
+                        </Button>
+                      </div>
+                    </div>
+                  </div>
+
+                  <Separator className="my-4" />
+                </div>
+              ))}
+            </HoverCardContent>
+          </HoverCard>
           <span className="absolute top-0 right-0.5 h-3 w-3 bg-red-600 rounded-full border-2"></span>
         </div>
         <div className="ms-4 lg:ms-6">
