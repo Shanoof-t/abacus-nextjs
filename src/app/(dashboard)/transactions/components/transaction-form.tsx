@@ -8,6 +8,7 @@ import {
   FormField,
   FormItem,
   FormLabel,
+  FormMessage,
 } from "@/components/ui/form";
 
 import { Button } from "@/components/ui/button";
@@ -37,7 +38,16 @@ import {
   SelectValue,
   Select as ShadcnSelect,
 } from "@/components/ui/select";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { useEffect } from "react";
+import { useGetBudget } from "@/hooks/use-budget";
+import BudgetSummary from "./budget-summary";
+import TransactionSummaryMessage from "./budget-summary-message";
+
 export const transactionSchema = z.object({
+  transaction_type: z
+    .string()
+    .min(1, { message: "Transaction type is required" }),
   account_name: z.string().min(1, { message: "Account name is required" }),
   category_name: z.string().min(1, { message: "Category name is required" }),
   transaction_date: z.union([
@@ -86,11 +96,13 @@ const TransactionForm = ({
           transaction_payee: "",
           is_recurring: false,
           recurring_frequency: undefined,
+          transaction_type: "",
         },
   });
 
   const { mutate: newTransactionMutate } = useNewTransaction();
   const { mutate: editTransactionMutate } = useEditTransaction();
+  const { mutate: getBudgetMutate, data, isSuccess, reset } = useGetBudget();
 
   const { id } = useEditTransactionStore();
 
@@ -102,16 +114,101 @@ const TransactionForm = ({
     }
   };
 
-  console.log(form.getValues());
+  const formWatch = form.watch();
+  useEffect(() => {
+    if (formWatch.transaction_type === "expense" && formWatch.category_name) {
+      getBudgetMutate(formWatch.category_name);
+    } else {
+      reset();
+    }
+  }, [formWatch.transaction_type, formWatch.category_name]);
+
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-2 mt-6">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-2 mt-3">
+        {/* type select */}
+        <FormField
+          name="transaction_type"
+          control={form.control}
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Type</FormLabel>
+              <FormControl>
+                <RadioGroup
+                  className="flex"
+                  value={field.value}
+                  onValueChange={field.onChange}
+                >
+                  <RadioGroupItem value="expense" />
+                  <FormLabel>Expense</FormLabel>
+                  <RadioGroupItem value="income" />
+                  <FormLabel>Income</FormLabel>
+                </RadioGroup>
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        {/* category select */}
+        <FormField
+          name="category_name"
+          control={form.control}
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Category</FormLabel>
+              <FormControl>
+                {/* account selector */}
+                <Select
+                  values={categoryValues}
+                  placeholder="Select an account"
+                  onCreate={onCategoryCreate}
+                  onChange={field.onChange}
+                  value={field.value}
+                />
+              </FormControl>
+              <FormMessage />
+
+              <BudgetSummary
+                variant="success"
+                isSuccess={isSuccess}
+                data={data?.data}
+                field="category_name"
+                isSelected={!!field.value}
+              />
+            </FormItem>
+          )}
+        />
+
+        {/* account select */}
+        <FormField
+          name="account_name"
+          control={form.control}
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Account</FormLabel>
+              <FormControl>
+                {/* account selector */}
+                <Select
+                  values={accountValues}
+                  placeholder="Select an account"
+                  value={field.value}
+                  onChange={field.onChange}
+                  onCreate={onAccountCreate}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
         {/* date picker */}
         <FormField
           name="transaction_date"
           control={form.control}
           render={({ field }) => (
             <FormItem>
+              <FormLabel>Date</FormLabel>
               <FormControl>
                 <Popover>
                   <PopoverTrigger asChild>
@@ -137,64 +234,15 @@ const TransactionForm = ({
                   </PopoverContent>
                 </Popover>
               </FormControl>
-              {form.formState.errors.transaction_date && (
-                <p className="text-red-500 text-sm mt-1">
-                  {form.formState.errors.transaction_date.message}
-                </p>
-              )}
-            </FormItem>
-          )}
-        />
-
-        {/* account select */}
-
-        <FormField
-          name="account_name"
-          control={form.control}
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Account</FormLabel>
-              <FormControl>
-                {/* account selector */}
-                <Select
-                  values={accountValues}
-                  placeholder="Select an account"
-                  value={field.value}
-                  onChange={field.onChange}
-                  onCreate={onAccountCreate}
-                />
-              </FormControl>
-              {form.formState.errors.account_name && (
-                <p className="text-red-500 text-sm mt-1">
-                  {form.formState.errors.account_name.message}
-                </p>
-              )}
-            </FormItem>
-          )}
-        />
-
-        {/* category select */}
-        <FormField
-          name="category_name"
-          control={form.control}
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Category</FormLabel>
-              <FormControl>
-                {/* account selector */}
-                <Select
-                  values={categoryValues}
-                  placeholder="Select an account"
-                  onCreate={onCategoryCreate}
-                  onChange={field.onChange}
-                  value={field.value}
-                />
-              </FormControl>
-              {form.formState.errors.category_name && (
-                <p className="text-red-500 text-sm mt-1">
-                  {form.formState.errors.category_name.message}
-                </p>
-              )}
+              <FormMessage />
+              <BudgetSummary
+                variant="default"
+                isSuccess={isSuccess}
+                data={data?.data}
+                field="budget_date"
+                isSelected={!!field.value}
+                value={field.value}
+              />
             </FormItem>
           )}
         />
@@ -213,11 +261,7 @@ const TransactionForm = ({
                   {...field}
                 />
               </FormControl>
-              {form.formState.errors.transaction_payee && (
-                <p className="text-red-500 text-sm mt-1">
-                  {form.formState.errors.transaction_payee.message}
-                </p>
-              )}
+              <FormMessage />
             </FormItem>
           )}
         />
@@ -229,6 +273,13 @@ const TransactionForm = ({
           render={({ field }) => (
             <FormItem>
               <FormLabel>Amount</FormLabel>
+              {/* <BudgetSummary
+                variant="success"
+                isSuccess={isSuccess}
+                data={data?.data}
+                field="amount_top"
+                isSelected={!!field.value}
+              /> */}
               <FormControl>
                 <AmountInput
                   placeholder="0.00"
@@ -238,11 +289,15 @@ const TransactionForm = ({
                 />
               </FormControl>
 
-              {form.formState.errors.transaction_amount && (
-                <p className="text-red-500 text-sm mt-1">
-                  {form.formState.errors.transaction_amount.message}
-                </p>
-              )}
+              <FormMessage />
+              <BudgetSummary
+                variant="default"
+                isSuccess={isSuccess}
+                data={data?.data}
+                field="amount_bottom"
+                isSelected={!!field.value}
+                value={field.value}
+              />
             </FormItem>
           )}
         />
@@ -295,6 +350,14 @@ const TransactionForm = ({
                     </SelectContent>
                   </ShadcnSelect>
                 </FormControl>
+                {field.value &&
+                  formWatch.transaction_amount &&
+                  formWatch.transaction_type && (
+                    <TransactionSummaryMessage
+                      variant="default"
+                      message={`This recurring transaction will add ₹${formWatch.transaction_amount} to your ${formWatch.recurring_frequency} ${formWatch.transaction_type}.`}
+                    />
+                  )}
               </FormItem>
             )}
           />
@@ -314,11 +377,7 @@ const TransactionForm = ({
                   className="items-center placeholder-shown:text-gray-500 border-gray-200  rounded-[.50rem] w-full justify-start transition"
                 />
               </FormControl>
-              {form.formState.errors.transaction_note && (
-                <p className="text-red-500 text-sm mt-1">
-                  {form.formState.errors.transaction_note.message}
-                </p>
-              )}
+              <FormMessage />
             </FormItem>
           )}
         />

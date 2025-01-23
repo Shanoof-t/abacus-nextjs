@@ -25,6 +25,7 @@ const AmountInput: React.FC<Props> = ({
   isEdit,
   disabled = false,
 }) => {
+  
   useEffect(() => {
     if (isEdit) {
       onChange(value.toString());
@@ -35,15 +36,15 @@ const AmountInput: React.FC<Props> = ({
   const isIncome = parsedValue > 0;
   const isExpense = parsedValue < 0;
 
-  const handleReverseValue = () => {
-    if (!value) return;
-    const reversedValue = parseFloat(value) * -1;
-    onChange(reversedValue.toString());
-  };
+  // const handleReverseValue = () => {
+  //   if (!value) return;
+  //   const reversedValue = parseFloat(value) * -1;
+  //   onChange(reversedValue.toString());
+  // };
 
   return (
     <div className="relative w-full">
-      <TooltipProvider>
+      {/* <TooltipProvider>
         <Tooltip>
           <TooltipTrigger asChild>
             <Button
@@ -69,11 +70,11 @@ const AmountInput: React.FC<Props> = ({
             Click to toggle between income [+] and expense [-]
           </TooltipContent>
         </Tooltip>
-      </TooltipProvider>
+      </TooltipProvider> */}
 
       <CurrencyInput
         className={cn(
-          "ps-12 h-10 bg-background px-3 py-2 text-base placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 border  items-center placeholder-shown:text-gray-500 border-gray-200 rounded-[.50rem] w-full justify-start transition"
+          "h-10 bg-background px-3 py-2 text-base placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 border  items-center placeholder-shown:text-gray-500 border-gray-200 rounded-[.50rem] w-full justify-start transition"
         )}
         prefix="₹"
         onValueChange={onChange}
@@ -84,10 +85,10 @@ const AmountInput: React.FC<Props> = ({
         decimalScale={2}
       />
 
-      <p className="text-sm text-muted-foreground mt-2">
+      {/* <p className="text-sm text-muted-foreground mt-2">
         {isIncome && "This will count as income"}
         {isExpense && "This will count as expense"}
-      </p>
+      </p> */}
     </div>
   );
 };

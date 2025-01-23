@@ -23,6 +23,7 @@ const boxVarient = cva("rounded-[.30rem] p-3", {
     },
   },
 });
+
 const iconVarient = cva("size-6", {
   variants: {
     variant: {

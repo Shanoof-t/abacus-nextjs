@@ -6,7 +6,6 @@ import { z } from "zod";
 export const createTransaction = async (
   data: z.infer<typeof transactionSchema>
 ) => {
-  console.log("datas in create", data);
   const response = await apiClient.post(
     API_ROUTES.TRANSACTION.CREATE_TRANSACTION,
     data
@@ -17,7 +16,7 @@ export const createTransaction = async (
 export type FetchTransactions = {
   status: string;
   message: string;
-  data: z.infer<typeof transactionSchema>[]
+  data: z.infer<typeof transactionSchema>[];
 };
 
 export const fetchAllTransactions = async (): Promise<FetchTransactions> => {

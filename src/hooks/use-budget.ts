@@ -1,4 +1,8 @@
-import { createBudget, fetchAllBudget } from "@/services/budget-service";
+import {
+  createBudget,
+  fetchAllBudget,
+  fetchBudget,
+} from "@/services/budget-service";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "./use-toast";
 import { useNewBudgetStore } from "@/store/budget-store";
@@ -11,7 +15,7 @@ export const useNewBudget = () => {
     onSuccess: (data) => {
       onClose();
       toast({ description: data.message });
-      queryClient.invalidateQueries({queryKey:["budgets"]})
+      queryClient.invalidateQueries({ queryKey: ["budgets"] });
     },
   });
 };
@@ -20,5 +24,14 @@ export const useGetAllBudget = () => {
   return useQuery({
     queryKey: ["budgets"],
     queryFn: fetchAllBudget,
+  });
+};
+
+export const useGetBudget = () => {
+  return useMutation({
+    mutationFn: fetchBudget,
+    onSuccess: (data) => {
+      console.log("budget data", data);
+    },
   });
 };
