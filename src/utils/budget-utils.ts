@@ -23,6 +23,7 @@ export const calculateAmountBalance = ({
 }) => {
   return remainingBudget - Number(value);
 };
+
 type GenerateMessages = {
   data?: BudgetData;
   value?: string | Date;
@@ -45,7 +46,10 @@ export const generateMessages = ({
   let amountBottomMessage = `After this transaction of ${value} remaining budget will be ${amountBalance}`;
 
   if (amountBalance < 0) {
-    const exceededAmount = Math.abs(Number(data?.amount_limit) - Number(value));
+    console.log("totalSpemd", data?.total_spent);
+    console.log("value", value);
+    const exceededAmount = Number(data?.total_spent) + Number(value);
+
     amountBottomMessage = `This transaction will exceed the budget by ${exceededAmount}`;
   }
 

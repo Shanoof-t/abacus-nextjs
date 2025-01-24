@@ -42,26 +42,8 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { useEffect } from "react";
 import { useGetBudget } from "@/hooks/use-budget";
 import BudgetSummary from "./budget-summary";
-import TransactionSummaryMessage from "./budget-summary-message";
-
-export const transactionSchema = z.object({
-  transaction_type: z
-    .string()
-    .min(1, { message: "Transaction type is required" }),
-  account_name: z.string().min(1, { message: "Account name is required" }),
-  category_name: z.string().min(1, { message: "Category name is required" }),
-  transaction_date: z.union([
-    z.date({
-      message: "Please select a date for transaction.",
-    }),
-    z.string(),
-  ]),
-  transaction_payee: z.string().min(1, { message: "Payee name is required" }),
-  transaction_amount: z.string({ message: "The amount is required." }),
-  transaction_note: z.string().optional(),
-  is_recurring: z.boolean().optional(),
-  recurring_frequency: z.string().optional(),
-});
+import TransactionSummaryMessage from "./transaction-summary-message";
+import { transactionSchema } from "@/utils/validations/transaction-validation";
 
 type TransactionForm = {
   accountValues: string[];
@@ -70,6 +52,16 @@ type TransactionForm = {
   onCategoryCreate: (name: string) => void;
   isEdit?: boolean;
   transactionData?: TransactionInput;
+};
+
+const initialVlaues = {
+  account_name: "",
+  transaction_date: undefined,
+  category_name: "",
+  transaction_payee: "",
+  is_recurring: false,
+  recurring_frequency: undefined,
+  transaction_type: "",
 };
 
 const TransactionForm = ({
@@ -89,15 +81,7 @@ const TransactionForm = ({
             ? new Date(transactionData.transaction_date)
             : undefined,
         }
-      : {
-          account_name: "",
-          transaction_date: undefined,
-          category_name: "",
-          transaction_payee: "",
-          is_recurring: false,
-          recurring_frequency: undefined,
-          transaction_type: "",
-        },
+      : initialVlaues,
   });
 
   const { mutate: newTransactionMutate } = useNewTransaction();

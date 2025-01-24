@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils";
 const SummaryVariants = cva("text-sm mt-1", {
   variants: {
     variant: {
-      default: "text-black",
+      default: "text-muted-foreground",
       success: "text-emerald-500",
       warning: "text-yellow-600",
       danger: "text-rose-500",

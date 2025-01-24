@@ -6,7 +6,7 @@ import {
   determineVariant,
   generateMessages,
 } from "@/utils/budget-utils";
-import TransactionSummaryMessage from "./budget-summary-message";
+import TransactionSummaryMessage from "./transaction-summary-message";
 
 export type fieldEnum =
   | "category_name"

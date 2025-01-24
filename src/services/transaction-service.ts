@@ -1,6 +1,6 @@
-import { transactionSchema } from "@/app/(dashboard)/transactions/components/transaction-form";
 import apiClient from "@/lib/axios.config";
 import API_ROUTES from "@/lib/routes";
+import { transactionSchema } from "@/utils/validations/transaction-validation";
 import { z } from "zod";
 
 export const createTransaction = async (
