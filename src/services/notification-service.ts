@@ -27,9 +27,10 @@ export const updateNotification = async ({
   id,
   action,
 }: UpdateNotification) => {
+  console.log("action", action);
   const response = await apiClient.post(
     API_ROUTES.NOTIFICATION.UPDATE_NOTIFICATION + id,
-    action
+    { action }
   );
   return response.data;
 };

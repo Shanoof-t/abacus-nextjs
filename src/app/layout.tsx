@@ -5,6 +5,7 @@ import "./globals.css";
 import QueryProvider from "@/utils/QueryProvider";
 import { SheetProvider } from "@/providers/sheet-provider";
 import AlertProvider from "@/providers/alert-provider";
+import DialogProvider from "@/providers/dialog-provider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -33,6 +34,7 @@ export default function RootLayout({
       >
         <QueryProvider>
           <Suspense>
+            <DialogProvider />
             <AlertProvider />
             <SheetProvider />
             {children}

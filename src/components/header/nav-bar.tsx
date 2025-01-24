@@ -22,6 +22,7 @@ import {
 } from "@/hooks/use-notification";
 import { Separator } from "../ui/separator";
 import { Button } from "../ui/button";
+import { useTransactionRescheduleStore } from "@/store/notification-store";
 
 const Navbar = () => {
   const { mutate, isSuccess } = useMutation({
@@ -40,7 +41,10 @@ const Navbar = () => {
   const handleLogout = () => {
     mutate();
   };
-
+  const { onOpen } = useTransactionRescheduleStore();
+  const handleReschedule = () => {
+    onOpen();
+  };
   // notification
 
   const { mutate: notificationMutation } = useUpdateNotification();
@@ -100,19 +104,30 @@ const Navbar = () => {
                           ></div>
                         </h6>
                       </div>
-                      <div className="space-x-2 space-y-2">
-                        <Button
-                          className="text-xs font-semibold "
-                          size="sm"
-                          onClick={() =>
-                            notificationMutation({
-                              id: notification._id,
-                              action: "ESTIMATED",
-                            })
-                          }
-                        >
-                          Approve
-                        </Button>
+                      <div className="space-x-2 space-y-2 flex justify-between items-center">
+                        <div className="space-y-2 space-x-2">
+                          <Button
+                            className="text-xs font-semibold "
+                            size="sm"
+                            variant="primary"
+                            onClick={() =>
+                              notificationMutation({
+                                id: notification._id,
+                                action: "ESTIMATED",
+                              })
+                            }
+                          >
+                            Approve
+                          </Button>
+                          <Button
+                            className="text-xs font-semibold"
+                            variant="outline"
+                            size="sm"
+                            onClick={handleReschedule}
+                          >
+                            Reschedule
+                          </Button>
+                        </div>
                         <Button
                           className="text-xs font-semibold"
                           variant="outline"
