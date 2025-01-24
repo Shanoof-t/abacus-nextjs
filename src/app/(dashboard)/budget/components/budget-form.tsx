@@ -10,23 +10,21 @@ import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@/components/ui/popover";
-import { Calendar } from "@/components/ui/calendar";
+} from "@radix-ui/react-popover";
 import Select from "@/components/creatable-select";
 import { Button } from "@/components/ui/button";
 import { CalendarIcon } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Slider } from "@/components/ui/slider";
 import { Textarea } from "@/components/ui/textarea";
-
 import { budgetSchema } from "@/schemas/budget-schema";
 import { z } from "zod";
 import { format } from "date-fns";
-
 import AmountInput from "./amount-input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { useNewBudget } from "@/hooks/use-budget";
+import { Calendar } from "@/components/ui/calendar";
 
 const initialValues = {
   budget_name: "",
@@ -82,13 +80,13 @@ const BudgetForm = ({ categoryValues, onCategoryCreate }: BudgetForm) => {
                       )}
                     </Button>
                   </PopoverTrigger>
-                  <PopoverContent className="bg-white items-center flex justify-center">
+                  <PopoverContent className="bg-white items-center flex justify-center z-50">
                     <Calendar
                       mode="single"
                       selected={field.value}
-                      onSelect={(date) => field.onChange(date)}
-                      initialFocus
-                    ></Calendar>
+                      onSelect={field.onChange}
+                      className="rounded-md border"
+                    />
                   </PopoverContent>
                 </Popover>
               </FormControl>
@@ -123,7 +121,7 @@ const BudgetForm = ({ categoryValues, onCategoryCreate }: BudgetForm) => {
                       )}
                     </Button>
                   </PopoverTrigger>
-                  <PopoverContent className="bg-white items-center flex justify-center">
+                  <PopoverContent className="bg-white items-center flex justify-center z-50">
                     <Calendar
                       mode="single"
                       selected={field.value}

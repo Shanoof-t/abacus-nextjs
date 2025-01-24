@@ -88,7 +88,6 @@ export const useCreateBulkTransaction = () => {
   return useMutation({
     mutationFn: createBulkTransactions,
     onSuccess: (data) => {
-      console.log("data", data);
       toast({ description: "Successfully imported." });
       queryClient.invalidateQueries({ queryKey: ["transactions"] });
     },

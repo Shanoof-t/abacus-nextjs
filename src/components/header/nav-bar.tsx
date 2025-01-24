@@ -41,10 +41,8 @@ const Navbar = () => {
   const handleLogout = () => {
     mutate();
   };
-  const { onOpen } = useTransactionRescheduleStore();
-  const handleReschedule = () => {
-    onOpen();
-  };
+  const { onOpen, setNotificationId } = useTransactionRescheduleStore();
+
   // notification
 
   const { mutate: notificationMutation } = useUpdateNotification();
@@ -123,7 +121,10 @@ const Navbar = () => {
                             className="text-xs font-semibold"
                             variant="outline"
                             size="sm"
-                            onClick={handleReschedule}
+                            onClick={() => {
+                              setNotificationId(notification._id);
+                              onOpen();
+                            }}
                           >
                             Reschedule
                           </Button>
@@ -135,7 +136,7 @@ const Navbar = () => {
                           onClick={() =>
                             notificationMutation({
                               id: notification._id,
-                              action: "NOT_ESTIMATED",
+                              action: "CANCEL_RECURRING",
                             })
                           }
                         >

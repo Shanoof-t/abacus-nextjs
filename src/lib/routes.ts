@@ -48,6 +48,7 @@ const API_ROUTES = {
   NOTIFICATION: {
     ALL_NOTIFICATIONS: "/api/v1/notifications",
     UPDATE_NOTIFICATION: "/api/v1/notifications/",
+    RESCHEDULE_RECURRING_TRANSCTION: "/api/v1/notifications/",
   },
 };
 

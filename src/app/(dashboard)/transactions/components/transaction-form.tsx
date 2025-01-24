@@ -17,7 +17,7 @@ import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@/components/ui/popover";
+} from "@radix-ui/react-popover";
 import { CalendarIcon } from "lucide-react";
 import { format } from "date-fns";
 import { Calendar } from "@/components/ui/calendar";
@@ -208,7 +208,7 @@ const TransactionForm = ({
                       )}
                     </Button>
                   </PopoverTrigger>
-                  <PopoverContent className="bg-white items-center flex justify-center">
+                  <PopoverContent className="bg-white items-center flex justify-center z-50">
                     <Calendar
                       mode="single"
                       selected={field.value}
