@@ -72,7 +72,7 @@ const SignUpForm = () => {
                   name="user_name"
                   onChange={handleChange}
                   value={values.user_name}
-                  className="h-[1.5rem] border rounded text-xs border-[0.1rem] border-gray-400"
+                  className="placeholder-shown:text-gray-500 h-[1.5rem] rounded text-xs  border-gray-400 "
                 />
               </div>
 
@@ -92,7 +92,7 @@ const SignUpForm = () => {
                   name="email"
                   onChange={handleChange}
                   value={values.email}
-                  className="h-[1.5rem] border rounded text-xs border-[0.1rem] border-gray-400"
+                  className="placeholder-shown:text-gray-500 h-[1.5rem] rounded text-xs  border-gray-400 "
                 />
               </div>
 
@@ -113,7 +113,7 @@ const SignUpForm = () => {
                     name="password"
                     onChange={handleChange}
                     value={values.password}
-                    className="h-[1.5rem] border rounded text-xs border-[0.1rem] border-gray-400 pr-10"
+                    className="placeholder-shown:text-gray-500 h-[1.5rem] rounded text-xs  border-gray-400 pr-10"
                   />
                   <button
                     type="button"
