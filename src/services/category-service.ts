@@ -18,10 +18,11 @@ export const createNewCategory = async (data: CategoryInputs) => {
 type FetchCategories = {
   status: string;
   message: string;
-  data: CategoryInputs[]
+  data: CategoryInputs[];
 };
 export const fetchAllCategories = async (): Promise<FetchCategories> => {
   const response = await apiClient.get(API_ROUTES.CATEGORY.GET_ALL_CATEGORY);
+  console.log("reponse data", response.data);
   return response.data;
 };
 

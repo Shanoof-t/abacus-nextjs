@@ -1,5 +1,11 @@
 "use client";
-import { resendOTP, signIn, signUp, verifyOTP } from "@/services/auth-service";
+import {
+  logOut,
+  resendOTP,
+  signIn,
+  signUp,
+  verifyOTP,
+} from "@/services/auth-service";
 import { useMutation } from "@tanstack/react-query";
 
 export const useSignup = () => {
@@ -14,14 +20,23 @@ export const useSignin = () => {
   });
 };
 
-export const useOtpVerify  = ()=>{
+export const useOtpVerify = () => {
   return useMutation({
-    mutationFn:verifyOTP
-  })
-}
+    mutationFn: verifyOTP,
+  });
+};
 
-export const useResendOtp = ()=>{
+export const useResendOtp = () => {
   return useMutation({
-    mutationFn:resendOTP
-  })
-}
+    mutationFn: resendOTP,
+  });
+};
+
+export const useLogout = () => {
+  return useMutation({
+    mutationFn: logOut,
+    onSuccess: () => {
+      localStorage.clear();
+    },
+  });
+};

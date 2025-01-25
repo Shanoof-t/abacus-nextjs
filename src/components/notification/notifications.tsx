@@ -28,7 +28,10 @@ const Notifications = () => {
             </div>
           )}
           {data?.data.map((notification) => (
-            <NotificationCard notification={notification} />
+            <NotificationCard
+              notification={notification}
+              key={notification._id}
+            />
           ))}
         </HoverCardContent>
       </HoverCard>

@@ -2,7 +2,7 @@ import React from "react";
 import HeaderLogo from "./header-logo";
 import Navigations from "./navigation";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
-import { Bell, Loader2, LogOut } from "lucide-react";
+import { Bell, Loader2, LogOut, Settings } from "lucide-react";
 import { DropdownMenu, DropdownMenuItem } from "../ui/dropdown-menu";
 import {
   DropdownMenuContent,
@@ -12,14 +12,10 @@ import { useMutation } from "@tanstack/react-query";
 import apiClient from "@/lib/axios.config";
 import API_ROUTES from "@/lib/routes";
 import Notifications from "../notification/notifications";
+import { useLogout } from "@/hooks/use-auth";
 
 const Navbar = () => {
-  const { mutate, isSuccess } = useMutation({
-    mutationFn: async () => {
-      const response = await apiClient.post(API_ROUTES.AUTH.LOGOUT);
-      return response.data;
-    },
-  });
+  const { mutate, isSuccess } = useLogout();
 
   if (isSuccess) {
     window.location.reload();
@@ -37,9 +33,9 @@ const Navbar = () => {
           <Navigations />
         </div>
       </div>
-      <div className="flex justify-between items-center">
+      <div className="flex justify-between items-center space-x-4">
         <Notifications />
-        <div className="ms-4 lg:ms-6">
+        {/* <div className="ms-4 lg:ms-6">
           <DropdownMenu>
             <DropdownMenuTrigger>
               <Avatar className="size-8">
@@ -59,7 +55,8 @@ const Navbar = () => {
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
-        </div>
+        </div> */}
+        <Settings className="text-white w-5 h-5 m-1 cursor-pointer" />
       </div>
     </div>
   );

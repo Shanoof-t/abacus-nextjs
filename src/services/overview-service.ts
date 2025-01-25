@@ -2,8 +2,9 @@ import apiClient from "@/lib/axios.config";
 import API_ROUTES from "@/lib/routes";
 
 type SummaryByDate = {
-  from: Date;
-  to: Date;
+  from: string | Date;
+  to: string | Date;
+  account: string;
 };
 
 type fetchSummaryByDateReponse = {
@@ -18,6 +19,7 @@ type fetchSummaryByDateReponse = {
     pastMonthRemainingPercentage: number;
   };
 };
+
 export const fetchSummaryByDate = async (
   data: SummaryByDate
 ): Promise<fetchSummaryByDateReponse> => {

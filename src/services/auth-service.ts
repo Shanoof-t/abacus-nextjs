@@ -29,3 +29,8 @@ export const verifyOTP = async (data: OtpVerifyParams): Promise<void> => {
 export const resendOTP = async (data: { userId: string }): Promise<void> => {
   return await apiClient.post(API_ROUTES.AUTH.RESEND_OTP, data);
 };
+
+export const logOut = async () => {
+  const response = await apiClient.post(API_ROUTES.AUTH.LOGOUT);
+  return response.data;
+};

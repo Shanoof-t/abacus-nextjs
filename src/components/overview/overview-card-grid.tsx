@@ -5,20 +5,43 @@ import { FaPiggyBank } from "react-icons/fa";
 import { FaArrowTrendUp, FaArrowTrendDown } from "react-icons/fa6";
 import { useFinancialSummary } from "@/hooks/use-overview";
 import { useEffect, useMemo } from "react";
+import { useSearchParams } from "next/navigation";
 const CardGrid = () => {
   // date period
 
-  const to = useMemo(() => new Date(), []);
-  const from = useMemo(() => subMonths(to, 1), [to]);
+  const searchParams = useSearchParams();
+
+  const to = useMemo(
+    () => searchParams.get("to") || new Date(),
+    [searchParams]
+  );
+
+  const from = useMemo(
+    () => searchParams.get("from") || subMonths(to, 1),
+    [to, searchParams]
+  );
+
+  const account = useMemo(
+    () => searchParams.get("account") || "all",
+    [searchParams]
+  );
 
   const endDate = format(to, "PP");
-  const startDate = format(from, "MMM MM");
+  const startDate = format(from, "MMM d");
 
   const { mutate, data } = useFinancialSummary();
 
   useEffect(() => {
-    mutate({ to, from });
-  }, [mutate, to, from]);
+    const query = {
+      from,
+      to,
+      account,
+    };
+    if (account === "all") {
+      query.account = "";
+    }
+    mutate({ to: query.to, from: query.from, account: query.account });
+  }, [mutate, to, from, account]);
 
   return (
     <div className="grid lg:grid-cols-3 gap-8">

@@ -27,15 +27,13 @@ const SignInForm = () => {
     signInInputs: SignInType;
     resetForm: () => void;
   };
-  const query = useQueryClient();
 
   const signInHandler = ({ signInInputs, resetForm }: SignInHandler) => {
     mutate(
       { email: signInInputs.email, password: signInInputs.password },
       {
         onSuccess: (data) => {
-          console.log("data ", data);
-          query.setQueryData(["signin"], data.data);
+          localStorage.setItem("user_name", data.data.user_name);
           resetForm();
           router.replace("/");
         },

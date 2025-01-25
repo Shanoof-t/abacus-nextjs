@@ -15,6 +15,7 @@ import { column } from "./columns";
 const Page = () => {
   const { onOpen } = useNewCategoryStore();
   const { data, isLoading, isSuccess } = useGetAllCategories();
+  console.log("data in category", data);
   const { mutate } = useDeleteBulkCategories();
   if (isLoading) {
     return (
