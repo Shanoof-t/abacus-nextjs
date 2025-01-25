@@ -1,8 +1,8 @@
 "use client";
 import Image from "next/image";
-import AuthForm from "../components/AuthForm";
 import Link from "next/link";
 import GoogleButton from "../components/GoogleButton";
+import SignUpForm from "../components/sign-up-form";
 
 function Page() {
   return (
@@ -33,7 +33,7 @@ function Page() {
 
           {/* form */}
 
-          <AuthForm type="sign-up" />
+          <SignUpForm />
 
           <div className="my-4 w-full flex items-center">
             <hr className="flex-grow text-[#7E8CA0]" />

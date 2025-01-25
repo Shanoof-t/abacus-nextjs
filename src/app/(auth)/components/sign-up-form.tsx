@@ -1,47 +1,39 @@
-"use client";
-import { Button } from "@/components/ui/button";
-import { Form, Formik } from "formik";
-import React, { useState } from "react";
-import { authValidationSchema } from "@/utils/validations/auth-validation";
-import { SignInType, SignUpType } from "@/types/auth-types";
-import { useSignin, useSignup } from "@/hooks/use-auth";
-import { useRouter } from "next/navigation";
-import { useQueryClient } from "@tanstack/react-query";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { useSignup } from "@/hooks/use-auth";
+import { SignUpType } from "@/types/auth-types";
+import { signUpValidationSchema } from "@/utils/validations/auth-validation";
+import { useQueryClient } from "@tanstack/react-query";
+import { Form, Formik } from "formik";
+import { useRouter } from "next/navigation";
+import React, { useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
-function AuthForm({ type }: { type: "sign-in" | "sign-up" }) {
-  const [isPasswordShow, setIsPasswordShow] = useState<boolean>(false);
-  const router = useRouter();
+import { Button } from "@/components/ui/button";
 
+const SignUpForm = () => {
   const signUpInitialValues: SignUpType = {
     email: "",
     password: "",
+    user_name: "",
   };
-
-  const signInInitialValues: SignInType = {
-    email: "",
-    password: "",
-  };
-
-  const query = useQueryClient();
-
-  const { error: signUpError, mutate: signUpMutate } = useSignup();
-  const { error: signInError, mutate: signInMutate } = useSignin();
 
   type SignUpHandler = {
     signUpInputs: SignUpType;
     resetForm: () => void;
   };
 
-  type SignInHandler = {
-    signInInputs: SignInType;
-    resetForm: () => void;
-  };
+  const { error: signUpError, mutate } = useSignup();
+  const query = useQueryClient();
+  const router = useRouter();
+  const [isPasswordShow, setIsPasswordShow] = useState<boolean>(false);
 
   const signUpHandler = ({ signUpInputs, resetForm }: SignUpHandler) => {
-    signUpMutate(
-      { email: signUpInputs.email, password: signUpInputs.password },
+    mutate(
+      {
+        email: signUpInputs.email,
+        password: signUpInputs.password,
+        user_name: signUpInputs.user_name,
+      },
       {
         onSuccess: (data) => {
           query.setQueryData(["signup"], data);
@@ -52,40 +44,43 @@ function AuthForm({ type }: { type: "sign-in" | "sign-up" }) {
     );
   };
 
-  const signInHandler = ({ signInInputs, resetForm }: SignInHandler) => {
-    signInMutate(
-      { email: signInInputs.email, password: signInInputs.password },
-      {
-        onSuccess: () => {
-          resetForm();
-          router.replace("/");
-        },
-      }
-    );
-  };
-
   const handleSubmit = (
-    formInputs: SignInType | SignUpType,
+    formInputs: SignUpType,
     { resetForm }: { resetForm: () => void }
   ) => {
-    if (type === "sign-up") {
-      signUpHandler({ signUpInputs: formInputs, resetForm });
-    } else if (type === "sign-in") {
-      signInHandler({ signInInputs: formInputs, resetForm });
-    }
+    signUpHandler({ signUpInputs: formInputs, resetForm });
   };
 
   return (
     <div className="max-w-md mx-auto p-3 bg-white">
       <Formik
-        initialValues={
-          type === "sign-in" ? signInInitialValues : signUpInitialValues
-        }
-        validationSchema={authValidationSchema}
+        initialValues={signUpInitialValues}
+        validationSchema={signUpValidationSchema}
         onSubmit={handleSubmit}
       >
         {({ handleChange, errors, values, touched }) => (
           <Form className="space-y-3">
+            {/* User Name Input */}
+
+            <div className="space-y-1">
+              <div className="grid w-full max-w-sm items-center gap-1.5">
+                <Label htmlFor="user_name" className="font-semibold text-xs">
+                  User Name
+                </Label>
+                <Input
+                  type="text"
+                  name="user_name"
+                  onChange={handleChange}
+                  value={values.user_name}
+                  className="h-[1.5rem] border rounded text-xs border-[0.1rem] border-gray-400"
+                />
+              </div>
+
+              {touched.user_name && errors.user_name && (
+                <p className="text-sm text-red-600">{errors.user_name}</p>
+              )}
+            </div>
+
             {/* Email Input */}
             <div className="space-y-1">
               <div className="grid w-full max-w-sm items-center gap-1.5">
@@ -132,22 +127,13 @@ function AuthForm({ type }: { type: "sign-in" | "sign-up" }) {
               {touched.password && errors.password && (
                 <p className="text-sm text-red-600">{errors.password}</p>
               )}
-              {touched.email &&
-                (signUpError?.message || signInError?.message) && (
-                  <p className="text-sm text-red-600">
-                    {signUpError?.message || signInError?.message}
-                  </p>
-                )}
+              {touched.email && signUpError?.message && (
+                <p className="text-sm text-red-600">{signUpError?.message}</p>
+              )}
             </div>
 
             {/* Submit Button */}
             <div>
-              {/* <Button
-                type="submit"
-                className="w-full py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
-              >
-                Continue
-              </Button> */}
               <Button
                 className="bg-zinc-800 hover:bg-zinc-700 text-white h-[1.5rem] w-full border rounded text-[0.700rem]"
                 type="submit"
@@ -160,6 +146,6 @@ function AuthForm({ type }: { type: "sign-in" | "sign-up" }) {
       </Formik>
     </div>
   );
-}
+};
 
-export default AuthForm;
+export default SignUpForm;

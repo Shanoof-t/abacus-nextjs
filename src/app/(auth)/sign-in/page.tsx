@@ -1,12 +1,11 @@
 "use client";
 import Image from "next/image";
 import React from "react";
-import AuthForm from "../components/AuthForm";
 import Link from "next/link";
 import GoogleButton from "../components/GoogleButton";
+import SignInForm from "../components/sign-in-form";
 
 function Page() {
-
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2  min-h-screen">
       <div className="flex flex-col justify-center items-center ">
@@ -35,8 +34,7 @@ function Page() {
 
           {/* form */}
 
-          <AuthForm type="sign-in" />
-
+          <SignInForm />
           <div className="my-4 w-full flex items-center">
             <hr className="flex-grow text-[#7E8CA0]" />
             <hr className="flex-grow text-[#7E8CA0]" />
