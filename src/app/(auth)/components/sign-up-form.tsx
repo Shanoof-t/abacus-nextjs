@@ -23,7 +23,7 @@ const SignUpForm = () => {
   };
 
   const { error: signUpError, mutate } = useSignup();
-  const query = useQueryClient();
+
   const router = useRouter();
   const [isPasswordShow, setIsPasswordShow] = useState<boolean>(false);
 
@@ -35,8 +35,7 @@ const SignUpForm = () => {
         user_name: signUpInputs.user_name,
       },
       {
-        onSuccess: (data) => {
-          query.setQueryData(["signup"], data);
+        onSuccess: () => {
           resetForm();
           router.replace("/sign-up/verify-email");
         },

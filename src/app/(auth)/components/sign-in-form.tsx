@@ -10,6 +10,7 @@ import { Form, Formik } from "formik";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { signInValidationSchema } from "@/utils/validations/auth-validation";
+import { useQueryClient } from "@tanstack/react-query";
 
 const SignInForm = () => {
   const [isPasswordShow, setIsPasswordShow] = useState<boolean>(false);
@@ -26,12 +27,15 @@ const SignInForm = () => {
     signInInputs: SignInType;
     resetForm: () => void;
   };
+  const query = useQueryClient();
 
   const signInHandler = ({ signInInputs, resetForm }: SignInHandler) => {
     mutate(
       { email: signInInputs.email, password: signInInputs.password },
       {
-        onSuccess: () => {
+        onSuccess: (data) => {
+          console.log("data ", data);
+          query.setQueryData(["signin"], data.data);
           resetForm();
           router.replace("/");
         },
@@ -66,7 +70,7 @@ const SignInForm = () => {
                   name="email"
                   onChange={handleChange}
                   value={values.email}
-                  className="h-[1.5rem] border rounded text-xs border-[0.1rem] border-gray-400"
+                  className="placeholder-shown:text-gray-500 h-[1.5rem] rounded text-xs  border-gray-400 "
                 />
               </div>
               {touched.email && errors.email && (
@@ -86,7 +90,7 @@ const SignInForm = () => {
                     name="password"
                     onChange={handleChange}
                     value={values.password}
-                    className="h-[1.5rem] border rounded text-xs border-[0.1rem] border-gray-400 pr-10"
+                    className="placeholder-shown:text-gray-500 h-[1.5rem] rounded text-xs  border-gray-400 "
                   />
                   <button
                     type="button"
