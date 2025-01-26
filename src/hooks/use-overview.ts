@@ -1,5 +1,5 @@
-import { fetchHistory, fetchSummaryByDate } from "@/services/overview-service";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { fetchHistory, fetchSummaryByDate, getHistory } from "@/services/overview-service";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 export const useFinancialSummary = () => {
   return useMutation({
@@ -7,9 +7,20 @@ export const useFinancialSummary = () => {
   });
 };
 
-export const useFinancialHistory = ()=>{
+export const useFinancialHistory = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: fetchHistory,
+    onSuccess: (data) => {
+      queryClient.setQueryData(["financialHistory"], data.data);
+    },
+  });
+};
+
+export const useGetFinancialHistory = () => {
   return useQuery({
-    queryKey:["financial-history"],
-    queryFn:fetchHistory
-  })
-}
+    queryKey: ["financialHistory"],
+    queryFn: getHistory,
+    staleTime: Infinity,
+  });
+};

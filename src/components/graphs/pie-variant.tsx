@@ -16,20 +16,22 @@ type Category = {
   category_amount: number;
 };
 
-const PieVariant = ({ data }: { data: Category[] }) => {
+const PieVariant = ({ data }: { data?: Category[] }) => {
   const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
 
-  const displayedData = data.slice(0, 3);
-  const otherData = data.slice(3);
-  const otherCategoryAmount = otherData.reduce(
+  const displayedData = data?.slice(0, 3);
+  const otherData = data?.slice(3);
+  const otherCategoryAmount = otherData?.reduce(
     (acc, item) => acc + item.category_amount,
     0
   );
 
-  const changedData = [
-    ...displayedData,
-    { category_name: "Other", category_amount: otherCategoryAmount },
-  ];
+  const changedData = displayedData
+    ? [
+        ...displayedData,
+        { category_name: "Other", category_amount: otherCategoryAmount },
+      ]
+    : [];
 
   const finalData = changedData.map((category) => {
     return {
@@ -59,7 +61,7 @@ const PieVariant = ({ data }: { data: Category[] }) => {
           }}
         /> */}
         <Legend />
-        <Tooltip content={<CategoryTooltip />}/>
+        <Tooltip content={<CategoryTooltip />} />
         <Pie
           data={finalData}
           dataKey="value"
@@ -71,7 +73,7 @@ const PieVariant = ({ data }: { data: Category[] }) => {
           paddingAngle={2}
           labelLine={false}
         >
-          {data.map((entry, index) => (
+          {data?.map((entry, index) => (
             <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
           ))}
         </Pie>

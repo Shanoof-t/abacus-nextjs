@@ -1,72 +1,47 @@
 "use client";
-import { format, subMonths } from "date-fns";
+
 import OverViewCard from "./card";
 import { FaPiggyBank } from "react-icons/fa";
 import { FaArrowTrendUp, FaArrowTrendDown } from "react-icons/fa6";
-import { useFinancialSummary } from "@/hooks/use-overview";
-import { useEffect, useMemo } from "react";
-import { useSearchParams } from "next/navigation";
-const CardGrid = () => {
-  // date period
 
-  const searchParams = useSearchParams();
+type CardGrid = {
+  startDate: string;
+  endDate: string;
+  data?: {
+    remaining: number;
+    income: number;
+    expense: number;
+    pastMonthIncomePercentage: number;
+    pastMonthExpensePercentage: number;
+    pastMonthRemainingPercentage: number;
+  };
+};
 
-  const to = useMemo(
-    () => searchParams.get("to") || new Date(),
-    [searchParams]
-  );
-
-  const from = useMemo(
-    () => searchParams.get("from") || subMonths(to, 1),
-    [to, searchParams]
-  );
-
-  const account = useMemo(
-    () => searchParams.get("account") || "all",
-    [searchParams]
-  );
-
-  const endDate = format(to, "PP");
-  const startDate = format(from, "MMM d");
-
-  const { mutate, data } = useFinancialSummary();
-
-  useEffect(() => {
-    const query = {
-      from,
-      to,
-      account,
-    };
-    if (account === "all") {
-      query.account = "";
-    }
-    mutate({ to: query.to, from: query.from, account: query.account });
-  }, [mutate, to, from, account]);
-
+const CardGrid = ({ startDate, endDate, data }: CardGrid) => {
   return (
     <div className="grid lg:grid-cols-3 gap-8">
       <OverViewCard
         title="Remaining"
         dateRange={startDate + " - " + endDate}
         icon={FaPiggyBank}
-        percentage={data?.data.pastMonthRemainingPercentage}
-        value={data?.data.remaining}
+        percentage={data?.pastMonthRemainingPercentage}
+        value={data?.remaining}
         variant={"default"}
       />
       <OverViewCard
         title="Income"
         dateRange={startDate + " - " + endDate}
         icon={FaArrowTrendUp}
-        percentage={data?.data.pastMonthIncomePercentage}
-        value={data?.data.income}
+        percentage={data?.pastMonthIncomePercentage}
+        value={data?.income}
         variant={"success"}
       />
       <OverViewCard
         title="Expense"
         dateRange={startDate + " - " + endDate}
         icon={FaArrowTrendDown}
-        percentage={data?.data.pastMonthExpensePercentage}
-        value={data?.data.expense}
+        percentage={data?.pastMonthExpensePercentage}
+        value={data?.expense}
         variant={"danger"}
       />
     </div>

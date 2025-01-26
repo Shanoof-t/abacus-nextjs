@@ -1,7 +1,15 @@
 "use client";
 
+import { useEffect, useState } from "react";
+
 const WelcomeMsg = () => {
-  const userName = localStorage.getItem("user_name");
+  const [userName, setUserName] = useState<string>("");
+  useEffect(() => {
+    const name = localStorage.getItem("user_name");
+    if (name) {
+      setUserName(name);
+    }
+  }, []);
   return (
     <div className="mb-4 mt-6 space-y-2">
       <h2 className="text-2xl lg:text-4xl text-white font-semibold">

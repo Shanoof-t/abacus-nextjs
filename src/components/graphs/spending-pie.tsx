@@ -2,24 +2,24 @@
 import React from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import PieVariant from "./pie-variant";
-import { useFinancialHistory } from "@/hooks/use-overview";
+import { useGetFinancialHistory } from "@/hooks/use-overview";
 
 const SpendingPie = () => {
-  const { data, isSuccess, isLoading } = useFinancialHistory();
-  console.log(data);
-  if (isLoading) return <div>Loading..</div>;
+  const { data } = useGetFinancialHistory();
 
-  if (isSuccess) {
+  if (!data) return <div>Loading..</div>;
+
+  if (data) {
     return (
       <Card className=" border-none drop-shadow-sm bg-white p-4 border rounded-[.50rem]">
         <CardHeader>
           <CardTitle>Categories</CardTitle>
         </CardHeader>
         <CardContent>
-          {data.data.categories.length === 0 ? (
+          {data?.categories.length === 0 ? (
             <div>No data for this period</div>
           ) : (
-            <PieVariant data={data.data.categories} />
+            <PieVariant data={data?.categories} />
           )}
         </CardContent>
       </Card>

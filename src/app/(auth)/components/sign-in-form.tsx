@@ -10,7 +10,6 @@ import { Form, Formik } from "formik";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { signInValidationSchema } from "@/utils/validations/auth-validation";
-import { useQueryClient } from "@tanstack/react-query";
 
 const SignInForm = () => {
   const [isPasswordShow, setIsPasswordShow] = useState<boolean>(false);

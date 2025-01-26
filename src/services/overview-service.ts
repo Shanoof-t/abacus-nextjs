@@ -1,5 +1,6 @@
 import apiClient from "@/lib/axios.config";
 import API_ROUTES from "@/lib/routes";
+import { useQueryClient } from "@tanstack/react-query";
 
 type SummaryByDate = {
   from: string | Date;
@@ -52,7 +53,25 @@ type FetchHistory = {
   };
 };
 
-export const fetchHistory = async (): Promise<FetchHistory> => {
-  const response = await apiClient.get(API_ROUTES.OVERVIEW.FINANCIAL_HISTORY);
+export const fetchHistory = async (
+  data: SummaryByDate
+): Promise<FetchHistory> => {
+  const response = await apiClient.post(
+    API_ROUTES.OVERVIEW.FINANCIAL_HISTORY,
+    data
+  );
+
   return response.data;
+};
+
+type getHistory =
+  | {
+      transaction: Transaction[];
+      categories: Category[];
+    }
+  | undefined;
+
+export const getHistory = (): Promise<getHistory> => {
+  const queryClient = useQueryClient();
+  return Promise.resolve(queryClient.getQueryData(["financialHistory"]));
 };

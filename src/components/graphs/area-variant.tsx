@@ -11,7 +11,7 @@ import {
 import CustomTooltip from "./transaction-tooltip";
 import { format } from "date-fns";
 
-const AreaVariant = ({ data }: { data: Transaction[] }) => {
+const AreaVariant = ({ data }: { data?: Transaction[] }) => {
   return (
     <ResponsiveContainer width="100%" height={350}>
       <AreaChart data={data}>
