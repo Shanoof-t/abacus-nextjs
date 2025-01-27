@@ -188,6 +188,6 @@ export const column: ColumnDef<Budget>[] = [
   },
   {
     id: "actions",
-    cell: ({ row }) => <Action id={row.original._id} />,
+    cell: ({ row }) => <Action category_name={row.original.category_name} />,
   },
 ];

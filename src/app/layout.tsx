@@ -6,6 +6,7 @@ import QueryProvider from "@/utils/QueryProvider";
 import { SheetProvider } from "@/providers/sheet-provider";
 import AlertProvider from "@/providers/alert-provider";
 import DialogProvider from "@/providers/dialog-provider";
+import DrawerProvider from "@/providers/drawer-provider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -34,6 +35,7 @@ export default function RootLayout({
       >
         <QueryProvider>
           <Suspense>
+            <DrawerProvider />
             <DialogProvider />
             <AlertProvider />
             <SheetProvider />

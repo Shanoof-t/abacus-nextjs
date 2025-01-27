@@ -31,3 +31,10 @@ export const fetchBudget = async (name: string): Promise<FetchBudget> => {
   const response = await apiClient.get(API_ROUTES.BUDGET.GET_BUDGET + name);
   return response.data;
 };
+
+export const deleteBudget = async (name: string): Promise<Fetch> => {
+  const response = await apiClient.delete(
+    API_ROUTES.BUDGET.DELETE_BUDGET + name
+  );
+  return response.data;
+};

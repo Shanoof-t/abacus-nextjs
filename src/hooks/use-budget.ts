@@ -1,5 +1,6 @@
 import {
   createBudget,
+  deleteBudget,
   fetchAllBudget,
   fetchBudget,
 } from "@/services/budget-service";
@@ -32,6 +33,17 @@ export const useGetBudget = () => {
     mutationFn: fetchBudget,
     onSuccess: (data) => {
       console.log("budget data", data);
+    },
+  });
+};
+
+export const useDeleteBudget = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: deleteBudget,
+    onSuccess: (data) => {
+      toast({ description: data.message });
+      queryClient.invalidateQueries({ queryKey: ["budgets"] });
     },
   });
 };

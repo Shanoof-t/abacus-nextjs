@@ -9,8 +9,6 @@ import { useNewBudgetStore } from "@/store/budget-store";
 import { column } from "./components/column";
 import { useGetAllBudget } from "@/hooks/use-budget";
 
-import React from "react";
-
 const BudgetPage = () => {
   const { onOpen } = useNewBudgetStore();
   const { data, isSuccess } = useGetAllBudget();
