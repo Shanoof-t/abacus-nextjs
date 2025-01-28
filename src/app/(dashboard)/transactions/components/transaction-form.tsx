@@ -39,11 +39,12 @@ import {
   Select as ShadcnSelect,
 } from "@/components/ui/select";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { useEffect } from "react";
-import { useGetBudget } from "@/hooks/use-budget";
+import { useEffect, useState } from "react";
+import { useGetBudget, useGetBudgetByCategory } from "@/hooks/use-budget";
 import BudgetSummary from "./budget-summary";
 import TransactionSummaryMessage from "./transaction-summary-message";
 import { transactionSchema } from "@/utils/validations/transaction-validation";
+import { useQueryClient } from "@tanstack/react-query";
 
 type TransactionForm = {
   accountValues: string[];
@@ -86,7 +87,6 @@ const TransactionForm = ({
 
   const { mutate: newTransactionMutate } = useNewTransaction();
   const { mutate: editTransactionMutate } = useEditTransaction();
-  const { mutate: getBudgetMutate, data, isSuccess, reset } = useGetBudget();
 
   const { id } = useEditTransactionStore();
 
@@ -99,11 +99,22 @@ const TransactionForm = ({
   };
 
   const formWatch = form.watch();
+
+  const [categoryName, setCategoryName] = useState("");
+  const { data, isSuccess } = useGetBudgetByCategory(
+    categoryName,
+    categoryName !== ""
+  );
+
+  const queryClient = useQueryClient();
   useEffect(() => {
     if (formWatch.transaction_type === "expense" && formWatch.category_name) {
-      getBudgetMutate(formWatch.category_name);
+      setCategoryName(formWatch.category_name);
     } else {
-      reset();
+      // reset();
+      queryClient.resetQueries({
+        queryKey: ["budget", formWatch.category_name],
+      });
     }
   }, [formWatch.transaction_type, formWatch.category_name]);
 
@@ -159,6 +170,7 @@ const TransactionForm = ({
                 data={data?.data}
                 field="category_name"
                 isSelected={!!field.value}
+                value={field.value}
               />
             </FormItem>
           )}

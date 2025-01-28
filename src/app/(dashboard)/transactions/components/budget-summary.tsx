@@ -7,6 +7,8 @@ import {
   generateMessages,
 } from "@/utils/budget-utils";
 import TransactionSummaryMessage from "./transaction-summary-message";
+import Link from "next/link";
+import { useBudgetStore } from "@/store/budget-store";
 
 export type fieldEnum =
   | "category_name"
@@ -32,11 +34,38 @@ const BudgetSummary = ({
   value,
 }: BudgetSummary) => {
   // if the user dont have any budget with selected category
-  if (!data) return null;
+  if (!data) {
+    const { onOpen, setMode } = useBudgetStore();
+    return (
+      <>
+        {isSuccess && isSelected ? (
+          <TransactionSummaryMessage
+            variant={"default"}
+            message={
+              <>
+                You don’t have a budget with this {value?.toString()}, create
+                one{" "}
+                <span
+                  onClick={() => {
+                    onOpen();
+                    setMode("create");
+                  }}
+                  className="text-blue-700 cursor-pointer"
+                >
+                  Budget
+                </span>
+                .
+              </>
+            }
+          />
+        ) : null}
+      </>
+    );
+  }
 
   const remainingBudget = calculateRemainingBudget({
     amount_limit: data.amount_limit,
-    total_spent: data.total_spent,
+    total_spent: data.total_spent || 0,
   });
 
   const amountBalance = calculateAmountBalance({ remainingBudget, value });
@@ -56,7 +85,7 @@ const BudgetSummary = ({
     variant,
   });
 
-  const budgetMessages = {
+  const budgetMessages = messages && {
     category_name: messages.remainingBudgetMessage,
     amount_top: messages.amountTopMessage,
     amount_bottom: messages.amountBottomMessage,

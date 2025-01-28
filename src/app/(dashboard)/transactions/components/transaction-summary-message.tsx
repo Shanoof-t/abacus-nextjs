@@ -19,11 +19,14 @@ const SummaryVariants = cva("text-sm mt-1", {
 type SummaryVariants = VariantProps<typeof SummaryVariants>;
 
 type TransactionSummaryMessage = {
-  message: string;
+  message: string | React.ReactNode;
   variant: "default" | "warning" | "success" | "danger";
 };
 
-const TransactionSummaryMessage = ({ variant, message }: TransactionSummaryMessage) => {
+const TransactionSummaryMessage = ({
+  variant,
+  message,
+}: TransactionSummaryMessage) => {
   return (
     <div>
       <p className={cn(SummaryVariants({ variant }))}>{message}</p>

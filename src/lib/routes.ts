@@ -36,6 +36,7 @@ const API_ROUTES = {
   BUDGET: {
     CREATE_BUDGET: "/api/v1/budget",
     GET_BUDGET: "/api/v1/budget/",
+    GET_BUDGET_CATEGORY: "/api/v1/budget/category/",
     GET_ALL_BUDGET: "/api/v1/budget",
     DELETE_BUDGET: "/api/v1/budget/",
     BULK_DELETE_BUDGET: "/api/v1/budget/bulk-delete",

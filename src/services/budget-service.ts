@@ -7,17 +7,6 @@ interface Fetch {
   status: string;
   message: string;
 }
-
-export const createBudget = async (data: z.infer<typeof budgetSchema>) => {
-  const response = await apiClient.post(API_ROUTES.BUDGET.CREATE_BUDGET, data);
-  return response.data;
-};
-
-export const fetchAllBudget = async () => {
-  const response = await apiClient.get(API_ROUTES.BUDGET.GET_ALL_BUDGET);
-  return response.data.data;
-};
-
 export interface BudgetData
   extends Omit<
     z.infer<typeof budgetSchema>,
@@ -33,6 +22,18 @@ export interface BudgetData
 interface FetchBudget extends Fetch {
   data: BudgetData;
 }
+
+export const createBudget = async (
+  data: z.infer<typeof budgetSchema>
+): Promise<FetchBudget> => {
+  const response = await apiClient.post(API_ROUTES.BUDGET.CREATE_BUDGET, data);
+  return response.data;
+};
+
+export const fetchAllBudget = async () => {
+  const response = await apiClient.get(API_ROUTES.BUDGET.GET_ALL_BUDGET);
+  return response.data.data;
+};
 
 export const fetchBudget = async (id: string): Promise<FetchBudget> => {
   const response = await apiClient.get(API_ROUTES.BUDGET.GET_BUDGET + id);
@@ -57,6 +58,16 @@ export const updateBudget = async ({
   const response = await apiClient.post(
     API_ROUTES.BUDGET.EDIT_BUDGET + id,
     data
+  );
+  return response.data;
+};
+
+export const fetchBudgetByCategory = async (
+  categoryName: string
+): Promise<FetchBudget> => {
+  console.log("categonyName in service", categoryName);
+  const response = await apiClient.get(
+    API_ROUTES.BUDGET.GET_BUDGET_CATEGORY + categoryName
   );
   return response.data;
 };

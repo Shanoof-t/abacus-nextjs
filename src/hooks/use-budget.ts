@@ -4,6 +4,7 @@ import {
   deleteBudget,
   fetchAllBudget,
   fetchBudget,
+  fetchBudgetByCategory,
   updateBudget,
 } from "@/services/budget-service";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
@@ -20,6 +21,9 @@ export const useNewBudget = () => {
       onClose();
       toast({ description: data.message });
       queryClient.invalidateQueries({ queryKey: ["budgets"] });
+      queryClient.invalidateQueries({
+        queryKey: ["budget", data.data.category_name],
+      });
     },
   });
 };
@@ -35,6 +39,17 @@ export const useGetBudget = (id: string, enabled?: boolean) => {
   return useQuery({
     queryKey: ["budget", id],
     queryFn: () => fetchBudget(id),
+    enabled,
+  });
+};
+
+export const useGetBudgetByCategory = (
+  categoryName: string,
+  enabled: boolean
+) => {
+  return useQuery({
+    queryKey: ["budget", categoryName],
+    queryFn: () => fetchBudgetByCategory(categoryName),
     enabled,
   });
 };
