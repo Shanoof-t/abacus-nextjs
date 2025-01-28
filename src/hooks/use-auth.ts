@@ -6,11 +6,16 @@ import {
   signUp,
   verifyOTP,
 } from "@/services/auth-service";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 export const useSignup = () => {
+  const queryClient = useQueryClient();
   return useMutation({
     mutationFn: signUp,
+    onSuccess: (data) => {
+      console.log("data in useSign", data);
+      queryClient.setQueryData(["signup"], data);
+    },
   });
 };
 

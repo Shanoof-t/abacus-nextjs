@@ -10,7 +10,7 @@ import {
   InputOTPSlot,
 } from "@/components/ui/input-otp";
 import { REGEXP_ONLY_DIGITS_AND_CHARS } from "input-otp";
-import { useOtpVerify, useResendOtp } from "@/hooks/use-auth";
+import { useOtpVerify, useResendOtp, useSignup } from "@/hooks/use-auth";
 
 type SignUpData = {
   data: {
@@ -24,17 +24,20 @@ const Page = () => {
   const [inputs] = useState(["key1", "key2", "key3", "key4", "key5", "key6"]);
   const router = useRouter();
   const queryClient = useQueryClient();
-  
+
   const signUpData = queryClient.getQueryData<SignUpData>(["signup"]);
-  
+  const { data } = useSignup();
+  console.log("signUpdata", signUpData);
+  console.log("data-sign", data);
   const { mutate: verifyMutate, error: verifyError } = useOtpVerify();
   const { mutate: resendMutate, error: resendError } = useResendOtp();
 
   const handleChange = (value: string) => setOtp(value);
 
   const handleSubmit = () => {
-    
+    console.log("handleSubmit clicked");
     if (signUpData?.data) {
+      console.log("inside mutate");
       const { userId } = signUpData.data;
       verifyMutate(
         { otp, userId },

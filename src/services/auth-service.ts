@@ -23,6 +23,7 @@ export const signIn = async (data: SignInType): Promise<SignIn> => {
 };
 
 export const verifyOTP = async (data: OtpVerifyParams): Promise<void> => {
+  console.log("data", data);
   return await apiClient.post(API_ROUTES.AUTH.VERIFY_OTP, data);
 };
 

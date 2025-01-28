@@ -1,29 +1,13 @@
 import React from "react";
 import HeaderLogo from "./header-logo";
 import Navigations from "./navigation";
-import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
-import { Bell, Loader2, LogOut, Settings } from "lucide-react";
-import { DropdownMenu, DropdownMenuItem } from "../ui/dropdown-menu";
-import {
-  DropdownMenuContent,
-  DropdownMenuTrigger,
-} from "@radix-ui/react-dropdown-menu";
-import { useMutation } from "@tanstack/react-query";
-import apiClient from "@/lib/axios.config";
-import API_ROUTES from "@/lib/routes";
+
+import { Settings } from "lucide-react";
 import Notifications from "../notification/notifications";
-import { useLogout } from "@/hooks/use-auth";
+import { useRouter } from "next/navigation";
 
 const Navbar = () => {
-  const { mutate, isSuccess } = useLogout();
-
-  if (isSuccess) {
-    window.location.reload();
-  }
-
-  const handleLogout = () => {
-    mutate();
-  };
+  const router = useRouter();
 
   return (
     <div className="flex justify-between items-center w-full">
@@ -56,7 +40,10 @@ const Navbar = () => {
             </DropdownMenuContent>
           </DropdownMenu>
         </div> */}
-        <Settings className="text-white w-5 h-5 m-1 cursor-pointer" />
+        <Settings
+          className="text-white w-5 h-5 m-1 cursor-pointer"
+          onClick={() => router.replace("settings")}
+        />
       </div>
     </div>
   );
