@@ -18,23 +18,45 @@ export const fetchAllBudget = async () => {
   return response.data.data;
 };
 
-export interface BudgetData extends z.infer<typeof budgetSchema> {
-  total_spent: number;
-  progress: number;
+export interface BudgetData
+  extends Omit<
+    z.infer<typeof budgetSchema>,
+    "budget_start_date" | "budget_end_date"
+  > {
+  budget_start_date?: Date;
+  budget_end_date?: Date;
+  total_spent?: number;
+  progress?: number;
+  _id?: string;
 }
 
 interface FetchBudget extends Fetch {
   data: BudgetData;
 }
 
-export const fetchBudget = async (name: string): Promise<FetchBudget> => {
-  const response = await apiClient.get(API_ROUTES.BUDGET.GET_BUDGET + name);
+export const fetchBudget = async (id: string): Promise<FetchBudget> => {
+  const response = await apiClient.get(API_ROUTES.BUDGET.GET_BUDGET + id);
   return response.data;
 };
 
-export const deleteBudget = async (name: string): Promise<Fetch> => {
-  const response = await apiClient.delete(
-    API_ROUTES.BUDGET.DELETE_BUDGET + name
+export const deleteBudget = async (id: string): Promise<Fetch> => {
+  const response = await apiClient.delete(API_ROUTES.BUDGET.DELETE_BUDGET + id);
+  return response.data;
+};
+
+interface UpdateBudget extends FetchBudget {}
+
+export const updateBudget = async ({
+  data,
+  id,
+}: {
+  data: BudgetData;
+  id: string;
+}): Promise<UpdateBudget> => {
+  console.log("data in edit", data);
+  const response = await apiClient.post(
+    API_ROUTES.BUDGET.EDIT_BUDGET + id,
+    data
   );
   return response.data;
 };

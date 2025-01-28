@@ -1,8 +1,8 @@
 function SemiCircleProgress({
-  progress,
+  progress = 0,
 }: {
-  progress: number;
-  total_spent: number;
+  progress?: number;
+  total_spent?: number;
 }) {
   const radius = 100; // Radius of the semi-circle
   const strokeWidth = 20; // Thickness of the stroke

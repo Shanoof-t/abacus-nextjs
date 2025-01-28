@@ -22,7 +22,6 @@ type FetchCategories = {
 };
 export const fetchAllCategories = async (): Promise<FetchCategories> => {
   const response = await apiClient.get(API_ROUTES.CATEGORY.GET_ALL_CATEGORY);
-  console.log("reponse data", response.data);
   return response.data;
 };
 

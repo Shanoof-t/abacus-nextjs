@@ -5,12 +5,12 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import DataTable from "@/components/ui/data-table";
 import { Plus } from "lucide-react";
 
-import { useNewBudgetStore } from "@/store/budget-store";
+import { useBudgetStore } from "@/store/budget-store";
 import { column } from "./components/column";
 import { useGetAllBudget } from "@/hooks/use-budget";
 
 const BudgetPage = () => {
-  const { onOpen } = useNewBudgetStore();
+  const { onOpen, setMode } = useBudgetStore();
   const { data, isSuccess } = useGetAllBudget();
 
   if (isSuccess)
@@ -23,7 +23,10 @@ const BudgetPage = () => {
               variant="primary"
               size="sm"
               className="text-white border rounded-[.50rem]"
-              onClick={onOpen}
+              onClick={() => {
+                onOpen();
+                setMode("create");
+              }}
             >
               <Plus /> Add new
             </Button>

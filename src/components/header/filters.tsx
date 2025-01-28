@@ -29,7 +29,6 @@ const Filters = () => {
   const to = date?.to || new Date();
   const from = date?.from || subMonths(to, 1);
   const [account, setAccount] = useState("all");
-  console.log("account", account);
 
   const endDate = format(to, "PP");
   const startDate = format(from, "MMM d");

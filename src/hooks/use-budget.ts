@@ -1,15 +1,18 @@
 import {
+  BudgetData,
   createBudget,
   deleteBudget,
   fetchAllBudget,
   fetchBudget,
+  updateBudget,
 } from "@/services/budget-service";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "./use-toast";
-import { useNewBudgetStore } from "@/store/budget-store";
+import { useBudgetDrawerStore, useBudgetStore } from "@/store/budget-store";
+import { useEffect, useState } from "react";
 
 export const useNewBudget = () => {
-  const { onClose } = useNewBudgetStore();
+  const { onClose } = useBudgetStore();
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: createBudget,
@@ -28,22 +31,86 @@ export const useGetAllBudget = () => {
   });
 };
 
-export const useGetBudget = () => {
-  return useMutation({
-    mutationFn: fetchBudget,
-    onSuccess: (data) => {
-      console.log("budget data", data);
-    },
+export const useGetBudget = (id: string, enabled?: boolean) => {
+  return useQuery({
+    queryKey: ["budget", id],
+    queryFn: () => fetchBudget(id),
+    enabled,
   });
 };
 
 export const useDeleteBudget = () => {
+  const { onClose } = useBudgetDrawerStore();
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: deleteBudget,
     onSuccess: (data) => {
+      onClose();
       toast({ description: data.message });
       queryClient.invalidateQueries({ queryKey: ["budgets"] });
     },
   });
+};
+
+export const useEditBudget = () => {
+  const { onClose } = useBudgetStore();
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: updateBudget,
+    onSuccess: (data) => {
+      console.log("updated budget", data);
+      onClose();
+      toast({ description: data.message });
+      queryClient.invalidateQueries({ queryKey: ["budgets"] });
+      queryClient.invalidateQueries({
+        queryKey: ["budget", data.data._id],
+      });
+    },
+  });
+};
+
+export const useBudgetstuffs = ({ data }: { data?: BudgetData }) => {
+  const [status, setStatus] = useState("");
+  const [badgeColor, setBadgeColor] = useState("#FFFFFF");
+  const [remaining, setRemaing] = useState(0);
+
+  useEffect(() => {
+    if (data?.progress !== undefined) {
+      switch (true) {
+        case data.progress === 0:
+          setStatus("Just Started");
+          setBadgeColor("#90EE90");
+          break;
+        case data.progress > 0 && data.progress < 50:
+          setStatus("Getting There");
+          setBadgeColor("#FFD700");
+          break;
+        case data.progress === 50:
+          setStatus("Halfway There");
+          setBadgeColor("#FFA500");
+          break;
+        case data.progress > 50 && data.progress < 100:
+          setStatus("Almost There");
+          setBadgeColor("#FF4500");
+          break;
+        case data.progress === 100:
+          setStatus("Fully Utilized");
+          setBadgeColor("#F43F5E");
+          break;
+        default:
+          setStatus("No Status");
+          setBadgeColor("#6C757D");
+      }
+    }
+    if (data) {
+      const remain = Number(data.amount_limit) - Number(data.total_spent);
+      if (remain < 0) {
+        setRemaing(0);
+      } else {
+        setRemaing(remain);
+      }
+    }
+  }, [data]);
+
+  return { status, badgeColor, remaining };
 };

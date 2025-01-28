@@ -9,11 +9,11 @@ const apiClient = axios.create({
 
 apiClient.interceptors.response.use(
   (res) => {
-    console.log("SUCCESS-RESPONSE>>>>>", res);
+    // console.log("SUCCESS-RESPONSE>>>>>", res);
     return res;
   },
   (err) => {
-    console.log("ERROR-RESPONSE>>>>>", err);
+    console.log("ERROR-RESPONSE>>>>>", err.response.data);
     return Promise.reject(err.response.data);
   }
 );

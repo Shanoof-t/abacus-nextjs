@@ -4,6 +4,7 @@ import {
   FormField,
   FormItem,
   FormLabel,
+  FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import {
@@ -23,36 +24,41 @@ import { format } from "date-fns";
 import AmountInput from "./amount-input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { useNewBudget } from "@/hooks/use-budget";
+import { useEditBudget, useGetBudget, useNewBudget } from "@/hooks/use-budget";
 import { Calendar } from "@/components/ui/calendar";
 
-const initialValues = {
-  budget_name: "",
-  category_name: "",
-  amount_limit: "",
-  budget_start_date: undefined,
-  budget_end_date: undefined,
-  notification_status: false,
-  budget_note: "",
-  alert_threshold: 0,
-};
+import { initialValues } from "./budget-sheet";
+import { useEffect } from "react";
+import { useBudgetStore } from "@/store/budget-store";
+import { BudgetData } from "@/services/budget-service";
 
 type BudgetForm = {
   accountValues: string[];
   onAccountCreate: (name: string) => void;
   categoryValues: string[];
   onCategoryCreate: (name: string) => void;
+  mode: "create" | "edit";
+  initialValues: typeof initialValues | BudgetData;
 };
 
-const BudgetForm = ({ categoryValues, onCategoryCreate }: BudgetForm) => {
+const BudgetForm = ({
+  categoryValues,
+  onCategoryCreate,
+  mode,
+  initialValues,
+}: BudgetForm) => {
+  const { id } = useBudgetStore();
   const form = useForm<z.infer<typeof budgetSchema>>({
     resolver: zodResolver(budgetSchema),
     defaultValues: initialValues,
   });
 
-  const { mutate } = useNewBudget();
+  const { mutate: addBudget } = useNewBudget();
+  const { mutate: editBudget } = useEditBudget();
   const onSubmit = (values: z.infer<typeof budgetSchema>) => {
-    mutate(values);
+    mode === "create"
+      ? addBudget(values)
+      : editBudget({ data: values, id });
   };
 
   return (
@@ -224,6 +230,7 @@ const BudgetForm = ({ categoryValues, onCategoryCreate }: BudgetForm) => {
               <FormControl>
                 <AmountInput {...field} placeholder="Add amount limit" />
               </FormControl>
+              <FormMessage />
             </FormItem>
           )}
         />
@@ -260,6 +267,7 @@ const BudgetForm = ({ categoryValues, onCategoryCreate }: BudgetForm) => {
                       onValueChange={(value) => {
                         field.onChange(value[0]);
                       }}
+                      value={field.value ? [field.value] : [0]}
                       min={0}
                       max={100}
                       className="w-full h-2 bg-gray-200 rounded-full appearance-none focus:ring-2 focus:ring-blue-500 cursor-pointer"
@@ -299,7 +307,7 @@ const BudgetForm = ({ categoryValues, onCategoryCreate }: BudgetForm) => {
           variant="primary"
           className="w-full border rounded-[.50rem] text-white"
         >
-          Add Budget
+          {mode === "create" ? "Add Budget" : "Edit Budget"}
         </Button>
       </form>
     </Form>

@@ -1,26 +1,37 @@
 import { create } from "zustand";
 
-interface NewBudgetStore {
+interface BudgetStore {
+  isOpen: boolean;
+  id: string;
+  onOpen: () => void;
+  onClose: () => void;
+  mode: "create" | "edit";
+  setMode: (mode: "create" | "edit") => void;
+  setId: (id: string) => void;
+}
+
+export const useBudgetStore = create<BudgetStore>((set) => ({
+  isOpen: false,
+  mode: "create",
+  id: "",
+  onOpen: () => set({ isOpen: true }),
+  onClose: () => set({ isOpen: false }),
+  setMode: (mode) => set({ mode: mode }),
+  setId: (id) => set({ id }),
+}));
+
+interface BudgetDrawerStore {
   isOpen: boolean;
   onOpen: () => void;
   onClose: () => void;
-}
-
-export const useNewBudgetStore = create<NewBudgetStore>((set) => ({
-  isOpen: false,
-  onOpen: () => set({ isOpen: true }),
-  onClose: () => set({ isOpen: false }),
-}));
-
-interface BudgetDrawerStore extends NewBudgetStore {
-  category_name: string;
-  setCategoryName: (id: string) => void;
+  id: string;
+  setId: (id: string) => void;
 }
 
 export const useBudgetDrawerStore = create<BudgetDrawerStore>((set) => ({
   isOpen: false,
-  category_name: "",
+  id: "",
   onOpen: () => set({ isOpen: true }),
   onClose: () => set({ isOpen: false }),
-  setCategoryName: (id: string) => set({ category_name: id }),
+  setId: (id: string) => set({ id }),
 }));
