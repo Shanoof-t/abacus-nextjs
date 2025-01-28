@@ -10,8 +10,9 @@ import {
   TooltipTrigger,
 } from "../ui/tooltip";
 import { Separator } from "../ui/separator";
+import { Notification } from "@/services/notification-service";
 
-const NotificationCard = ({ notification }: { notification: any }) => {
+const NotificationCard = ({ notification }: { notification: Notification }) => {
   const { onOpen, setNotificationId } = useTransactionRescheduleStore();
   const { mutate: notificationMutation } = useUpdateNotification();
 
@@ -31,7 +32,7 @@ const NotificationCard = ({ notification }: { notification: any }) => {
             <div className="flex justify-between">
               <div>
                 <h2 className="text-base font-semibold text-gray-600">
-                  This is sample title
+                  {notification.title}
                 </h2>
               </div>
               {/* <div>

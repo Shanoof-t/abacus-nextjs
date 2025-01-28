@@ -3,9 +3,10 @@ import apiClient from "@/lib/axios.config";
 import API_ROUTES from "@/lib/routes";
 import { z } from "zod";
 
-type Notification = {
+export type Notification = {
   _id: string;
   message: string;
+  title: string;
   is_server_notification: boolean;
 };
 

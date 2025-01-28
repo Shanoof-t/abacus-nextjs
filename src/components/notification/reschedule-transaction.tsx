@@ -108,7 +108,7 @@ const RescheduleTransaction = () => {
                 className="border rounded-[0.50rem]"
               >
                 {date ? (
-                  <span>Reschedule for {format(date, "PPP")}</span>
+                  <span>Reschedule to {format(date, "PPP")}</span>
                 ) : (
                   <span>Reschedule</span>
                 )}
