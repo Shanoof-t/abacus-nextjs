@@ -7,13 +7,14 @@ import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown } from "lucide-react";
 import Action from "./action";
 
-export type Account = {
-  _id: string;
-  account_balance: number;
+export type AccountInputs = {
   account_name: string;
+  account_balance?: number;
+  _id: string;
+  user_id: string;
 };
 
-export const column: ColumnDef<Account>[] = [
+export const column: ColumnDef<AccountInputs>[] = [
   {
     id: "select",
     header: ({ table }) => (
@@ -51,7 +52,9 @@ export const column: ColumnDef<Account>[] = [
   {
     accessorKey: "account_balance",
     header: () => {
-      return <span className="font-normal text-secondary-foreground">Balance</span>;
+      return (
+        <span className="font-normal text-secondary-foreground">Balance</span>
+      );
     },
   },
   {

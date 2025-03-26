@@ -1,4 +1,4 @@
-import { rescheduleTransactionSchema } from "@/components/notification/reschedule-transaction";
+// import { rescheduleTransactionSchema } from "@/components/notification/reschedule-transaction";
 import apiClient from "@/lib/axios.config";
 import API_ROUTES from "@/lib/routes";
 import { transactionSchema } from "@/utils/validations/transaction-validation";
@@ -17,7 +17,16 @@ export const createTransaction = async (
 export type FetchTransactions = {
   status: string;
   message: string;
-  data: z.infer<typeof transactionSchema>[];
+  data: {
+    _id: string;
+    transaction_date: string;
+    account_name: string;
+    category_name: string;
+    transaction_amount: number;
+    transaction_type: string;
+    transaction_payee: string;
+    transaction_note:string
+  }[];
 };
 
 export const fetchAllTransactions = async (): Promise<FetchTransactions> => {
@@ -72,14 +81,19 @@ export const editTransaction = async ({ data, id }: EditTransaction) => {
   return response.data;
 };
 
-export const createBulkTransactions = async (data: any) => {
+type Transaction = {
+  account_name?: string;
+  category_name?: string;
+  transaction_date?: string;
+  transaction_payee?: string;
+  transaction_amount?: string;
+  transaction_note?: string;
+};
+
+export const createBulkTransactions = async (data: Transaction[]) => {
   const response = await apiClient.post(
     API_ROUTES.TRANSACTION.CREATE_BULK_TRANSACTIONS,
     data
   );
   return response.data;
 };
-
-
-
-

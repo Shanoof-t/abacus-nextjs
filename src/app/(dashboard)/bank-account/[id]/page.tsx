@@ -1,15 +1,15 @@
 "use client";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { useGetConsent } from "@/hooks/use-bank";
+// import { useGetConsent } from "@/hooks/use-bank";
 import React, { useEffect, useState } from "react";
 
 const Page = ({ params }: { params: Promise<{ id: string }> }) => {
   const [id, setId] = useState("");
-    
+  console.log("id", id);
   useEffect(() => {
     const fetchId = async () => {
       const id = (await params).id;
-      console.log("id fetched", id);
+      // console.log("id fetched", id);
       setId(id);
     };
     fetchId();

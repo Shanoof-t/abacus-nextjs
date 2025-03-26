@@ -1,4 +1,3 @@
-import React, { useEffect } from "react";
 import TransactionGraph from "./TransactionGraph";
 import SpendingPie from "./spending-pie";
 

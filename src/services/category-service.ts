@@ -6,6 +6,11 @@ export type CategoryInputs = {
   _id?: string;
   user_id?: string;
 };
+export type Category = {
+  category_name: string;
+  _id: string;
+  user_id?: string;
+};
 
 export const createNewCategory = async (data: CategoryInputs) => {
   const response = await apiClient.post(
@@ -18,7 +23,7 @@ export const createNewCategory = async (data: CategoryInputs) => {
 type FetchCategories = {
   status: string;
   message: string;
-  data: CategoryInputs[];
+  data: Category[];
 };
 export const fetchAllCategories = async (): Promise<FetchCategories> => {
   const response = await apiClient.get(API_ROUTES.CATEGORY.GET_ALL_CATEGORY);

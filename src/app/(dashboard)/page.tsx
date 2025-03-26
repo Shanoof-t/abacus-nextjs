@@ -31,8 +31,7 @@ const Page = () => {
 
   const { mutate: financialSummaryMutate, data: financialSummaryData } =
     useFinancialSummary();
-  const { mutate: financialHistoryMutate, data: financialHistoryData } =
-    useFinancialHistory();
+  const { mutate: financialHistoryMutate } = useFinancialHistory();
 
   useEffect(() => {
     const query = {
@@ -53,7 +52,7 @@ const Page = () => {
       from: query.from,
       account: query.account,
     });
-  }, [financialSummaryMutate, to, from, account]);
+  }, [financialSummaryMutate, financialHistoryMutate, to, from, account]);
 
   return (
     <div className="-mt-28 border-none container overflow-y-auto ">

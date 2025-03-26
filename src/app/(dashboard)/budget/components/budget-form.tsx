@@ -24,11 +24,10 @@ import { format } from "date-fns";
 import AmountInput from "./amount-input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { useEditBudget, useGetBudget, useNewBudget } from "@/hooks/use-budget";
+import { useEditBudget, useNewBudget } from "@/hooks/use-budget";
 import { Calendar } from "@/components/ui/calendar";
 
 import { initialValues } from "./budget-sheet";
-import { useEffect } from "react";
 import { useBudgetStore } from "@/store/budget-store";
 import { BudgetData } from "@/services/budget-service";
 
@@ -56,9 +55,11 @@ const BudgetForm = ({
   const { mutate: addBudget } = useNewBudget();
   const { mutate: editBudget } = useEditBudget();
   const onSubmit = (values: z.infer<typeof budgetSchema>) => {
-    mode === "create"
-      ? addBudget(values)
-      : editBudget({ data: values, id });
+    if (mode === "create") {
+      addBudget(values);
+    } else {
+      editBudget({ data: values, id });
+    }
   };
 
   return (

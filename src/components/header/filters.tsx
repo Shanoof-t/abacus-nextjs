@@ -15,13 +15,12 @@ import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { Calendar } from "../ui/calendar";
 import { ChevronDown } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
-import { useFinancialSummary } from "@/hooks/use-overview";
+import { DateRange } from "react-day-picker";
+// import { useFinancialSummary } from "@/hooks/use-overview";
 
 const Filters = () => {
   const { data, isSuccess } = useGetAllAccount();
-  const [date, setDate] = useState<{ from: Date; to: Date } | undefined>(
-    undefined
-  );
+  const [date, setDate] = useState<DateRange | undefined>(undefined);
 
   const router = useRouter();
   const pathName = usePathname();
@@ -50,7 +49,7 @@ const Filters = () => {
     } else {
       router.push(pathName);
     }
-  }, [date, account]);
+  }, [date, account, router, pathName]);
 
   return (
     <div className="lg:space-x-2 lg:flex space-y-2 lg:space-y-0">
@@ -101,7 +100,6 @@ const Filters = () => {
                 selected={date}
                 onSelect={setDate}
                 initialFocus
-                value
               />
             </div>
           </div>

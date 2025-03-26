@@ -1,13 +1,5 @@
 import React, { useEffect } from "react";
 import CurrencyInput from "react-currency-input-field";
-import { CircleMinus, CirclePlus, Info } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-} from "@/components/ui/tooltip";
-import { TooltipTrigger } from "@radix-ui/react-tooltip";
 import { cn } from "@/lib/utils";
 
 type Props = {
@@ -32,9 +24,9 @@ const AmountInput: React.FC<Props> = ({
     }
   }, [value, isEdit, onChange]);
 
-  const parsedValue = parseFloat(value) || 0;
-  const isIncome = parsedValue > 0;
-  const isExpense = parsedValue < 0;
+  // const parsedValue = parseFloat(value) || 0;
+  // const isIncome = parsedValue > 0;
+  // const isExpense = parsedValue < 0;
 
   // const handleReverseValue = () => {
   //   if (!value) return;

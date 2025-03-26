@@ -4,9 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Loader2, Plus } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
 import DataTable from "@/components/ui/data-table";
-
 import { column } from "./columns";
-
 import { useNewAccountStore } from "@/store/account-store";
 import { useBulkAccountDelete, useGetAllAccount } from "@/hooks/use-account";
 

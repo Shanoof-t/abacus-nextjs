@@ -71,7 +71,7 @@ type getHistory =
     }
   | undefined;
 
-export const getHistory = (): Promise<getHistory> => {
+export const useGetHistory = (): Promise<getHistory> => {
   const queryClient = useQueryClient();
   return Promise.resolve(queryClient.getQueryData(["financialHistory"]));
 };

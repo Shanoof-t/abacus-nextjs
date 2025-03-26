@@ -1,4 +1,4 @@
-import { fetchHistory, fetchSummaryByDate, getHistory } from "@/services/overview-service";
+import { fetchHistory, fetchSummaryByDate, useGetHistory } from "@/services/overview-service";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 export const useFinancialSummary = () => {
@@ -20,7 +20,7 @@ export const useFinancialHistory = () => {
 export const useGetFinancialHistory = () => {
   return useQuery({
     queryKey: ["financialHistory"],
-    queryFn: getHistory,
+    queryFn: useGetHistory,
     staleTime: Infinity,
   });
 };

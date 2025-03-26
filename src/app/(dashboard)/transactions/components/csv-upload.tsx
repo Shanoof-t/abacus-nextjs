@@ -21,6 +21,15 @@ type Props = {
   onBack: () => void;
 };
 
+export type Transaction = {
+  account_name?: string;
+  category_name?: string;
+  transaction_date?: string;
+  transaction_payee?: string;
+  transaction_amount?: string;
+  transaction_note?: string;
+};
+
 const CsvUpload = ({ onCancel, importData, onBack }: Props) => {
   const header: string[] = importData[0];
   const body: string[][] = importData.slice(1);
@@ -46,13 +55,16 @@ const CsvUpload = ({ onCancel, importData, onBack }: Props) => {
   const { mutate, isPending, isSuccess } = useCreateBulkTransaction();
   const onUpload = () => {
     const uploadData = body.map((transactionSet) => {
-      return transactionSet.reduce((acc: any, transactionDetail, index) => {
-        const header = adjustedHeader[index];
-        if (header !== null) {
-          acc[header] = transactionDetail;
-        }
-        return acc;
-      }, {});
+      return transactionSet.reduce(
+        (acc: Transaction, transactionDetail, index) => {
+          const header = adjustedHeader[index];
+          if (header !== null) {
+            acc[header] = transactionDetail;
+          }
+          return acc;
+        },
+        {}
+      );
     });
     mutate(uploadData);
   };

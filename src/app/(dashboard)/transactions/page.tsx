@@ -18,7 +18,7 @@ import useConfirm from "@/hooks/use-confirm";
 import { toast } from "@/hooks/use-toast";
 
 type CsvResult = {
-  data: [];
+  data: string[][];
   error: [];
   meta: [];
 };
@@ -34,7 +34,7 @@ const Page = () => {
   const { mutate } = useBulkTransactionDelete();
 
   const [variant, setVariant] = useState(Variants.DEFAULT);
-  const [importData, setImportData] = useState([]);
+  const [importData, setImportData] = useState<string[][]>([]);
 
   const importCsv = (result: CsvResult) => {
     setVariant(Variants.IMPORT);
@@ -69,8 +69,8 @@ const Page = () => {
             transaction_note: transaction.transaction_note,
           };
         });
-        const jsonData: any = JSON.stringify(filterDataForCSV);
-        const result = jsonToCSV(jsonData);
+        const jsonData= JSON.stringify(filterDataForCSV);
+        const result = jsonToCSV(JSON.parse(jsonData));
         const url = URL.createObjectURL(new Blob([result]));
         const link = document.createElement("a");
         link.href = url;

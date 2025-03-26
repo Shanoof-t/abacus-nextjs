@@ -3,7 +3,6 @@ import { Label } from "@/components/ui/label";
 import { useSignup } from "@/hooks/use-auth";
 import { SignUpType } from "@/types/auth-types";
 import { signUpValidationSchema } from "@/utils/validations/auth-validation";
-import { useQueryClient } from "@tanstack/react-query";
 import { Form, Formik } from "formik";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";

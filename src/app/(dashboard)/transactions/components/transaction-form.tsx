@@ -40,7 +40,7 @@ import {
 } from "@/components/ui/select";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { useEffect, useState } from "react";
-import { useGetBudget, useGetBudgetByCategory } from "@/hooks/use-budget";
+import { useGetBudgetByCategory } from "@/hooks/use-budget";
 import BudgetSummary from "./budget-summary";
 import TransactionSummaryMessage from "./transaction-summary-message";
 import { transactionSchema } from "@/utils/validations/transaction-validation";
@@ -116,7 +116,7 @@ const TransactionForm = ({
         queryKey: ["budget", formWatch.category_name],
       });
     }
-  }, [formWatch.transaction_type, formWatch.category_name]);
+  }, [formWatch.transaction_type, formWatch.category_name,queryClient]);
 
   return (
     <Form {...form}>
@@ -223,7 +223,7 @@ const TransactionForm = ({
                   <PopoverContent className="bg-white items-center flex justify-center z-50">
                     <Calendar
                       mode="single"
-                      selected={field.value}
+                      selected={field.value as Date}
                       onSelect={(date) => field.onChange(date)}
                       initialFocus
                     ></Calendar>

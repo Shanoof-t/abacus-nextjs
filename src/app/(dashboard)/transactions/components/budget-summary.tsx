@@ -7,7 +7,6 @@ import {
   generateMessages,
 } from "@/utils/budget-utils";
 import TransactionSummaryMessage from "./transaction-summary-message";
-import Link from "next/link";
 import { useBudgetStore } from "@/store/budget-store";
 
 export type fieldEnum =
@@ -33,9 +32,9 @@ const BudgetSummary = ({
   isSelected,
   value,
 }: BudgetSummary) => {
+  const { onOpen, setMode } = useBudgetStore();
   // if the user dont have any budget with selected category
   if (!data) {
-    const { onOpen, setMode } = useBudgetStore();
     return (
       <>
         {isSuccess && isSelected ? (

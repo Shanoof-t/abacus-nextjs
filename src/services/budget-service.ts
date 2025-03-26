@@ -45,7 +45,7 @@ export const deleteBudget = async (id: string): Promise<Fetch> => {
   return response.data;
 };
 
-interface UpdateBudget extends FetchBudget {}
+// interface UpdateBudget extends FetchBudget {}
 
 export const updateBudget = async ({
   data,
@@ -53,7 +53,7 @@ export const updateBudget = async ({
 }: {
   data: BudgetData;
   id: string;
-}): Promise<UpdateBudget> => {
+}): Promise<FetchBudget> => {
   console.log("data in edit", data);
   const response = await apiClient.post(
     API_ROUTES.BUDGET.EDIT_BUDGET + id,

@@ -16,18 +16,17 @@ const CsvUploadButton = ({
 
   return (
     <CSVReader
-      onUploadAccepted={(results: any) => {
+      onUploadAccepted={(results: CsvResult) => {
         onUpload(results);
       }}
     >
-      {({ getRootProps }: any) => (
+      {() => (
         <>
           <Button
             variant="primary"
             size="sm"
             type="button"
             className="text-white border rounded-[.50rem] w-full lg:w-auto"
-            {...getRootProps()}
           >
             <Upload /> Import
           </Button>

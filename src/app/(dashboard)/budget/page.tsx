@@ -12,7 +12,7 @@ import { useGetAllBudget } from "@/hooks/use-budget";
 const BudgetPage = () => {
   const { onOpen, setMode } = useBudgetStore();
   const { data, isSuccess } = useGetAllBudget();
-
+console.log("data",data)
   if (isSuccess)
     return (
       <div className="-mt-28 bg-white container overflow-y-auto border rounded-[.50rem]">

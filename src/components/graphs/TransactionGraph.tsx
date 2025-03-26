@@ -6,7 +6,7 @@ import AreaVariant from "./area-variant";
 import { useGetFinancialHistory } from "@/hooks/use-overview";
 
 const TransactionGraph = () => {
-  const { data, isLoading, isSuccess } = useGetFinancialHistory();
+  const { data } = useGetFinancialHistory();
   if (!data) return <div>Loading..</div>;
 
   if (data) {

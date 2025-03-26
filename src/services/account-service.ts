@@ -8,6 +8,13 @@ export type AccountInputs = {
   user_id?: string;
 };
 
+export type Account = {
+  account_name: string;
+  account_balance?: number;
+  _id: string;
+  user_id: string;
+};
+
 export const createNewAccount = async (data: AccountInputs) => {
   console.log("data", data);
   const response = await apiClient.post(
@@ -17,7 +24,7 @@ export const createNewAccount = async (data: AccountInputs) => {
   return response.data;
 };
 
-type FetchAccount = { status: string; message: string; data: AccountInputs[] };
+type FetchAccount = { status: string; message: string; data: Account[] };
 
 export const fetchAllAccounts = async (): Promise<FetchAccount> => {
   const response = await apiClient.get(API_ROUTES.ACCOUNT.GET_ALL_ACCOUNTS);

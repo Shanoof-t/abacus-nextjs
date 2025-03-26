@@ -1,9 +1,21 @@
 import { format } from "date-fns";
 import { Separator } from "../ui/separator";
 
-const CustomTooltip = ({ active, payload }: any) => {
-  console.log(active);
-  if (!active) return null;
+interface PayloadItem {
+  value: number;
+  payload: {
+    date: string | Date;
+  };
+}
+
+interface CustomTooltipProps {
+  active?: boolean;
+  payload?: PayloadItem[];
+}
+
+const CustomTooltip = ({ active, payload }: CustomTooltipProps) => {
+  if (!active || !payload || payload.length < 2) return null;
+
   const date = payload[0].payload.date;
   const income = payload[0].value;
   const expense = payload[1].value;
@@ -29,7 +41,6 @@ const CustomTooltip = ({ active, payload }: any) => {
           </div>
           <p className="text-sm text-right font-medium">{expense}</p>
         </div>
-
       </div>
     </div>
   );
