@@ -11,6 +11,7 @@ const BankAccount = () => {
 
   const [enabled, setEnabled] = useState(false);
   const { data, isSuccess } = useCreateConsent(enabled);
+  console.log("createConsent", data);
 
   useEffect(() => {
     if (isSuccess && data) {
@@ -43,7 +44,7 @@ const BankAccount = () => {
             className="outline-0 border-none"
             onClick={() => setEnabled(true)}
           >
-            conncet
+            connect
           </Button>
         </div>
       </div>
