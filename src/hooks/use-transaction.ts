@@ -19,6 +19,7 @@ export const useNewTransaction = () => {
   const queryClient = useQueryClient();
   const { onOpen, setContent } = useAlertStore();
   const { onClose } = useNewTransactionStore();
+  
   return useMutation({
     mutationFn: createTransaction,
     onSuccess: (data) => {

@@ -12,6 +12,7 @@ export const useGetAllNotification = () => {
     queryKey: ["notifications"],
     queryFn: fetchAllNotifications,
     enabled: true,
+    refetchInterval: 24 * 60 * 60 * 1000,
   });
 };
 export const useUpdateNotification = () => {

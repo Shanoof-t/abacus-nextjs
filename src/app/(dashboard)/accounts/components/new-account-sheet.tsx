@@ -19,7 +19,6 @@ import { useNewAccount } from "@/hooks/use-account";
 const NewAccountSheet = () => {
   const { isOpen, onClose } = useNewAccountStore();
 
-
   const initialValues = {
     account_name: "",
     account_balance: 0,

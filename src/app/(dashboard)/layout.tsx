@@ -1,5 +1,4 @@
 "use client"
-
 import TopSection from "@/components/header/top-section";
 import { Toaster } from "@/components/ui/toaster";
 import React from "react";

@@ -37,6 +37,7 @@ export const generateMessages = ({
   remainingBudget,
   amountBalance,
 }: GenerateMessages) => {
+  console.log("remainingBudget",remainingBudget)
   // remaining Budget - category_name
   const remainingBudgetMessage = `${data?.progress}% of your ${data?.category_name} budget is used. Remaining Budget: ₹${remainingBudget} out of ₹${data?.amount_limit}.`;
 

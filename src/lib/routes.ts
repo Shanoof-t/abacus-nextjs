@@ -51,6 +51,10 @@ const API_ROUTES = {
     UPDATE_NOTIFICATION: "/api/v1/notifications/",
     RESCHEDULE_RECURRING_TRANSCTION: "/api/v1/notifications/",
   },
+  BANK_ACCOUNT: {
+    CREATE_CONSENT: "/api/v1/bank/consent/create",
+    GET_CONSENT: "/api/v1/bank/consent/",
+  },
 };
 
 export default API_ROUTES;
