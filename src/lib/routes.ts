@@ -52,7 +52,7 @@ const API_ROUTES = {
     RESCHEDULE_RECURRING_TRANSCTION: "/api/v1/notifications/",
   },
   BANK_ACCOUNT: {
-    CREATE_CONSENT: "/api/v1/bank/consent/create",
+    CREATE_CONSENT: "/api/v1/bank/consent/create/",
     GET_CONSENT: "/api/v1/bank/consent/",
   },
 };

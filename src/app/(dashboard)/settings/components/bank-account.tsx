@@ -1,7 +1,7 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { useCreateConsent, useGetConsent } from "@/hooks/use-bank";
+import { useCreateConsent, useGetBankTransactions } from "@/hooks/use-bank";
 import { useRouter, useSearchParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
@@ -11,7 +11,6 @@ const BankAccount = () => {
 
   const [enabled, setEnabled] = useState(false);
   const { data, isSuccess } = useCreateConsent(enabled);
-  console.log("createConsent", data);
 
   useEffect(() => {
     if (isSuccess && data) {
@@ -23,9 +22,8 @@ const BankAccount = () => {
   const success = Boolean(searchParams.get("success"));
   const id = searchParams.get("id");
 
-  const { data: consentData } = useGetConsent(id, success);
-  console.log("data from consent", consentData);
-
+  const { data: transactions } = useGetBankTransactions(id, success);
+  console.log("transactions", transactions);
   return (
     <>
       <Separator className="border-gray-300" />

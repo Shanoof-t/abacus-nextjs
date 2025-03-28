@@ -1,4 +1,4 @@
-import { createConsent, getConsent } from "@/services/bank-service";
+import { createConsent, getBankTransactions } from "@/services/bank-service";
 import { useQuery } from "@tanstack/react-query";
 
 export const useCreateConsent = (enabled: boolean) => {
@@ -9,10 +9,13 @@ export const useCreateConsent = (enabled: boolean) => {
   });
 };
 
-export const useGetConsent = (id: string | null, enabled?: boolean) => {
+export const useGetBankTransactions = (
+  id: string | null,
+  enabled?: boolean
+) => {
   return useQuery({
-    queryKey: ["consent", id],
-    queryFn: () => getConsent(id),
+    queryKey: ["transactions", id],
+    queryFn: async () => await getBankTransactions(id),
     enabled,
   });
 };
