@@ -1,10 +1,16 @@
 import { createConsent, getBankTransactions } from "@/services/bank-service";
 import { useQuery } from "@tanstack/react-query";
 
-export const useCreateConsent = (enabled: boolean) => {
+export const useCreateConsent = ({
+  enabled,
+  mobileNumber,
+}: {
+  mobileNumber: string;
+  enabled: boolean;
+}) => {
   return useQuery({
     queryKey: ["account-consent"],
-    queryFn: createConsent,
+    queryFn: async()=>await createConsent(mobileNumber),
     enabled,
   });
 };

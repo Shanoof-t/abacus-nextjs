@@ -21,10 +21,11 @@ export const useNewCategory = () => {
   });
 };
 
-export const useGetAllCategories = () => {
+export const useGetAllCategories = (enabled = false) => {
   return useQuery({
     queryKey: ["categories"],
     queryFn: fetchAllCategories,
+    enabled,
   });
 };
 
@@ -52,11 +53,11 @@ export const useDeleteCategory = () => {
   });
 };
 
-export const useGetCategory = (id: string) => {
+export const useGetCategory = (id: string, enabled: boolean) => {
   return useQuery({
     queryKey: ["category", id],
     queryFn: () => fetchCategory(id),
-    enabled: !!id,
+    enabled,
   });
 };
 

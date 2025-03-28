@@ -21,19 +21,19 @@ export const useNewAccount = () => {
   });
 };
 
-export const useGetAllAccount = () => {
+export const useGetAllAccount = (enabled: boolean) => {
   return useQuery({
     queryKey: ["accounts"],
     queryFn: fetchAllAccounts,
+    enabled,
   });
 };
 
-
-export const useGetAccount = (id: string) => {
+export const useGetAccount = (id: string, isOpen: boolean) => {
   return useQuery({
     queryKey: ["account", id],
     queryFn: () => fetchAccount(id),
-    enabled: !!id,
+    enabled: isOpen,
   });
 };
 

@@ -18,7 +18,7 @@ import { useEditCategoryStore } from "@/store/category-store";
 
 const EditCategorySheet = () => {
   const { id, isOpen, onClose } = useEditCategoryStore();
-  const { data } = useGetCategory(id);
+  const { data } = useGetCategory(id, isOpen);
   const { mutate, isSuccess, error } = useEditCategory();
 
   useEffect(() => {

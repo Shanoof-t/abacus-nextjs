@@ -1,9 +1,9 @@
 import apiClient from "@/lib/axios.config";
 import API_ROUTES from "@/lib/routes";
 
-export const createConsent = async () => {
+export const createConsent = async (mobileNumber: string) => {
   const response = await apiClient.get(
-    API_ROUTES.BANK_ACCOUNT.CREATE_CONSENT + "9961628083"
+    API_ROUTES.BANK_ACCOUNT.CREATE_CONSENT + mobileNumber
   );
   return response.data;
 };

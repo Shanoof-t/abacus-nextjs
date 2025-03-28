@@ -1,11 +1,12 @@
-"use client"
+"use client";
+import ConsentCreationForm from "@/app/(dashboard)/settings/components/consent-form";
 import RescheduleTransaction from "@/components/notification/reschedule-transaction";
-import React from "react";
 
 const DialogProvider = () => {
   return (
     <>
       <RescheduleTransaction />
+      <ConsentCreationForm />
     </>
   );
 };

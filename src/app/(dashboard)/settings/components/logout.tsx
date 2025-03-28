@@ -16,7 +16,7 @@ const Logout = () => {
       <div className="flex justify-between py-5 items-center">
         <div className="flex justify-between space-x-36">
           <div>
-            <h1 className="text-base font-medium">Bank account</h1>
+            <h1 className="text-base font-medium">Log Out</h1>
           </div>
           <div className="text-muted-foreground flex justify-center items-center">
             <h1 className="text-muted-foreground">Logout current account.</h1>

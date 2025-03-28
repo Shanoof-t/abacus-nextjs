@@ -16,6 +16,8 @@ import { useGetAllCategories, useNewCategory } from "@/hooks/use-categorie";
 import { useGetTransaction } from "@/hooks/use-transaction";
 
 const EdtTransactionSheet = () => {
+  const { id, isOpen, onClose } = useEditTransactionStore();
+
   // account section
 
   // fetch accounts
@@ -24,7 +26,7 @@ const EdtTransactionSheet = () => {
     isLoading: accountLoading,
     isSuccess: accountSuccess,
     isError: accountError,
-  } = useGetAllAccount();
+  } = useGetAllAccount(isOpen);
 
   // filtter account names
   const accountValues: string[] =
@@ -56,8 +58,7 @@ const EdtTransactionSheet = () => {
 
   // fetch transaction
 
-  const { id, isOpen, onClose } = useEditTransactionStore();
-
+ 
   const {
     data: transactionData,
     isLoading: transactionLoading,

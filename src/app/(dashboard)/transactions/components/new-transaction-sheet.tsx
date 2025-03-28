@@ -25,7 +25,7 @@ const NewTransactionSheet = () => {
     isLoading: accountLoading,
     isSuccess: accountSuccess,
     isError: accountError,
-  } = useGetAllAccount();
+  } = useGetAllAccount(isOpen);
 
   // filtter account names
   const accountValues: string[] =

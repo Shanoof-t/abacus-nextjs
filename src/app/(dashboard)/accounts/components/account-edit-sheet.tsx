@@ -27,7 +27,7 @@ const EditAccountSheet = () => {
 
   const { mutate, error, isSuccess } = useEditAccount();
 
-  const { data, isLoading, isSuccess: getAccountSuccess } = useGetAccount(id);
+  const { data, isLoading, isSuccess: getAccountSuccess } = useGetAccount(id,isOpen);
 
   useEffect(() => {
     if (isSuccess) {

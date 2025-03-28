@@ -1,29 +1,21 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { useCreateConsent, useGetBankTransactions } from "@/hooks/use-bank";
-import { useRouter, useSearchParams } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import { useGetBankTransactions } from "@/hooks/use-bank";
+import { useConsentCreationStore } from "@/store/bank-store";
+import { useSearchParams } from "next/navigation";
 
 const BankAccount = () => {
-  const router = useRouter();
   const searchParams = useSearchParams();
 
-  const [enabled, setEnabled] = useState(false);
-  const { data, isSuccess } = useCreateConsent(enabled);
-
-  useEffect(() => {
-    if (isSuccess && data) {
-      const { url } = data.data;
-      router.replace(url);
-    }
-  }, [isSuccess, data, router]);
+  const { onOpen } = useConsentCreationStore();
 
   const success = Boolean(searchParams.get("success"));
   const id = searchParams.get("id");
 
   const { data: transactions } = useGetBankTransactions(id, success);
   console.log("transactions", transactions);
+  
   return (
     <>
       <Separator className="border-gray-300" />
@@ -40,7 +32,7 @@ const BankAccount = () => {
           <Button
             variant="outline"
             className="outline-0 border-none"
-            onClick={() => setEnabled(true)}
+            onClick={onOpen}
           >
             connect
           </Button>

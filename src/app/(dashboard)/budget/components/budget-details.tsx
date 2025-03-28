@@ -10,7 +10,7 @@ import BudgetDetailsHeader from "./budget-drawer-header";
 
 const BudgetDetails = () => {
   const { isOpen, onClose, id } = useBudgetDrawerStore();
-  const { data, isSuccess } = useGetBudget(id, id !== "");
+  const { data, isSuccess } = useGetBudget(id, isOpen);
   const { badgeColor, status, remaining } = useBudgetstuffs({
     data: data?.data,
   });

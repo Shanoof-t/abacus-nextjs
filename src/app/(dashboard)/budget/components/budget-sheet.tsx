@@ -35,7 +35,7 @@ const BudgetSheet = () => {
     isLoading: accountLoading,
     isSuccess: accountSuccess,
     isError: accountError,
-  } = useGetAllAccount();
+  } = useGetAllAccount(isOpen);
 
   // filtter account names
   const accountValues: string[] =
@@ -53,7 +53,7 @@ const BudgetSheet = () => {
     isLoading: categoryLoading,
     isSuccess: categorySuccess,
     isError: categoryError,
-  } = useGetAllCategories();
+  } = useGetAllCategories(isOpen);
 
   // filter category name
   const categoryValues: string[] =
