@@ -11,7 +11,7 @@ import { useBulkAccountDelete, useGetAllAccount } from "@/hooks/use-account";
 const AccountsPage = () => {
   const { onOpen } = useNewAccountStore();
 
-  const { data, isLoading, isSuccess } = useGetAllAccount();
+  const { data, isLoading, isSuccess } = useGetAllAccount(true);
 
   const { mutate } = useBulkAccountDelete();
 

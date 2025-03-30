@@ -19,7 +19,7 @@ import { DateRange } from "react-day-picker";
 // import { useFinancialSummary } from "@/hooks/use-overview";
 
 const Filters = () => {
-  const { data, isSuccess } = useGetAllAccount();
+  const { data, isSuccess } = useGetAllAccount(true);
   const [date, setDate] = useState<DateRange | undefined>(undefined);
 
   const router = useRouter();
