@@ -1,0 +1,20 @@
+name:CI/CD for Abacus
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on:linux-latest
+    
+    steps:
+      - name: Checkout Repository
+      - uses: actions/checkout@v2
+
+      - name: Install Dependencies
+      - run: npm install
+
+      - name: Build Project
+      - run: npm run build 
