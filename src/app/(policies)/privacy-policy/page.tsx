@@ -65,9 +65,7 @@ const Page = () => {
                 </li>
                 <li>
                   <p>
-                    <strong>Company</strong> (referred to as either &quot;the
-                    Company&quot;, &quot;We&quot;, &quot;Us&quot; or &quot;Our&quot; in
-                    this Agreement) refers to Abacus.
+                    <strong>Company</strong> Us refers to Abacus.
                   </p>
                 </li>
                 <li>

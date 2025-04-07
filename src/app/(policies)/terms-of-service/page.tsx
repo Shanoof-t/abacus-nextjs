@@ -11,9 +11,9 @@ const Page = () => {
 
         <section className="prose prose-gray max-w-none">
           <p>
-            Our Terms and Conditions (hereinafter, &quot;T&C&quot;) constitute a legally
+            Our Terms and Conditions constitute a legally
             binding agreement between <a href="https://abacuss.online" className="text-blue-600 hover:underline">Abacuss</a>
-            (hereinafter, &quot;Us&quot;, &quot;We&quot; or &quot;Our&quot;) and you (hereinafter, &quot;User,&quot; &quot;Users,&quot; &quot;your,&quot; or &quot;yours&quot;). Your
+            (Us) and you (Users). Your
             use of our App shall be governed by the following T&C.
           </p>
           <p>
