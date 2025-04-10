@@ -76,7 +76,7 @@ const OverViewCard = ({
             start={0}
             end={value}
             decimals={2}
-            prefix="$"
+            prefix="₹"
           />
         </h1>
         {percentage ? (
