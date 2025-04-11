@@ -20,7 +20,7 @@ const SignInForm = () => {
     password: "",
   };
 
-  const { error, mutate } = useSignin();
+  const { error, mutate, isPending } = useSignin();
 
   type SignInHandler = {
     signInInputs: SignInType;
@@ -109,8 +109,9 @@ const SignInForm = () => {
               <Button
                 className="bg-zinc-800 hover:bg-zinc-700 text-white h-[1.5rem] w-full border rounded text-[0.700rem]"
                 type="submit"
+                disabled={isPending}
               >
-                Continue
+                {isPending ? "Loading..." : "Continue"}
               </Button>
             </div>
           </Form>

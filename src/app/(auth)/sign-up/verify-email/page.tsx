@@ -124,7 +124,7 @@ const Page = () => {
       </div>
 
       <div className="bg-blue-600 flex justify-center items-center hidden lg:flex">
-        <Image src="./logo.svg" width={100} height={100} alt="logo" />
+        <Image src="/logo.svg" width={100} height={100} alt="logo" />
       </div>
     </div>
   );
