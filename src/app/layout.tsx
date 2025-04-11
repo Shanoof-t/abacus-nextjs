@@ -22,11 +22,13 @@ export const metadata: Metadata = {
   title: "Abacus",
   description: "A Comprehensive Personal Finance Management Platform",
   icons: {
-    other: {
-      rel: "icon",
-      url: "/favicon.svg",
-      type: "image/svg+xml",
-    },
+    other: [
+      {
+        rel: "icon",
+        url: "/favicon.svg",
+        type: "image/svg+xml",
+      },
+    ],
   },
 };
 
