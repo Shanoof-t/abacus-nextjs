@@ -17,7 +17,7 @@ function Page() {
       });
       return res.data;
     },
-    onSuccess: (data) => {
+    onSuccess: () => {
       router.replace("https://abacuss.online");
     },
   });
