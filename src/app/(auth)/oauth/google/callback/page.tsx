@@ -18,8 +18,7 @@ function Page() {
       return res.data;
     },
     onSuccess: (data) => {
-      console.log("succes data", data);
-      router.replace("http://localhost:3000/");
+      router.replace("https://abacuss.online");
     },
   });
 
