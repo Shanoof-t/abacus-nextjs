@@ -1,4 +1,5 @@
 "use client";
+import { Button } from "@/components/ui/button";
 import apiClient from "@/lib/axios.config";
 import API_ROUTES from "@/lib/routes";
 import { useMutation } from "@tanstack/react-query";
@@ -36,8 +37,15 @@ function Page() {
           You will be logged in.
         </p>
         {error ? (
-          <div className="text-center text-red-500 text-sm">
+          <div className="text-center text-red-500 text-sm flex-col justify-center items-center space-y-3">
             <p>{error.message}</p>
+            <Button
+              variant="outline"
+              onClick={() => router.replace("https://abacuss.online")}
+              className="text-black"
+            >
+              Back
+            </Button>
           </div>
         ) : (
           <div className="flex items-center justify-center">
