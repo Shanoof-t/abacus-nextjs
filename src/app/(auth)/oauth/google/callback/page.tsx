@@ -19,6 +19,7 @@ function Page() {
       return res.data;
     },
     onSuccess: (data) => {
+      console.log("data", data);
       localStorage.setItem("user_name", data.userData.user_name);
       router.replace("https://abacuss.online");
     },
