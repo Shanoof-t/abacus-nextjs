@@ -35,8 +35,8 @@ const SignUpForm = () => {
       },
       {
         onSuccess: () => {
-          resetForm();
           router.replace("/sign-up/verify-email");
+          resetForm();
         },
       }
     );
@@ -137,7 +137,7 @@ const SignUpForm = () => {
                 type="submit"
                 disabled={isPending}
               >
-                 {isPending ? "Loading..." : "Continue"}
+                {isPending ? "Loading..." : "Continue"}
               </Button>
             </div>
           </Form>
