@@ -131,7 +131,7 @@ const Page = () => {
               Transaction history
             </CardTitle>
 
-            <div className="space-x-2">
+            <div className="lg:space-x-2 lg:space-y-0 space-y-1">
               <Button
                 variant="primary"
                 size="sm"
