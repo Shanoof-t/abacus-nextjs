@@ -16,9 +16,9 @@ const MaintenancePage = () => {
         <h1 className="text-5xl md:text-7xl font-extrabold mb-6 bg-gradient-to-r from-blue-700 to-blue-500 bg-clip-text text-transparent">
           Website Under Maintenance
         </h1>
-        <p className="text-xl text-gray-700 mb-3">We're working on something awesome!</p>
+        <p className="text-xl text-gray-700 mb-3">We&apos;re working on something awesome!</p>
         <p className="text-xl text-gray-700 mb-8">
-          We'll be back on <strong>May 1st, 2025</strong>.
+          We&apos;ll be back on <strong>May 1st, 2025</strong>.
         </p>
         <Countdown targetDate="2025-05-01T00:00:00" />
       </div>
@@ -68,7 +68,7 @@ const Countdown = ({ targetDate }: { targetDate: string }) => {
 
   if (timeLeft.days ===.0 && timeLeft.hours === 0 && 
       timeLeft.minutes === 0 && timeLeft.seconds === 0) {
-    return <p className="text-xl text-green-600 font-medium">We're back online!</p>;
+    return <p className="text-xl text-green-600 font-medium">We&apos;re back online!</p>;
   }
 
   return (

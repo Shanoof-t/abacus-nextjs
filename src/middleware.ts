@@ -2,11 +2,11 @@ import { NextRequest, NextResponse } from "next/server";
 
 export function middleware(request: NextRequest) {
   const user = request.cookies.get("token");
-  // if (!user) {
-  //   return NextResponse.redirect(new URL("/sign-in", request.url));
-  // }
-  // return NextResponse.next();
-  return NextResponse.redirect(new URL("/maintenance", request.url));
+  if (!user) {
+    return NextResponse.redirect(new URL("/sign-in", request.url));
+  }
+  return NextResponse.next();
+  // return NextResponse.redirect(new URL("/maintenance", request.url));
 }
 
 export const config = {
@@ -17,7 +17,7 @@ export const config = {
     "/category",
     "/budget",
     "/settings",
-    "/sign-in",
-    "/sign-up",
+    // "/sign-in",
+    // "/sign-up",
   ],
 };
