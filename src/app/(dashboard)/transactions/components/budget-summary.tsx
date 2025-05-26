@@ -8,6 +8,7 @@ import {
 } from "@/utils/budget-utils";
 import TransactionSummaryMessage from "./transaction-summary-message";
 import { useBudgetStore } from "@/store/budget-store";
+import { format } from "date-fns";
 
 export type fieldEnum =
   | "category_name"
@@ -33,8 +34,14 @@ const BudgetSummary = ({
   value,
 }: BudgetSummary) => {
   const { onOpen, setMode } = useBudgetStore();
+
   // if the user dont have any budget with selected category
   if (!data) {
+    const formatedSummery =
+      field === "budget_date" && value
+        ? format(new Date(value), "do LLL yyyy")
+        : value?.toString();
+
     return (
       <>
         {isSuccess && isSelected ? (
@@ -42,8 +49,7 @@ const BudgetSummary = ({
             variant={"default"}
             message={
               <>
-                You don’t have a budget with this {value?.toString()}, create
-                one{" "}
+                You don’t have a budget with this {formatedSummery}, create one{" "}
                 <span
                   onClick={() => {
                     onOpen();

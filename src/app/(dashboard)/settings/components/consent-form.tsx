@@ -33,7 +33,6 @@ const consentCreationSchema = z.object({
     .refine((val) => /^\d+$/.test(val), {
       message: "Mobile number must contain only digits",
     }),
-  // .transform((val) => parseInt(val, 10)),
 });
 
 type FormValues = z.infer<typeof consentCreationSchema>;
@@ -52,7 +51,7 @@ const ConsentCreationForm = () => {
   const [enabled, setEnabled] = useState(false);
   const [mobileNumber, setMobileNumber] = useState("");
 
-  const { data, isSuccess } = useCreateConsent({
+  const { data, isSuccess, isLoading, error } = useCreateConsent({
     enabled,
     mobileNumber,
   });
@@ -69,6 +68,16 @@ const ConsentCreationForm = () => {
       router.replace(url);
     }
   }, [isSuccess, data, router, onClose]);
+
+  useEffect(() => {
+    if (error) {
+      form.setError("mobileNumber", {
+        type: "server",
+        message: error.message || "Something wrong happened",
+      });
+      setEnabled(false);
+    }
+  }, [error]);
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
@@ -103,9 +112,13 @@ const ConsentCreationForm = () => {
             />
 
             <DialogFooter className="mt-5">
-              <Button variant="primary" type="submit">
-                Connect
-              </Button>
+              {isLoading ? (
+                <Button variant="primary">Loading...</Button>
+              ) : (
+                <Button variant="primary" type="submit">
+                  Connect
+                </Button>
+              )}
             </DialogFooter>
           </form>
         </DialogContent>

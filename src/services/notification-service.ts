@@ -10,7 +10,7 @@ export type Notification = {
   is_server_notification: boolean;
 };
 
-type AllNotifications = {
+export type AllNotifications = {
   status: string;
   message: string;
   data: Notification[];

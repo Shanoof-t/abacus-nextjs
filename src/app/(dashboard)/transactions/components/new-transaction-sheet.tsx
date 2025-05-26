@@ -43,7 +43,7 @@ const NewTransactionSheet = () => {
     isLoading: categoryLoading,
     isSuccess: categorySuccess,
     isError: categoryError,
-  } = useGetAllCategories();
+  } = useGetAllCategories(isOpen);
 
   // filter category name
   const categoryValues: string[] =
@@ -53,7 +53,7 @@ const NewTransactionSheet = () => {
   const onCreateCategory = (name: string) =>
     categoryMutate({ category_name: name });
 
-  const isLoading = accountLoading || categoryLoading;
+  const isLoading = accountLoading || categoryLoading || (!categoryValues && true)
   const isSuccess = accountSuccess || categorySuccess;
   const isError = accountError || categoryError;
 

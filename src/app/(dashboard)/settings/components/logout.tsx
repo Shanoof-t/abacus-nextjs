@@ -14,18 +14,17 @@ const Logout = () => {
     <>
       <Separator className="border-gray-300" />
       <div className="flex justify-between py-5 items-center">
-        <div className="flex justify-between space-x-36">
-          <div>
-            <h1 className="text-base font-medium">Log Out</h1>
+        <div className="flex justify-between  lg:w-1/2 items-center">
+          <div className=" w-1/3">
+            <h1 className="text-base font-medium">Log out</h1>
           </div>
-          <div className="text-muted-foreground flex justify-center items-center">
+          <div className="text-muted-foreground flex justify-start items-center w-2/3">
             <h1 className="text-muted-foreground">Logout current account.</h1>
           </div>
         </div>
         <div>
           <Button
             variant="outline"
-            className="outline-0 border-none"
             onClick={() => mutate()}
           >
             Logout

@@ -1,13 +1,20 @@
-"use client"
+"use client";
 import TopSection from "@/components/header/top-section";
 import { Toaster } from "@/components/ui/toaster";
-import React from "react";
+import { useSocket } from "@/hooks/use-socket";
+import React, { useEffect } from "react";
 
 type Props = {
   children: React.ReactNode;
 };
 
-function layout({ children }: Props) {
+function Layout({ children }: Props) {
+  const { init } = useSocket();
+
+  useEffect(() => {
+    init();
+  }, [init]);
+
   return (
     <>
       <Toaster />
@@ -17,4 +24,4 @@ function layout({ children }: Props) {
   );
 }
 
-export default layout;
+export default Layout;

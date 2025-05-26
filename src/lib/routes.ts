@@ -53,7 +53,8 @@ const API_ROUTES = {
   },
   BANK_ACCOUNT: {
     CREATE_CONSENT: "/api/v1/bank/consent/create/",
-    GET_CONSENT: "/api/v1/bank/consent/",
+    GET_CONSENT: "/api/v1/bank/consent",
+    UPDATE_CONSENT: "/api/v1/bank/consent/",
   },
 };
 

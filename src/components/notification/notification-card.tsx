@@ -78,7 +78,7 @@ const NotificationCard = ({ notification }: { notification: Notification }) => {
             </div>
             <TooltipProvider>
               <Tooltip>
-                <TooltipTrigger>
+                <TooltipTrigger asChild>
                   <Button
                     className="text-xs font-semibold"
                     variant="outline"

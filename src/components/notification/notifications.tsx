@@ -1,6 +1,5 @@
 import { useGetAllNotification } from "@/hooks/use-notification";
-
-import React from "react";
+import React, { useEffect } from "react";
 import {
   HoverCard,
   HoverCardContent,
@@ -8,10 +7,25 @@ import {
 } from "../ui/hover-card";
 import { Separator } from "../ui/separator";
 import { Bell } from "lucide-react";
-
 import NotificationCard from "./notification-card";
+import { useSocketStore } from "@/store/socket-store";
+import { useQueryClient } from "@tanstack/react-query";
+import { AllNotifications } from "@/services/notification-service";
+
 const Notifications = () => {
   const { data } = useGetAllNotification();
+  const socket = useSocketStore((state) => state.socket);
+  const queryClient = useQueryClient();
+
+  useEffect(() => {
+    if (!socket) return;
+
+    socket.on("notification:send", (data: Notification) => {
+      queryClient.setQueryData(["notifications"], (prev: AllNotifications) => {
+        return { ...prev, data: [...prev.data, data] };
+      });
+    });
+  }, [socket]);
 
   return (
     <div className="relative">

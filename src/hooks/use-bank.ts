@@ -1,4 +1,9 @@
-import { createConsent, getBankTransactions } from "@/services/bank-service";
+import {
+  createConsent,
+  getBankTransactions,
+  getConsent,
+  updateConsent,
+} from "@/services/bank-service";
 import { useQuery } from "@tanstack/react-query";
 
 export const useCreateConsent = ({
@@ -10,7 +15,7 @@ export const useCreateConsent = ({
 }) => {
   return useQuery({
     queryKey: ["account-consent"],
-    queryFn: async()=>await createConsent(mobileNumber),
+    queryFn: async () => await createConsent(mobileNumber),
     enabled,
   });
 };
@@ -22,6 +27,21 @@ export const useGetBankTransactions = (
   return useQuery({
     queryKey: ["transactions", id],
     queryFn: async () => await getBankTransactions(id),
+    enabled,
+  });
+};
+
+export const useGetConsent = () => {
+  return useQuery({
+    queryKey: ["consent"],
+    queryFn: async () => await getConsent(),
+  });
+};
+
+export const useUpdateConsent = (consentId: string, enabled: boolean) => {
+  return useQuery({
+    queryKey: ["consent-update"],
+    queryFn: async () => await updateConsent(consentId),
     enabled,
   });
 };

@@ -33,6 +33,7 @@ const SignInForm = () => {
       {
         onSuccess: (data) => {
           localStorage.setItem("user_name", data.data.user_name);
+          localStorage.setItem("user_id", data.data._id);
           router.replace("/");
           resetForm();
         },
