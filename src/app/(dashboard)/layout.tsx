@@ -13,7 +13,7 @@ function Layout({ children }: Props) {
 
   useEffect(() => {
     init();
-  }, [init]);
+  }, []);
 
   return (
     <>
