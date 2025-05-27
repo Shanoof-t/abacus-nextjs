@@ -7,13 +7,14 @@ import {
   verifyOTP,
 } from "@/services/auth-service";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
 
 export const useSignup = () => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: signUp,
     onSuccess: (data) => {
-      console.log("data in useSign", data);
+      localStorage.setItem("userDetails", JSON.stringify(data.data));
       queryClient.setQueryData(["signup"], data);
     },
   });
@@ -26,8 +27,13 @@ export const useSignin = () => {
 };
 
 export const useOtpVerify = () => {
+  const router = useRouter();
+
   return useMutation({
     mutationFn: verifyOTP,
+    onSuccess: () => {
+      router.replace("/sign-in");
+    },
   });
 };
 

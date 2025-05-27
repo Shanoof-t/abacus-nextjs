@@ -77,7 +77,7 @@ const ConsentCreationForm = () => {
       });
       setEnabled(false);
     }
-  }, [error]);
+  }, [error, form]);
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>

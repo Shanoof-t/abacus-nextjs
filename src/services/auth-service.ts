@@ -2,7 +2,16 @@ import apiClient from "@/lib/axios.config";
 import API_ROUTES from "@/lib/routes";
 import { OtpVerifyParams, SignInType, SignUpType } from "@/types/auth-types";
 
-export const signUp = async (data: SignUpType): Promise<void> => {
+type SignUp = {
+  status: string;
+  message: string;
+  data: {
+    userId: string;
+    email: string;
+    userName: string;
+  };
+};
+export const signUp = async (data: SignUpType): Promise<SignUp> => {
   const response = await apiClient.post(API_ROUTES.AUTH.SIGNUP, data);
   return response.data;
 };

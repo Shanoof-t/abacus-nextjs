@@ -1,7 +1,5 @@
 "use client";
-import React, { useState } from "react";
-import { useRouter } from "next/navigation";
-import { useQueryClient } from "@tanstack/react-query";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import {
@@ -10,49 +8,41 @@ import {
   InputOTPSlot,
 } from "@/components/ui/input-otp";
 import { REGEXP_ONLY_DIGITS_AND_CHARS } from "input-otp";
-import { useOtpVerify, useResendOtp, useSignup } from "@/hooks/use-auth";
-
-type SignUpData = {
-  data: {
-    userId: string;
-    email: string;
-  };
-};
+import { useOtpVerify, useResendOtp } from "@/hooks/use-auth";
 
 const Page = () => {
   const [otp, setOtp] = useState<string>("");
   const [inputs] = useState(["key1", "key2", "key3", "key4", "key5", "key6"]);
-  const router = useRouter();
-  const queryClient = useQueryClient();
+  const [useDetails, setUserDetails] = useState<null | {
+    userId: string;
+    email: string;
+    userName: string;
+  }>(null);
 
-  const signUpData = queryClient.getQueryData<SignUpData>(["signup"]);
-  const { data } = useSignup();
-  console.log("signUpdata", signUpData);
-  console.log("data-sign", data);
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const stored = localStorage.getItem("userDetails");
+      if (stored) {
+        setUserDetails(JSON.parse(stored));
+      }
+    }
+  }, []);
+
   const { mutate: verifyMutate, error: verifyError } = useOtpVerify();
   const { mutate: resendMutate, error: resendError } = useResendOtp();
 
   const handleChange = (value: string) => setOtp(value);
 
   const handleSubmit = () => {
-    console.log("handleSubmit clicked");
-    if (signUpData?.data) {
-      console.log("inside mutate");
-      const { userId } = signUpData.data;
-      verifyMutate(
-        { otp, userId },
-        {
-          onSuccess: () => {
-            router.replace("/sign-in");
-          },
-        }
-      );
+    if (useDetails) {
+      const { userId } = useDetails;
+      verifyMutate({ otp, userId });
     }
   };
 
   const handleResendOTP = () => {
-    if (signUpData?.data) {
-      const { userId } = signUpData.data;
+    if (useDetails) {
+      const { userId } = useDetails;
       resendMutate({ userId });
     }
   };
@@ -70,7 +60,7 @@ const Page = () => {
             <h2 className="font-bold text-lg">Verify your email</h2>
             <p className="text-sm text-[#7E8CA0]">
               Enter the verification code sent to your email{" "}
-              <strong>{`${signUpData?.data.email}`}</strong>
+              <strong>{`${useDetails?.email}`}</strong>
             </p>
           </div>
 

@@ -34,14 +34,14 @@ const BankAccount = () => {
       setIsConnected(false);
       toast({ description: consentUpdateResponse.message });
     }
-  }, [updateConsentSuccess]);
+  }, [updateConsentSuccess, consentUpdateResponse]);
 
   useEffect(() => {
     if (isSuccess && data.data) {
       setIsConnected(data.data.isApproved);
       setConsentId(data?.data.consent_id);
     }
-  }, [isSuccess]);
+  }, [isSuccess, data?.data]);
 
   useEffect(() => {
     if (socket) {
@@ -57,7 +57,7 @@ const BankAccount = () => {
         });
       });
     }
-  }, [socket]);
+  }, [socket, queryClient]);
 
   const isLoading = getConsentLoading || updateConsentLoading || isConnecting;
 

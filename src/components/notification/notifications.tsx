@@ -25,7 +25,7 @@ const Notifications = () => {
         return { ...prev, data: [...prev.data, data] };
       });
     });
-  }, [socket]);
+  }, [socket, queryClient]);
 
   return (
     <div className="relative">
