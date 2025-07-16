@@ -3,7 +3,7 @@ import Image from "next/image";
 
 const GoogleButton = () => {
   const handleGoogleAuth = () => {
-    window.location.href = "http://localhost:8080/api/v1/auth/google";
+    window.location.href = `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v1/auth/google`;
   };
 
   return (
