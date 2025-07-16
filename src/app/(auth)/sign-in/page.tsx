@@ -1,11 +1,24 @@
 "use client";
 import Image from "next/image";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import GoogleButton from "../components/GoogleButton";
 import SignInForm from "../components/sign-in-form";
+import { useRouter, useSearchParams } from "next/navigation";
 
 function Page() {
+  const searchParams = useSearchParams();
+  const [error] = useState(searchParams.get("error"));
+  const router = useRouter();
+  useEffect(() => {
+    const newUrl =
+      window.location.protocol +
+      "//" +
+      window.location.host +
+      window.location.pathname;
+    router.replace(newUrl)
+  }, []);
+
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2  min-h-screen">
       <div className="flex flex-col justify-center items-center ">
@@ -22,8 +35,9 @@ function Page() {
             </p>
           </div>
           {/* google button  */}
-          <div className="flex justify-center mt-4">
+          <div className="flex flex-col text-center justify-center mt-4">
             <GoogleButton />
+            {error && <p className="text-sm text-red-600 mt-2">{error}</p>}
           </div>
 
           <div className="mt-3 mb-1 w-full flex items-center">
