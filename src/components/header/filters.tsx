@@ -65,7 +65,7 @@ const Filters = () => {
             <SelectItem value="all">All Accounts</SelectItem>
             {isSuccess &&
               data?.data.map((account) => (
-                <SelectItem value={account.account_name} key={account._id}>
+                <SelectItem value={account.account_name} key={account.id}>
                   {account.account_name}
                 </SelectItem>
               ))}

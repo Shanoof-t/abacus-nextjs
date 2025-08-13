@@ -11,12 +11,11 @@ export type AccountInputs = {
 export type Account = {
   account_name: string;
   account_balance?: number;
-  _id: string;
+  id: string;
   user_id: string;
 };
 
 export const createNewAccount = async (data: AccountInputs) => {
-  console.log("data", data);
   const response = await apiClient.post(
     API_ROUTES.ACCOUNT.CREATE_ACCOUNT,
     data
