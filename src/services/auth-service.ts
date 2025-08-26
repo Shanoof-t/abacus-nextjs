@@ -22,7 +22,7 @@ type SignIn = {
   data: {
     user_name: string;
     email: string;
-    _id: string;
+    id: string;
   };
 };
 
@@ -32,7 +32,6 @@ export const signIn = async (data: SignInType): Promise<SignIn> => {
 };
 
 export const verifyOTP = async (data: OtpVerifyParams): Promise<void> => {
-  console.log("data", data);
   return await apiClient.post(API_ROUTES.AUTH.VERIFY_OTP, data);
 };
 

@@ -67,7 +67,7 @@ const AccountsPage = () => {
             filterPlaceholder="name"
             disabled={false}
             onDelete={(rows) => {
-              const ids = rows.map((row) => row.original._id);
+              const ids = rows.map((row) => row.original.id);
               mutate(ids);
             }}
           />

@@ -20,9 +20,12 @@ export const useNewBudget = () => {
     onSuccess: (data) => {
       onClose();
       toast({ description: data.message });
-      queryClient.invalidateQueries({ queryKey: ["budgets"] });
       queryClient.invalidateQueries({
         queryKey: ["budget", data.data.category_name],
+      });
+      queryClient.invalidateQueries({ queryKey: ["budgets"] });
+      queryClient.invalidateQueries({
+        queryKey: ["budget", data.data.id],
       });
     },
   });
@@ -38,7 +41,7 @@ export const useGetAllBudget = () => {
 export const useGetBudget = (id: string, enabled?: boolean) => {
   return useQuery({
     queryKey: ["budget", id],
-    queryFn: () => fetchBudget(id),
+    queryFn: async () => await fetchBudget(id),
     enabled,
   });
 };
@@ -49,7 +52,7 @@ export const useGetBudgetByCategory = (
 ) => {
   return useQuery({
     queryKey: ["budget", categoryName],
-    queryFn: () => fetchBudgetByCategory(categoryName),
+    queryFn: async () => await fetchBudgetByCategory(categoryName),
     enabled,
   });
 };
@@ -73,12 +76,11 @@ export const useEditBudget = () => {
   return useMutation({
     mutationFn: updateBudget,
     onSuccess: (data) => {
-      console.log("updated budget", data);
       onClose();
       toast({ description: data.message });
       queryClient.invalidateQueries({ queryKey: ["budgets"] });
       queryClient.invalidateQueries({
-        queryKey: ["budget", data.data._id],
+        queryKey: ["budget", data.data.id],
       });
     },
   });

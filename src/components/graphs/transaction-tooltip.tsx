@@ -4,7 +4,7 @@ import { Separator } from "../ui/separator";
 interface PayloadItem {
   value: number;
   payload: {
-    date: string | Date;
+    transaction_date: string | Date;
   };
 }
 
@@ -16,7 +16,7 @@ interface CustomTooltipProps {
 const CustomTooltip = ({ active, payload }: CustomTooltipProps) => {
   if (!active || !payload || payload.length < 2) return null;
 
-  const date = payload[0].payload.date;
+  const date = payload[0].payload.transaction_date;
   const income = payload[0].value;
   const expense = payload[1].value;
 

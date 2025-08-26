@@ -4,7 +4,7 @@ import API_ROUTES from "@/lib/routes";
 import { z } from "zod";
 
 export type Notification = {
-  _id: string;
+  id: string;
   message: string;
   title: string;
   is_server_notification: boolean;

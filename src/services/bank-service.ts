@@ -5,7 +5,6 @@ export const createConsent = async (mobileNumber: string) => {
   const response = await apiClient.get(
     API_ROUTES.BANK_ACCOUNT.CREATE_CONSENT + mobileNumber
   );
-  console.log("consenr", response.data);
   return response.data;
 };
 

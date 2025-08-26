@@ -3,12 +3,12 @@ import API_ROUTES from "@/lib/routes";
 
 export type CategoryInputs = {
   category_name: string;
-  _id?: string;
+  id?: string;
   user_id?: string;
 };
 export type Category = {
   category_name: string;
-  _id: string;
+  id: string;
   user_id?: string;
 };
 

@@ -16,7 +16,7 @@ export interface BudgetData
   budget_end_date?: Date;
   total_spent?: number;
   progress?: number;
-  _id?: string;
+  id?: string;
 }
 
 interface FetchBudget extends Fetch {
@@ -54,8 +54,7 @@ export const updateBudget = async ({
   data: BudgetData;
   id: string;
 }): Promise<FetchBudget> => {
-  console.log("data in edit", data);
-  const response = await apiClient.post(
+  const response = await apiClient.put(
     API_ROUTES.BUDGET.EDIT_BUDGET + id,
     data
   );

@@ -17,8 +17,10 @@ const AreaVariant = ({ data }: { data?: Transaction[] }) => {
       <AreaChart data={data}>
         <CartesianGrid strokeDasharray="3 3" />
         <XAxis
-          dataKey="date"
-          tickFormatter={(value) => format(value, "dd MMM")}
+          dataKey="transaction_date"
+          tickFormatter={(value) => {
+            return format(value, "dd MMM");
+          }}
         />
         <Tooltip content={<CustomTooltip />} />
         <defs>

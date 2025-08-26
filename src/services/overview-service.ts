@@ -32,14 +32,14 @@ export const fetchSummaryByDate = async (
 };
 
 export type Transaction = {
-  _id: string;
+  id: string;
   date: string;
   income: number;
   expense: number;
 };
 
 export type Category = {
-  _id: string;
+  id: string;
   category_name: string;
   category_amount: number;
 };

@@ -10,7 +10,7 @@ import Action from "./action";
 export type AccountInputs = {
   account_name: string;
   account_balance?: number;
-  _id: string;
+  id: string;
   user_id: string;
 };
 
@@ -59,6 +59,6 @@ export const column: ColumnDef<AccountInputs>[] = [
   },
   {
     id: "actions",
-    cell: ({ row }) => <Action id={row.original._id} />,
+    cell: ({ row }) => <Action id={row.original.id} />,
   },
 ];

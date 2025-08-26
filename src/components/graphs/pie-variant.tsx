@@ -11,7 +11,7 @@ import {
 import CategoryTooltip from "./category-tooltip";
 
 type Category = {
-  _id: string;
+  id: string;
   category_name: string;
   category_amount: number;
 };

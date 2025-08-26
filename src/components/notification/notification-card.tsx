@@ -57,7 +57,7 @@ const NotificationCard = ({ notification }: { notification: Notification }) => {
                 variant="primary"
                 onClick={() =>
                   notificationMutation({
-                    id: notification._id,
+                    id: notification.id,
                     action: "ESTIMATED",
                   })
                 }
@@ -69,7 +69,7 @@ const NotificationCard = ({ notification }: { notification: Notification }) => {
                 variant="outline"
                 size="sm"
                 onClick={() => {
-                  setNotificationId(notification._id);
+                  setNotificationId(notification.id);
                   onOpen();
                 }}
               >
@@ -85,7 +85,7 @@ const NotificationCard = ({ notification }: { notification: Notification }) => {
                     size="sm"
                     onClick={() =>
                       notificationMutation({
-                        id: notification._id,
+                        id: notification.id,
                         action: "CANCEL_RECURRING",
                       })
                     }

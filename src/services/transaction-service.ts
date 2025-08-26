@@ -9,7 +9,7 @@ export const createTransaction = async (
 ) => {
   const response = await apiClient.post(
     API_ROUTES.TRANSACTION.CREATE_TRANSACTION,
-    data
+    { ...data, transaction_amount: Number(data.transaction_amount) }
   );
   return response.data;
 };
@@ -18,14 +18,14 @@ export type FetchTransactions = {
   status: string;
   message: string;
   data: {
-    _id: string;
+    id: string;
     transaction_date: string;
     account_name: string;
     category_name: string;
     transaction_amount: number;
     transaction_type: string;
     transaction_payee: string;
-    transaction_note:string
+    transaction_note: string;
   }[];
 };
 
@@ -52,7 +52,7 @@ export const deleteTranaction = async (id: string) => {
 };
 
 export type TransactionInput = {
-  _id: string;
+  id: string;
   user_id: string;
   account_name: string;
   transaction_amount: string;
