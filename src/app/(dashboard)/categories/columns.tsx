@@ -8,7 +8,7 @@ import { ArrowUpDown } from "lucide-react";
 import Action from "./action";
 
 export type Category = {
-  _id: string;
+  id: string;
   category_name: string;
 };
 
@@ -49,6 +49,6 @@ export const column: ColumnDef<Category>[] = [
   },
   {
     id: "actions",
-    cell: ({ row }) => <Action id={row.original._id} />,
+    cell: ({ row }) => <Action id={row.original.id} />,
   },
 ];

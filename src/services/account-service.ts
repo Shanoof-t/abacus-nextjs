@@ -4,7 +4,7 @@ import API_ROUTES from "@/lib/routes";
 export type AccountInputs = {
   account_name: string;
   account_balance?: number;
-  _id?: string;
+  id?: string;
   user_id?: string;
 };
 

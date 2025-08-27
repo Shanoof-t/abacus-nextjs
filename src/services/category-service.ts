@@ -8,7 +8,7 @@ export type CategoryInputs = {
 };
 export type Category = {
   category_name: string;
-  _id: string;
+  id: string;
   user_id?: string;
 };
 

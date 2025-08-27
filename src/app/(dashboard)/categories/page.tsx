@@ -66,7 +66,7 @@ const Page = () => {
             columns={column}
             filterKey="category_name"
             onDelete={(rows) => {
-              const ids = rows.map((row) => row.original._id);
+              const ids = rows.map((row) => row.original.id);
               mutate(ids);
             }}
             disabled={false}
