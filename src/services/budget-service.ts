@@ -54,8 +54,7 @@ export const updateBudget = async ({
   data: BudgetData;
   id: string;
 }): Promise<FetchBudget> => {
-  console.log("data in edit", data);
-  const response = await apiClient.post(
+  const response = await apiClient.put(
     API_ROUTES.BUDGET.EDIT_BUDGET + id,
     data
   );
@@ -65,7 +64,6 @@ export const updateBudget = async ({
 export const fetchBudgetByCategory = async (
   categoryName: string
 ): Promise<FetchBudget> => {
-  console.log("categonyName in service", categoryName);
   const response = await apiClient.get(
     API_ROUTES.BUDGET.GET_BUDGET_CATEGORY + categoryName
   );

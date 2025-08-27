@@ -16,7 +16,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 interface Budget extends z.infer<typeof budgetSchema> {
-  _id: string;
+  id: string;
   progress: number;
   total_spent: number;
 }
@@ -178,7 +178,7 @@ export const column: ColumnDef<Budget>[] = [
                 Used: ₹{row.original.total_spent} of ₹
                 {row.original.amount_limit}
                 <br />
-                Progress: {Math.round(row.original.progress)}%
+                Progress: {row.original.progress}%
               </p>
             </TooltipContent>
           </Tooltip>
@@ -188,6 +188,6 @@ export const column: ColumnDef<Budget>[] = [
   },
   {
     id: "actions",
-    cell: ({ row }) => <Action id={row.original._id} />,
+    cell: ({ row }) => <Action id={row.original.id} />,
   },
 ];

@@ -66,7 +66,6 @@ const BudgetSheet = () => {
   // fetch existing budget
   const { data } = useGetBudget(id, mode === "edit");
 
-
   const isLoading = accountLoading || categoryLoading;
   const isSuccess = accountSuccess || categorySuccess || data?.data;
   const isError = accountError || categoryError;
@@ -81,6 +80,7 @@ const BudgetSheet = () => {
         budget_end_date: data.data.budget_end_date
           ? new Date(data.data.budget_end_date)
           : undefined,
+        budget_note: data.data.budget_note ?? "",
       }
     : initialValues;
   return (
