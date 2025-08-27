@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import DataTable from "@/components/ui/data-table";
 import { useNewTransactionStore } from "@/store/transaction-store";
-import { Download, Loader2, Plus } from "lucide-react";
+import { Loader2, Plus } from "lucide-react";
 import React, { useState } from "react";
 import { column } from "./components/column";
 import {
@@ -11,7 +11,7 @@ import {
   useGetAllTransaction,
 } from "@/hooks/use-transaction";
 import { Skeleton } from "@/components/ui/skeleton";
-import CsvUploadButton from "./components/csv-upload-button";
+// import CsvUploadButton from "./components/csv-upload-button";
 import CsvUpload from "./components/csv-upload";
 import { jsonToCSV } from "react-papaparse";
 import useConfirm from "@/hooks/use-confirm";
@@ -69,7 +69,7 @@ const Page = () => {
             transaction_note: transaction.transaction_note,
           };
         });
-        const jsonData= JSON.stringify(filterDataForCSV);
+        const jsonData = JSON.stringify(filterDataForCSV);
         const result = jsonToCSV(JSON.parse(jsonData));
         const url = URL.createObjectURL(new Blob([result]));
         const link = document.createElement("a");
@@ -132,7 +132,7 @@ const Page = () => {
             </CardTitle>
 
             <div className="lg:space-x-2 lg:space-y-0 space-y-1">
-              <Button
+              {/* <Button
                 variant="primary"
                 size="sm"
                 className="text-white border rounded-[.50rem] w-full lg:w-auto"
@@ -140,7 +140,7 @@ const Page = () => {
               >
                 <Download /> Export
               </Button>
-              <CsvUploadButton onUpload={importCsv} />
+              <CsvUploadButton onUpload={importCsv} /> */}
 
               <Button
                 variant="primary"
@@ -159,7 +159,7 @@ const Page = () => {
               filterKey="transaction_payee"
               filterPlaceholder="Search payee"
               onDelete={(rows) => {
-                const ids = rows.map((row) => row.original._id);
+                const ids = rows.map((row) => row.original.id);
                 mutate(ids);
               }}
               disabled={false}

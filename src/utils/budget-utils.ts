@@ -37,7 +37,6 @@ export const generateMessages = ({
   remainingBudget,
   amountBalance,
 }: GenerateMessages) => {
-  console.log("remainingBudget",remainingBudget)
   // remaining Budget - category_name
   const remainingBudgetMessage = `${data?.progress}% of your ${data?.category_name} budget is used. Remaining Budget: ₹${remainingBudget} out of ₹${data?.amount_limit}.`;
 
@@ -47,8 +46,6 @@ export const generateMessages = ({
   let amountBottomMessage = `After this transaction of ${value} remaining budget will be ${amountBalance}`;
 
   if (amountBalance && amountBalance < 0) {
-    console.log("totalSpemd", data?.total_spent);
-    console.log("value", value);
     const exceededAmount = Number(data?.total_spent) + Number(value);
 
     amountBottomMessage = `This transaction will exceed the budget by ${exceededAmount}`;

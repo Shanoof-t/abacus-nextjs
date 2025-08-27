@@ -8,7 +8,7 @@ import Action from "./action";
 import moment from "moment";
 import { Badge } from "@/components/ui/badge";
 export type Transaction = {
-  _id: string;
+  id: string;
   transaction_date: string;
   account_name: string;
   category_name: string;
@@ -123,6 +123,6 @@ export const column: ColumnDef<Transaction>[] = [
   },
   {
     id: "actions",
-    cell: ({ row }) => <Action id={row.original._id} />,
+    cell: ({ row }) => <Action id={row.original.id} />,
   },
 ];

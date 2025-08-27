@@ -13,7 +13,7 @@ apiClient.interceptors.response.use(
     return res;
   },
   (err) => {
-    console.error("ERROR-RESPONSE>>>>>", err.response.data);
+    console.error("ERROR-RESPONSE>>>>>", err.response.data.message);
     return Promise.reject(err.response.data);
   }
 );

@@ -81,6 +81,7 @@ const TransactionForm = ({
           transaction_date: transactionData?.transaction_date
             ? new Date(transactionData.transaction_date)
             : undefined,
+          transaction_note: transactionData?.transaction_note ?? "",
         }
       : initialVlaues,
   });
@@ -116,7 +117,7 @@ const TransactionForm = ({
         queryKey: ["budget", formWatch.category_name],
       });
     }
-  }, [formWatch.transaction_type, formWatch.category_name,queryClient]);
+  }, [formWatch.transaction_type, formWatch.category_name, queryClient]);
 
   return (
     <Form {...form}>

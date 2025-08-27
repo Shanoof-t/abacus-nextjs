@@ -7,9 +7,13 @@ import { z } from "zod";
 export const createTransaction = async (
   data: z.infer<typeof transactionSchema>
 ) => {
+  const payload = {
+    ...data,
+    transaction_amount: Number(data.transaction_amount),
+  };
   const response = await apiClient.post(
     API_ROUTES.TRANSACTION.CREATE_TRANSACTION,
-    data
+    payload
   );
   return response.data;
 };
@@ -18,14 +22,14 @@ export type FetchTransactions = {
   status: string;
   message: string;
   data: {
-    _id: string;
+    id: string;
     transaction_date: string;
     account_name: string;
     category_name: string;
     transaction_amount: number;
     transaction_type: string;
     transaction_payee: string;
-    transaction_note:string
+    transaction_note: string;
   }[];
 };
 
@@ -76,7 +80,7 @@ type EditTransaction = { data: z.infer<typeof transactionSchema>; id: string };
 export const editTransaction = async ({ data, id }: EditTransaction) => {
   const response = await apiClient.put(
     API_ROUTES.TRANSACTION.EDIT_TRANSACTION + id,
-    data
+    { ...data, transaction_amount: Number(data.transaction_amount) }
   );
   return response.data;
 };
