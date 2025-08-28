@@ -37,6 +37,19 @@ const iconVarient = cva("size-6", {
   },
 });
 
+const percentageVarient = cva("text-sm", {
+  variants: {
+    variant: {
+      default: "text-emarald-500",
+      success: "text-emerald-500",
+      danger: "text-red-500",
+    },
+    defaultVariants: {
+      variant: "default",
+    },
+  },
+});
+
 type BoxVarient = VariantProps<typeof boxVarient>;
 type IconVarient = VariantProps<typeof iconVarient>;
 
@@ -57,7 +70,7 @@ const OverViewCard = ({
   value = 0,
 }: OverViewCard) => {
   return (
-    <Card className="border-none drop-shadow-sm bg-white p-4 border rounded-[.50rem]">
+    <Card className="border-none drop-shadow-sm bg-white p-4 border rounded-[.50rem] mb-2">
       <CardHeader className="flex-row justify-between items-center">
         <div className="space-y-2">
           <CardTitle>{title}</CardTitle>
@@ -77,14 +90,24 @@ const OverViewCard = ({
             end={value}
             decimals={2}
             prefix="₹"
+            className={`${
+              title === "Remaining" && value < 0 ? "text-red-500" : ""
+            }`}
           />
         </h1>
         {percentage ? (
           <p
             className={
               percentage && percentage > 0
-                ? "text-emerald-500  text-sm"
-                : "text-rose-500  text-sm"
+                ? cn(
+                    percentageVarient({
+                      variant:
+                        variant === "danger" && percentage > 80
+                          ? "danger"
+                          : "success",
+                    })
+                  )
+                : cn(percentageVarient({ variant: "danger" }))
             }
           >
             {percentage}% from last period
