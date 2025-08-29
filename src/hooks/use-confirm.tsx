@@ -46,7 +46,7 @@ const useConfirm = ({ title, description }: Confirm): useConfirm => {
   const ConfirmDialog = () => {
     return (
       <AlertDialog open={promise !== null}>
-        <AlertDialogContent className="bg-white border rounded-full">
+        <AlertDialogContent className="bg-white border">
           <AlertDialogHeader>
             <AlertDialogTitle>{title}</AlertDialogTitle>
             <AlertDialogDescription>{description}</AlertDialogDescription>

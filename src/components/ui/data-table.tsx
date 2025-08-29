@@ -74,7 +74,7 @@ const DataTable = <TData, TValue>({
   return (
     <div>
       <ConfirmDialog />
-      <div className="flex justify-between mb-3 w-full">
+      <div className="flex justify-between mb-3 w-full space-x-5 items-center">
         <div>
           <Input
             placeholder={`${filterPlaceholder}...`}
@@ -84,7 +84,7 @@ const DataTable = <TData, TValue>({
             onChange={(event) =>
               table.getColumn(filterKey)?.setFilterValue(event.target.value)
             }
-            className="w-[19rem] placeholder:text-gray-400 rounded-[.50rem] border-gray-200 "
+            className="lg:w-[19rem]  placeholder:text-gray-400 rounded-[.50rem] border-gray-200 "
           />
         </div>
         <div>

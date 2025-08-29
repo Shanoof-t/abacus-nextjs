@@ -1,16 +1,19 @@
 import { useGetAllNotification } from "@/hooks/use-notification";
 import React, { useEffect } from "react";
-import {
-  HoverCard,
-  HoverCardContent,
-  HoverCardTrigger,
-} from "../ui/hover-card";
-import { Separator } from "../ui/separator";
-import { Bell } from "lucide-react";
-import NotificationCard from "./notification-card";
+import { Bell, BellOff } from "lucide-react";
 import { useSocketStore } from "@/store/socket-store";
 import { useQueryClient } from "@tanstack/react-query";
 import { AllNotifications } from "@/services/notification-service";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "../ui/dropdown-menu";
+import RecurringTransactionCard from "./recurring-transaction-card";
+import EmptyNotificationCard from "./empty-notification-card";
+import BudgetAlertCard from "./budget-alert-card";
 
 const Notifications = () => {
   const { data } = useGetAllNotification();
@@ -21,6 +24,7 @@ const Notifications = () => {
     if (!socket) return;
 
     socket.on("notification:send", (data: Notification) => {
+      console.log("notification:send: ", data);
       queryClient.setQueryData(["notifications"], (prev: AllNotifications) => {
         return { ...prev, data: [...prev.data, data] };
       });
@@ -28,29 +32,42 @@ const Notifications = () => {
   }, [socket, queryClient]);
 
   return (
-    <div className="relative">
-      <HoverCard>
-        <HoverCardTrigger>
-          <Bell className="text-white w-5 h-5 m-1 cursor-pointer" />
-        </HoverCardTrigger>
-        <HoverCardContent className="w-[30rem] mr-16 mt-5">
-          <h1>Notification</h1>
-          <Separator className="my-4" />
-          {data?.data.length === 0 && (
-            <div>
-              <h1>No messages.</h1>
-            </div>
-          )}
-          {data?.data.map((notification) => (
-            <NotificationCard
-              notification={notification}
-              key={notification._id}
-            />
-          ))}
-        </HoverCardContent>
-      </HoverCard>
+    <div className="relative flex items-center justify-center">
+      <DropdownMenu>
+        <DropdownMenuTrigger>
+          <Bell className="text-white w-5 h-5  cursor-pointer" />
+        </DropdownMenuTrigger>
+        <DropdownMenuContent className="absolute top-0 right-0 w-64 lg:w-96">
+          <DropdownMenuLabel>Notifications</DropdownMenuLabel>
+          <DropdownMenuSeparator />
+
+          {data?.data.length === 0 && <EmptyNotificationCard />}
+
+          {data?.data.map((notification) => {
+            switch (notification.notification_type) {
+              case "reccuring-alert":
+                return (
+                  <RecurringTransactionCard
+                    notification={notification}
+                    key={notification.id}
+                  />
+                );
+              case "budget-alert":
+                return (
+                  <BudgetAlertCard
+                    notification={notification}
+                    key={notification.id}
+                  />
+                );
+
+              default:
+                return <EmptyNotificationCard key={notification.id} />;
+            }
+          })}
+        </DropdownMenuContent>
+      </DropdownMenu>
       {data?.data && data?.data.length > 0 ? (
-        <span className="absolute top-0 right-0.5 h-3 w-3 bg-red-600 rounded-full border-2"></span>
+        <span className="absolute -top-1 right-0 h-3 w-3 bg-red-600 rounded-full border-2"></span>
       ) : null}
     </div>
   );

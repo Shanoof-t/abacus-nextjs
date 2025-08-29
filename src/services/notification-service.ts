@@ -4,10 +4,11 @@ import API_ROUTES from "@/lib/routes";
 import { z } from "zod";
 
 export type Notification = {
-  _id: string;
+  id: string;
   message: string;
   title: string;
   is_server_notification: boolean;
+  notification_type: "budget-alert" | "reccuring-alert";
 };
 
 export type AllNotifications = {
@@ -24,13 +25,12 @@ export const fetchAllNotifications = async (): Promise<AllNotifications> => {
 
 type UpdateNotification = {
   id: string;
-  action: "ESTIMATED" | "CANCEL_RECURRING";
+  action: "ESTIMATED" | "CANCEL_RECURRING" | "READED_BUDGET_ALERT";
 };
 export const updateNotification = async ({
   id,
   action,
 }: UpdateNotification) => {
-  console.log("action", action);
   const response = await apiClient.post(
     API_ROUTES.NOTIFICATION.UPDATE_NOTIFICATION + id,
     { action }

@@ -9,16 +9,16 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "../ui/tooltip";
-import { Separator } from "../ui/separator";
 import { Notification } from "@/services/notification-service";
+import { DropdownMenuSeparator } from "../ui/dropdown-menu";
 
-const NotificationCard = ({ notification }: { notification: Notification }) => {
+const RecurringTransactionCard = ({ notification }: { notification: Notification }) => {
   const { onOpen, setNotificationId } = useTransactionRescheduleStore();
   const { mutate: notificationMutation } = useUpdateNotification();
 
   return (
-    <div>
-      <div className="flex">
+    <>
+      <div className="flex p-2">
         <div className="mr-5">
           {notification.is_server_notification && (
             <div className="bg-slate-200 p-3 rounded-full border-[0.0.5rem] border-gray-600 text-gray-600">
@@ -57,7 +57,7 @@ const NotificationCard = ({ notification }: { notification: Notification }) => {
                 variant="primary"
                 onClick={() =>
                   notificationMutation({
-                    id: notification._id,
+                    id: notification.id,
                     action: "ESTIMATED",
                   })
                 }
@@ -69,7 +69,7 @@ const NotificationCard = ({ notification }: { notification: Notification }) => {
                 variant="outline"
                 size="sm"
                 onClick={() => {
-                  setNotificationId(notification._id);
+                  setNotificationId(notification.id);
                   onOpen();
                 }}
               >
@@ -85,7 +85,7 @@ const NotificationCard = ({ notification }: { notification: Notification }) => {
                     size="sm"
                     onClick={() =>
                       notificationMutation({
-                        id: notification._id,
+                        id: notification.id,
                         action: "CANCEL_RECURRING",
                       })
                     }
@@ -101,10 +101,9 @@ const NotificationCard = ({ notification }: { notification: Notification }) => {
           </div>
         </div>
       </div>
-
-      <Separator className="my-4" />
-    </div>
+      <DropdownMenuSeparator />
+    </>
   );
 };
 
-export default NotificationCard;
+export default RecurringTransactionCard;
