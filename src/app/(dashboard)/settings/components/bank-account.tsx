@@ -8,12 +8,13 @@ import { IGetConsent } from "@/services/bank-service";
 import { useConsentCreationStore } from "@/store/bank-store";
 import { useSocketStore } from "@/store/socket-store";
 import { useQueryClient } from "@tanstack/react-query";
+import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
 const BankAccount = () => {
+  const searchParams = useSearchParams();
   const socket = useSocketStore((state) => state.socket);
   const queryClient = useQueryClient();
-
   const { onOpen } = useConsentCreationStore();
 
   const [isConnected, setIsConnected] = useState(false);
@@ -29,16 +30,38 @@ const BankAccount = () => {
   } = useUpdateConsent(consentId, isDisconnect);
 
   useEffect(() => {
+    if (typeof window !== "undefined") {
+      const stored = localStorage.getItem("consent_success");
+      if (stored === "true") {
+        setIsConnected(true);
+      }
+    }
+  }, []);
+
+  useEffect(() => {
+    const success = searchParams.get("success");
+    if (success) {
+      if (typeof window !== "undefined") {
+        localStorage.setItem("consent_success", success);
+      }
+      setIsConnected(success === "true");
+    }
+  }, [searchParams]);
+
+  useEffect(() => {
     if (updateConsentSuccess) {
       setIsDisconnect(false);
       setIsConnected(false);
+      if (typeof window !== "undefined") {
+        localStorage.removeItem("consent_success");
+      }
       toast({ description: consentUpdateResponse.message });
     }
   }, [updateConsentSuccess, consentUpdateResponse]);
 
   useEffect(() => {
-    if (isSuccess && data.data) {
-      setIsConnected(data.data.isApproved);
+    if (isSuccess && data?.data) {
+      setIsConnected(data.data.is_approved);
       setConsentId(data?.data.consent_id);
     }
   }, [isSuccess, data?.data]);
@@ -50,11 +73,11 @@ const BankAccount = () => {
         setIsConnected(true);
         setIsConnecting(false);
         queryClient.setQueryData(["consent"], (prev: IGetConsent) => {
-          return {
-            ...prev,
-            data,
-          };
+          return { ...prev, data };
         });
+        if (typeof window !== "undefined") {
+          localStorage.setItem("consent_success", "true");
+        }
       });
     }
   }, [socket, queryClient]);
@@ -80,15 +103,15 @@ const BankAccount = () => {
             <h1 className="text-muted-foreground line-clamp-2">
               {isLoading
                 ? "waiting for bank details"
-                : isConnected && data?.data
-                ? `${data?.data.connectedAccounts.join(",")} is connected`
+                : isConnected && data?.data?.connected_accounts
+                ? `${data.data.connected_accounts.join(",")} is connected`
                 : "No bank account connected"}
             </h1>
           </div>
         </div>
         <div>
           {isLoading ? (
-            <Button variant="outline" disabled={isLoading}>
+            <Button variant="outline" disabled>
               Loading...
             </Button>
           ) : isConnected ? (
@@ -96,11 +119,8 @@ const BankAccount = () => {
               variant="outline"
               onClick={async () => {
                 const ok = await confirm();
-                if (ok) {
-                  setIsDisconnect(true);
-                }
+                if (ok) setIsDisconnect(true);
               }}
-              disabled={isLoading}
             >
               Disconnect
             </Button>
@@ -111,7 +131,6 @@ const BankAccount = () => {
                 setIsConnecting(true);
                 onOpen();
               }}
-              disabled={isLoading}
             >
               Connect
             </Button>

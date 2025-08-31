@@ -21,9 +21,9 @@ import {
 import { useConsentCreationStore } from "@/store/bank-store";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Input } from "@/components/ui/input";
-import { useEffect, useState } from "react";
-import { useCreateConsent } from "@/hooks/use-bank";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
+import API_ROUTES from "@/lib/routes";
 
 const consentCreationSchema = z.object({
   mobileNumber: z
@@ -48,36 +48,16 @@ const ConsentCreationForm = () => {
     },
   });
 
-  const [enabled, setEnabled] = useState(false);
-  const [mobileNumber, setMobileNumber] = useState("");
-
-  const { data, isSuccess, isLoading, error } = useCreateConsent({
-    enabled,
-    mobileNumber,
-  });
+  const [isDisabled, setIsDisabled] = useState(false);
 
   const handleSubmit = (values: FormValues) => {
-    setMobileNumber(values.mobileNumber.toString());
-    setEnabled(true);
+    setIsDisabled(true);
+    router.replace(
+      process.env.NEXT_PUBLIC_BACKEND_URL! +
+        API_ROUTES.BANK_ACCOUNT.CREATE_CONSENT +
+        values.mobileNumber.toString().trim()
+    );
   };
-
-  useEffect(() => {
-    if (isSuccess && data) {
-      const { url } = data.data;
-      onClose();
-      router.replace(url);
-    }
-  }, [isSuccess, data, router, onClose]);
-
-  useEffect(() => {
-    if (error) {
-      form.setError("mobileNumber", {
-        type: "server",
-        message: error.message || "Something wrong happened",
-      });
-      setEnabled(false);
-    }
-  }, [error, form]);
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
@@ -112,13 +92,9 @@ const ConsentCreationForm = () => {
             />
 
             <DialogFooter className="mt-5">
-              {isLoading ? (
-                <Button variant="primary">Loading...</Button>
-              ) : (
-                <Button variant="primary" type="submit">
-                  Connect
-                </Button>
-              )}
+              <Button variant="primary" type="submit" disabled={isDisabled}>
+                Connect
+              </Button>
             </DialogFooter>
           </form>
         </DialogContent>

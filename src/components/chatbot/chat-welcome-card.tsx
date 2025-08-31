@@ -18,7 +18,7 @@ export default function ChatWelcomeCard() {
           <div className="bg-white shadow w-1 h-1 absolute top-0 left-0  rounded-full"></div>
           <div className="bg-white shadow w-2 h-2 absolute top-1 left-1  rounded-full"></div>
           <div className="shadow bg-neutral-100 w-32 z-50 absolute right-3 top-1 rounded-2xl px-3 py-2 leading-tight">
-            <span className="text-xs text-neutral-700 ">
+            <span className="text-xs text-neutral-700 font-sans">
               Hey there!👋 <br></br>
               <span className="font-semibold text-neutral-900">
                 Need any advice?

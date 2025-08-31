@@ -13,14 +13,14 @@ import { useGetAllAccount } from "@/hooks/use-account";
 import { format, subMonths } from "date-fns";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { Calendar } from "../ui/calendar";
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, Loader2 } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
 import { DateRange } from "react-day-picker";
-// import { useFinancialSummary } from "@/hooks/use-overview";
 
 const Filters = () => {
-  const { data, isSuccess } = useGetAllAccount(true);
+  const { data, isSuccess, isLoading } = useGetAllAccount(true);
   const [date, setDate] = useState<DateRange | undefined>(undefined);
+  const [isInitialized, setIsInitialized] = useState(false);
 
   const router = useRouter();
   const pathName = usePathname();
@@ -33,6 +33,7 @@ const Filters = () => {
   const startDate = format(from, "MMM d");
 
   useEffect(() => {
+    setIsInitialized(true);
     if (date?.to && date?.from && account === "all") {
       const queryUrl = `?from=${date?.from.toISOString()}&to=${date?.to.toISOString()}`;
       router.push(queryUrl);
@@ -51,24 +52,48 @@ const Filters = () => {
     }
   }, [date, account, router, pathName]);
 
+  const showLoading = isLoading;
+
   return (
     <div className="lg:space-x-2 lg:flex space-y-2 lg:space-y-0">
-      <Select defaultValue={account} onValueChange={setAccount}>
-        <SelectTrigger className="w-full h-auto space-x-2 lg:w-auto border-none font-normal bg-white/10 hover:bg-white/20 transition text-white  border focus:ring-0 focus:ring-offset-0 rounded hover:text-white">
-          <SelectValue placeholder="All Accounts " />
+      <Select
+        defaultValue={account}
+        onValueChange={setAccount}
+        disabled={showLoading}
+      >
+        <SelectTrigger className="w-full h-auto space-x-2 lg:w-auto border-none font-normal bg-white/10 hover:bg-white/20 transition text-white border focus:ring-0 focus:ring-offset-0 rounded hover:text-white disabled:opacity-50">
+          {showLoading ? (
+            <div className="flex items-center space-x-2">
+              <Loader2 className="h-4 w-4 animate-spin" />
+              <span>Loading...</span>
+            </div>
+          ) : (
+            <SelectValue placeholder="All Accounts" />
+          )}
         </SelectTrigger>
         <SelectContent>
           <SelectGroup>
-            {isSuccess && data?.data.length === 0 && (
-              <SelectLabel className="items-center">No Accounts</SelectLabel>
+            {showLoading ? (
+              <div className="flex items-center justify-center py-2">
+                <Loader2 className="h-4 w-4 animate-spin mr-2" />
+                <span className="text-sm">Loading accounts...</span>
+              </div>
+            ) : (
+              <>
+                {isSuccess && data?.data.length === 0 && (
+                  <SelectLabel className="items-center">
+                    No Accounts
+                  </SelectLabel>
+                )}
+                <SelectItem value="all">All Accounts</SelectItem>
+                {isSuccess &&
+                  data?.data.map((account) => (
+                    <SelectItem value={account.account_name} key={account.id}>
+                      {account.account_name}
+                    </SelectItem>
+                  ))}
+              </>
             )}
-            <SelectItem value="all">All Accounts</SelectItem>
-            {isSuccess &&
-              data?.data.map((account) => (
-                <SelectItem value={account.account_name} key={account.id}>
-                  {account.account_name}
-                </SelectItem>
-              ))}
           </SelectGroup>
         </SelectContent>
       </Select>
@@ -78,12 +103,20 @@ const Filters = () => {
           <Button
             size="sm"
             variant="outline"
-            className={
-              "flex justify-between w-full lg:w-auto border-none font-normal bg-white/10 hover:bg-white/20 transition text-white focus:bg-white/30 border rounded hover:text-white"
-            }
+            disabled={showLoading}
+            className="flex justify-between w-full lg:w-auto border-none font-normal bg-white/10 hover:bg-white/20 transition text-white focus:bg-white/30 border rounded hover:text-white disabled:opacity-50"
           >
-            {startDate + " - " + endDate}{" "}
-            <ChevronDown className="text-white/30" />
+            {showLoading ? (
+              <div className="flex items-center space-x-2">
+                <Loader2 className="h-4 w-4 animate-spin" />
+                <span>Loading...</span>
+              </div>
+            ) : (
+              <>
+                {startDate + " - " + endDate}
+                <ChevronDown className="text-white/30" />
+              </>
+            )}
           </Button>
         </PopoverTrigger>
         <PopoverContent className="bg-white items-center flex justify-center z-50 ">

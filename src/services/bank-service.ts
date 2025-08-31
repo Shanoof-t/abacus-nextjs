@@ -17,12 +17,10 @@ interface IFetch {
 export interface IGetConsent extends IFetch {
   data: {
     consent_id: string;
-    userDetails: {
-      user_id: string;
-      user_email: string;
-    };
-    connectedAccounts: string[];
-    isApproved: boolean;
+    user_id: string;
+    user_email: string;
+    connected_accounts: string[];
+    is_approved: boolean;
   };
 }
 
