@@ -56,6 +56,10 @@ const API_ROUTES = {
     GET_CONSENT: "/api/v1/bank/consent",
     UPDATE_CONSENT: "/api/v1/bank/consent/",
   },
+  CHATBOT: {
+    CREATE_ANSWER: "/api/v1/chat",
+    GET_CHATS: "/api/v1/chat",
+  },
 };
 
 export default API_ROUTES;
