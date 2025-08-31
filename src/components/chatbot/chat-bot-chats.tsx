@@ -33,7 +33,7 @@ export default function ChatBotChats({
       {chats.map((chat) => (
         <div key={chat.id} className="space-y-2">
           <div className="w-full flex items-start justify-end gap-2 min-h-[2.5rem]">
-            <div className="inline-block max-w-[65%] lg:max-w-[70%] min-w-[12%] bg-white rounded-2xl rounded-br-sm p-2 lg:p-3 shadow-md break-words whitespace-pre-wrap">
+            <div className="inline-block max-w-[65%] lg:max-w-[70%] min-w-[12%] bg-white text-center rounded-3xl rounded-br-sm p-2 lg:p-3 shadow-md break-words whitespace-pre-wrap">
               <h1 className="text-xs lg:text-sm text-neutral-800 font-medium font-sans">
                 {chat.prompt}
               </h1>
@@ -58,7 +58,7 @@ export default function ChatBotChats({
                 <AvatarFallback>B</AvatarFallback>
               </Avatar>
 
-              <div className="relative inline-block max-w-[65%] lg:max-w-[70%] min-w-[12%] bg-blue-500 rounded-2xl rounded-tl-sm p-2 lg:p-3 shadow-md break-words whitespace-pre-wrap">
+              <div className="relative inline-block max-w-[65%] lg:max-w-[70%] min-w-[12%] bg-blue-500 rounded-3xl rounded-tl-sm p-2 lg:p-3 shadow-md break-words whitespace-pre-wrap">
                 <h1 className="text-xs lg:text-sm text-white font-medium font-sans">
                   {chat.answer}
                 </h1>

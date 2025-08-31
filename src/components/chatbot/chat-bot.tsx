@@ -14,6 +14,8 @@ import ChatWelcomeCard from "./chat-welcome-card";
 import { useCreateAnswer, userGetChats } from "@/hooks/use-chatbot";
 import { useQueryClient } from "@tanstack/react-query";
 import { IGetChats } from "@/services/chatbot-service";
+import ChatErrorCard from "./chat-error-card";
+import ChatBotLoading from "./chat-bot-loading";
 
 // const dummyData: IGetChats = {
 //   status: "success",
@@ -58,9 +60,9 @@ export default function Chatbot() {
   const queryClient = useQueryClient();
 
   const [prompt, setPrompt] = React.useState("");
-  const { data } = userGetChats(true);
+  const { data, isLoading, isError: getChatsError } = userGetChats(true);
 
-  const { mutate, isPending } = useCreateAnswer();
+  const { mutate, isPending, isError: createAnsweError } = useCreateAnswer();
 
   const [isOpen, setIsOpen] = React.useState(false);
   const inputRef = React.useRef<HTMLInputElement | null>(null);
@@ -133,6 +135,8 @@ export default function Chatbot() {
     }, 50);
   };
 
+  const isError = getChatsError || createAnsweError;
+
   return (
     <DropdownMenu open={isOpen} onOpenChange={setIsOpen}>
       <DropdownMenuTrigger asChild>
@@ -149,7 +153,11 @@ export default function Chatbot() {
         side="top"
         align="end"
       >
-        {!data?.data.length ? (
+        {isLoading ? (
+          <ChatBotLoading />
+        ) : isError ? (
+          <ChatErrorCard />
+        ) : !data?.data.length ? (
           <ChatWelcomeCard />
         ) : (
           <ChatBotChats chats={data.data} isLoading={isPending} />

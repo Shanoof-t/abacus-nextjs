@@ -12,8 +12,19 @@ apiClient.interceptors.response.use(
     // console.log("SUCCESS-RESPONSE>>>>>", res);
     return res;
   },
-  (err) => {
-    console.error("ERROR-RESPONSE>>>>>", err.response.data.message);
+  (
+    err
+  ): Promise<{
+    error: {
+      statusCode: number;
+      status: "error" | "success";
+      isOperational: boolean;
+    };
+    message: string;
+    stackTrace: string;
+    status: number;
+  }> => {
+    console.log("ERROR-RESPONSE>>>>>", err.response.data);
     return Promise.reject(err.response.data);
   }
 );
