@@ -17,44 +17,42 @@ import { IGetChats } from "@/services/chatbot-service";
 import ChatErrorCard from "./chat-error-card";
 import ChatBotLoading from "./chat-bot-loading";
 
-// const dummyData: IGetChats = {
-//   status: "success",
-//   message: "Dummy chats fetched",
-//   data: [
-//     {
-//       id: 1,
-//       prompt: "Hi, how are you?",
-//       answer: "I'm doing great! How can I assist you today?",
-//       createdAt: new Date().toISOString(),
-//       updatedAt: new Date().toISOString(),
-//       type: "user",
-//     },
-//     {
-//       id: 2,
-//       prompt: "What's my balance?",
-//       answer: "Your current balance is ₹12,500.",
-//       createdAt: new Date().toISOString(),
-//       updatedAt: new Date().toISOString(),
-//       type: "bot",
-//     },
-//     {
-//       id: 3,
-//       prompt: "Can I afford a ₹10,000 phone this month?",
-//       answer: "Based on your expenses, yes, you can afford it.",
-//       createdAt: new Date().toISOString(),
-//       updatedAt: new Date().toISOString(),
-//       type: "bot",
-//     },
-//     {
-//       id: 4,
-//       prompt: "Thanks!",
-//       answer: "You're welcome! Do you need any finance advice or rules?",
-//       createdAt: new Date().toISOString(),
-//       updatedAt: new Date().toISOString(),
-//       type: "bot",
-//     },
-//   ],
-// };
+const dummyData: IGetChats = {
+  status: "success",
+  message: "Dummy chats fetched",
+  data: [
+    {
+      id: 1,
+      prompt: "Hi, how are you?",
+      answer: [
+        {
+          text: "I'm doing great! How can I assist you today?",
+          recipient_id: "2",
+        },
+      ],
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+      type: "user",
+    },
+    {
+      id: 2,
+      prompt: "What's my balance?",
+      answer: [
+        {
+          text: "Your balance is zero.",
+          recipient_id: "2",
+        },
+        {
+          text: "I'm doing great! How can I assist you today?",
+          recipient_id: "2",
+        },
+      ],
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+      type: "bot",
+    },
+  ],
+};
 
 export default function Chatbot() {
   const queryClient = useQueryClient();
@@ -103,7 +101,7 @@ export default function Chatbot() {
     }
 
     const newData: IChatbot = {
-      answer: "",
+      answer: [],
       createdAt: new Date().toISOString(),
       id: Date.now(),
       prompt: prompt.trim(),
