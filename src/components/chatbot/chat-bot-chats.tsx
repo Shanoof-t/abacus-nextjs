@@ -1,24 +1,9 @@
 "use client";
 import React, { useEffect, useRef } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { format } from "date-fns";
 import { Ellipsis } from "lucide-react";
-import ReactMarkdown from "react-markdown";
 import ChatBubble from "./chat-bubble";
-
-export interface IChatbot {
-  id: number;
-  prompt: string;
-  answer: {
-    recipient_id: string;
-    text: string;
-  }[];
-  createdAt: string;
-  updatedAt: string;
-  userId?: number;
-  type: "user" | "bot";
-  is_temp?: boolean;
-}
+import { IChatbot } from "@/types/chatbot-types";
 
 export default function ChatBotChats({
   chats,

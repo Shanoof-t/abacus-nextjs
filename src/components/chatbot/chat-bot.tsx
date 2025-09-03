@@ -9,50 +9,51 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
-import ChatBotChats, { IChatbot } from "./chat-bot-chats";
+import ChatBotChats from "./chat-bot-chats";
 import ChatWelcomeCard from "./chat-welcome-card";
 import { useCreateAnswer, userGetChats } from "@/hooks/use-chatbot";
 import { useQueryClient } from "@tanstack/react-query";
 import { IGetChats } from "@/services/chatbot-service";
 import ChatErrorCard from "./chat-error-card";
 import ChatBotLoading from "./chat-bot-loading";
+import { IChatbot } from "@/types/chatbot-types";
 
-const dummyData: IGetChats = {
-  status: "success",
-  message: "Dummy chats fetched",
-  data: [
-    {
-      id: 1,
-      prompt: "Hi, how are you?",
-      answer: [
-        {
-          text: "I'm doing great! How can I assist you today?",
-          recipient_id: "2",
-        },
-      ],
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
-      type: "user",
-    },
-    {
-      id: 2,
-      prompt: "What's my balance?",
-      answer: [
-        {
-          text: "Your balance is zero.",
-          recipient_id: "2",
-        },
-        {
-          text: "I'm doing great! How can I assist you today?",
-          recipient_id: "2",
-        },
-      ],
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
-      type: "bot",
-    },
-  ],
-};
+// const dummyData: IGetChats = {
+//   status: "success",
+//   message: "Dummy chats fetched",
+//   data: [
+//     {
+//       id: 1,
+//       prompt: "Hi, how are you?",
+//       answer: [
+//         {
+//           text: "I'm doing great! How can I assist you today?",
+//           recipient_id: "2",
+//         },
+//       ],
+//       createdAt: new Date().toISOString(),
+//       updatedAt: new Date().toISOString(),
+//       type: "user",
+//     },
+//     {
+//       id: 2,
+//       prompt: "What's my balance?",
+//       answer: [
+//         {
+//           text: "Your balance is zero.",
+//           recipient_id: "2",
+//         },
+//         {
+//           text: "I'm doing great! How can I assist you today?",
+//           recipient_id: "2",
+//         },
+//       ],
+//       createdAt: new Date().toISOString(),
+//       updatedAt: new Date().toISOString(),
+//       type: "bot",
+//     },
+//   ],
+// };
 
 export default function Chatbot() {
   const queryClient = useQueryClient();
@@ -102,11 +103,11 @@ export default function Chatbot() {
 
     const newData: IChatbot = {
       answer: [],
-      createdAt: new Date().toISOString(),
-      id: Date.now(),
+      created_at: new Date().toISOString(),
+      id: Date.now().toString(),
       prompt: prompt.trim(),
-      type: "user",
-      updatedAt: new Date().toISOString(),
+      answer_type: "user",
+      updated_at: new Date().toISOString(),
       is_temp: true,
     };
 
@@ -142,7 +143,11 @@ export default function Chatbot() {
           className="fixed bottom-6 right-6 z-50 w-16 h-16 bg-white rounded-full shadow-lg flex items-center justify-center cursor-pointer hover:shadow-xl transition-shadow"
           onClick={handleOpenChatbot}
         >
-          {isOpen ? <X className="text-blue-600"/> : <Image src="/bot.jpg" fill alt="bot" className="rounded-full" />}
+          {isOpen ? (
+            <X className="text-blue-600" />
+          ) : (
+            <Image src="/bot.jpg" fill alt="bot" className="rounded-full" />
+          )}
         </div>
       </DropdownMenuTrigger>
 

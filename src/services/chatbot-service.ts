@@ -1,6 +1,6 @@
-import { IChatbot } from "@/components/chatbot/chat-bot-chats";
 import apiClient from "@/lib/axios.config";
 import API_ROUTES from "@/lib/routes";
+import { IChatbot } from "@/types/chatbot-types";
 
 interface IFetch {
   status: string;
