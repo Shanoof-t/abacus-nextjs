@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import Image from "next/image";
-import { SendHorizontal } from "lucide-react";
+import { SendHorizontal, X } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -142,7 +142,7 @@ export default function Chatbot() {
           className="fixed bottom-6 right-6 z-50 w-16 h-16 bg-white rounded-full shadow-lg flex items-center justify-center cursor-pointer hover:shadow-xl transition-shadow"
           onClick={handleOpenChatbot}
         >
-          <Image src="/bot.jpg" fill alt="bot" className="rounded-full" />
+          {isOpen ? <X className="text-blue-600"/> : <Image src="/bot.jpg" fill alt="bot" className="rounded-full" />}
         </div>
       </DropdownMenuTrigger>
 
